@@ -35,8 +35,7 @@
 
 #define MBSS_EXTERN
 
-#endif /* MODULE_MBSS */
-
+#endif				/* MODULE_MBSS */
 
 /*
 	For MBSS, the phy mode is different;
@@ -61,26 +60,15 @@
 		}														\
 	}
 
-
 /* Public function list */
-INT	Show_MbssInfo_Display_Proc(
-	IN	PRTMP_ADAPTER				pAd,
-	IN	PSTRING						arg);
+INT Show_MbssInfo_Display_Proc(IN PRTMP_ADAPTER pAd, IN PSTRING arg);
 
-VOID MBSS_Init(
-	IN PRTMP_ADAPTER				pAd,
-	IN RTMP_OS_NETDEV_OP_HOOK		*pNetDevOps);
+VOID MBSS_Init(IN PRTMP_ADAPTER pAd, IN RTMP_OS_NETDEV_OP_HOOK * pNetDevOps);
 
-VOID MBSS_Remove(
-	IN PRTMP_ADAPTER				pAd);
+VOID MBSS_Remove(IN PRTMP_ADAPTER pAd);
 
-INT MBSS_Open(
-	IN	PNET_DEV					pDev);
+INT MBSS_Open(IN PNET_DEV pDev);
 
-INT MBSS_Close(
-	IN	PNET_DEV					pDev);
+INT MBSS_Close(IN PNET_DEV pDev);
 
-INT32 RT28xx_MBSS_IdxGet(
-	IN PRTMP_ADAPTER	pAd,
-	IN PNET_DEV			pDev);
-
+INT32 RT28xx_MBSS_IdxGet(IN PRTMP_ADAPTER pAd, IN PNET_DEV pDev);

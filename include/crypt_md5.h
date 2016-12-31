@@ -28,7 +28,6 @@
 #ifndef __CRYPT_MD5_H__
 #define __CRYPT_MD5_H__
 
-
 /* Algorithm options */
 #define MD5_SUPPORT
 
@@ -42,22 +41,13 @@ typedef struct {
 	UINT BlockLen;
 } MD5_CTX_STRUC, *PMD5_CTX_STRUC;
 
-VOID RT_MD5_Init(
-	IN MD5_CTX_STRUC * pMD5_CTX);
-VOID RT_MD5_Hash(
-	IN MD5_CTX_STRUC * pMD5_CTX);
-VOID RT_MD5_Append(
-	IN MD5_CTX_STRUC * pMD5_CTX,
-	IN const UINT8 Message[],
-	IN UINT MessageLen);
-VOID RT_MD5_End(
-	IN MD5_CTX_STRUC * pMD5_CTX,
-	OUT UINT8 DigestMessage[]);
-VOID RT_MD5(
-	IN const UINT8 Message[],
-	IN UINT MessageLen,
-	OUT UINT8 DigestMessage[]);
-#endif /* MD5_SUPPORT */
+VOID RT_MD5_Init(IN MD5_CTX_STRUC * pMD5_CTX);
+VOID RT_MD5_Hash(IN MD5_CTX_STRUC * pMD5_CTX);
+VOID RT_MD5_Append(IN MD5_CTX_STRUC * pMD5_CTX,
+		   IN const UINT8 Message[], IN UINT MessageLen);
+VOID RT_MD5_End(IN MD5_CTX_STRUC * pMD5_CTX, OUT UINT8 DigestMessage[]);
+VOID RT_MD5(IN const UINT8 Message[],
+	    IN UINT MessageLen, OUT UINT8 DigestMessage[]);
+#endif				/* MD5_SUPPORT */
 
-
-#endif /* __CRYPT_MD5_H__ */
+#endif				/* __CRYPT_MD5_H__ */

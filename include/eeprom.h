@@ -31,30 +31,27 @@
 /* For ioctl check usage */
 #define EEPROM_IS_PROGRAMMED		0x80
 
-
 #ifdef RTMP_MAC_USB
 #define EEPROM_SIZE					0x400
-#endif /* RTMP_MAC_USB */
-
+#endif				/* RTMP_MAC_USB */
 
 #ifdef RT_BIG_ENDIAN
-typedef	union _EEPROM_WORD_STRUC {
+typedef union _EEPROM_WORD_STRUC {
 	struct {
-		UCHAR	Byte1;				// High Byte
-		UCHAR	Byte0;				// Low Byte
+		UCHAR Byte1;	// High Byte
+		UCHAR Byte0;	// Low Byte
 	} field;
-	USHORT	word;
+	USHORT word;
 } EEPROM_WORD_STRUC;
 #else
-typedef	union _EEPROM_WORD_STRUC {
+typedef union _EEPROM_WORD_STRUC {
 	struct {
-		UCHAR	Byte0;
-		UCHAR	Byte1;
+		UCHAR Byte0;
+		UCHAR Byte1;
 	} field;
-	USHORT	word;
+	USHORT word;
 } EEPROM_WORD_STRUC;
 #endif
-
 
 /* ------------------------------------------------------------------- */
 /*  E2PROM data layout */
@@ -115,7 +112,6 @@ typedef union _EEPROM_NIC_CINFIG2_STRUC {
 } EEPROM_NIC_CONFIG2_STRUC, *PEEPROM_NIC_CONFIG2_STRUC;
 #endif
 
-
 #if defined(BT_COEXISTENCE_SUPPORT) || defined(RT3290)
 #ifdef RTMP_USB_SUPPORT
 #ifdef RT_BIG_ENDIAN
@@ -139,11 +135,9 @@ typedef union _EEPROM_NIC_CINFIG3_STRUC {
 	USHORT word;
 } EEPROM_NIC_CONFIG3_STRUC, *PEEPROM_NIC_CONFIG3_STRUC;
 #endif
-#endif /* RTMP_USB_SUPPORT */
+#endif				/* RTMP_USB_SUPPORT */
 
-#endif /* defined(BT_COEXISTENCE_SUPPORT) || defined(RT3290) */
-
-
+#endif				/* defined(BT_COEXISTENCE_SUPPORT) || defined(RT3290) */
 
 /*
 	TX_PWR Value valid range 0xFA(-6) ~ 0x24(36)
@@ -238,78 +232,66 @@ typedef union _EEPROM_TXPOWER_DELTA_STRUC {
 } EEPROM_TXPOWER_DELTA_STRUC, *PEEPROM_TXPOWER_DELTA_STRUC;
 #endif
 
-
 #ifdef RT_BIG_ENDIAN
-typedef union _EEPROM_TX_PWR_OFFSET_STRUC
-{
-	struct
-	{
-		UCHAR	Byte1;	/* High Byte */
-		UCHAR	Byte0;	/* Low Byte */
+typedef union _EEPROM_TX_PWR_OFFSET_STRUC {
+	struct {
+		UCHAR Byte1;	/* High Byte */
+		UCHAR Byte0;	/* Low Byte */
 	} field;
-	
-	USHORT		word;
+
+	USHORT word;
 } EEPROM_TX_PWR_OFFSET_STRUC, *PEEPROM_TX_PWR_OFFSET_STRUC;
 #else
-typedef union _EEPROM_TX_PWR_OFFSET_STRUC
-{
-	struct
-	{
-		UCHAR	Byte0;	/* Low Byte */
-		UCHAR	Byte1;	/* High Byte */
+typedef union _EEPROM_TX_PWR_OFFSET_STRUC {
+	struct {
+		UCHAR Byte0;	/* Low Byte */
+		UCHAR Byte1;	/* High Byte */
 	} field;
 
-	USHORT		word;
+	USHORT word;
 } EEPROM_TX_PWR_OFFSET_STRUC, *PEEPROM_TX_PWR_OFFSET_STRUC;
-#endif /* RT_BIG_ENDIAN */
-
+#endif				/* RT_BIG_ENDIAN */
 
 struct _RTMP_ADAPTER;
 
-
-
 #ifdef RTMP_USB_SUPPORT
-NTSTATUS RTUSBReadEEPROM16(
-	IN struct _RTMP_ADAPTER *pAd,
-	IN USHORT offset,
-	OUT	USHORT *pData);
+NTSTATUS RTUSBReadEEPROM16(IN struct _RTMP_ADAPTER *pAd,
+			   IN USHORT offset, OUT USHORT * pData);
 
-NTSTATUS RTUSBWriteEEPROM16(
-	IN struct _RTMP_ADAPTER *pAd, 
-	IN USHORT offset, 
-	IN USHORT value);
-#endif /* RTMP_USB_SUPPORT */
-
+NTSTATUS RTUSBWriteEEPROM16(IN struct _RTMP_ADAPTER *pAd,
+			    IN USHORT offset, IN USHORT value);
+#endif				/* RTMP_USB_SUPPORT */
 
 #if defined(RTMP_RBUS_SUPPORT) || defined(RTMP_FLASH_SUPPORT)
 NDIS_STATUS rtmp_nv_init(struct _RTMP_ADAPTER *pAd);
-int rtmp_ee_flash_read(struct _RTMP_ADAPTER *pAd, USHORT Offset, USHORT *pVal);
+int rtmp_ee_flash_read(struct _RTMP_ADAPTER *pAd, USHORT Offset, USHORT * pVal);
 int rtmp_ee_flash_write(struct _RTMP_ADAPTER *pAd, USHORT Offset, USHORT data);
-VOID rtmp_ee_flash_read_all(struct _RTMP_ADAPTER *pAd, USHORT *Data);
-VOID rtmp_ee_flash_write_all(struct _RTMP_ADAPTER *pAd, USHORT *Data);
-#endif /* defined(RTMP_RBUS_SUPPORT) || defined(RTMP_FLASH_SUPPORT) */
-
+VOID rtmp_ee_flash_read_all(struct _RTMP_ADAPTER *pAd, USHORT * Data);
+VOID rtmp_ee_flash_write_all(struct _RTMP_ADAPTER *pAd, USHORT * Data);
+#endif				/* defined(RTMP_RBUS_SUPPORT) || defined(RTMP_FLASH_SUPPORT) */
 
 #ifdef RTMP_EFUSE_SUPPORT
 INT eFuseLoadEEPROM(struct _RTMP_ADAPTER *pAd);
 INT eFuseWriteEeeppromBuf(struct _RTMP_ADAPTER *pAd);
-VOID eFuseGetFreeBlockCount(struct _RTMP_ADAPTER *pAd, UINT *EfuseFreeBlock);
+VOID eFuseGetFreeBlockCount(struct _RTMP_ADAPTER *pAd, UINT * EfuseFreeBlock);
 
-int rtmp_ee_efuse_read16(struct _RTMP_ADAPTER *pAd, USHORT Offset, USHORT *pVal);
-int rtmp_ee_efuse_write16(struct _RTMP_ADAPTER *pAd, USHORT Offset, USHORT data);
+int rtmp_ee_efuse_read16(struct _RTMP_ADAPTER *pAd, USHORT Offset,
+			 USHORT * pVal);
+int rtmp_ee_efuse_write16(struct _RTMP_ADAPTER *pAd, USHORT Offset,
+			  USHORT data);
 
-
-NTSTATUS eFuseRead(struct _RTMP_ADAPTER *pAd, USHORT Offset, USHORT *pData, USHORT len);
-NTSTATUS eFuseWrite(struct _RTMP_ADAPTER *pAd, USHORT Offset, USHORT *pData, USHORT len);
+NTSTATUS eFuseRead(struct _RTMP_ADAPTER *pAd, USHORT Offset, USHORT * pData,
+		   USHORT len);
+NTSTATUS eFuseWrite(struct _RTMP_ADAPTER *pAd, USHORT Offset, USHORT * pData,
+		    USHORT len);
 
 INT eFuse_init(struct _RTMP_ADAPTER *pAd);
 INT efuse_probe(struct _RTMP_ADAPTER *pAd);
-#endif /* RTMP_EFUSE_SUPPORT */
-
+#endif				/* RTMP_EFUSE_SUPPORT */
 
 /*************************************************************************
   *	Public function declarations for prom operation callback functions setting
   ************************************************************************/
 INT RtmpChipOpsEepromHook(struct _RTMP_ADAPTER *pAd, INT infType);
 
-#endif /* __EEPROM_H__ */
+#endif				/* __EEPROM_H__ */

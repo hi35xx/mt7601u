@@ -20,14 +20,12 @@
 
 ***************************************************************************/
 
-
 /* only for UAPSD_TIMING_RECORD */
-
 
 #define UAPSD_TIMING_RECORD_MAX				1000
 #define UAPSD_TIMING_RECORD_DISPLAY_TIMES	10
 
-#define UAPSD_QUEUE_TIMEOUT					5 /* unit: seconds */
+#define UAPSD_QUEUE_TIMEOUT					5	/* unit: seconds */
 
 #define UAPSD_TIMING_RECORD_ISR				1
 #define UAPSD_TIMING_RECORD_TASKLET			2
@@ -54,8 +52,7 @@
 #define UAPSD_TIMING_RECORD_STOP()
 #define UAPSD_TIMING_RECORD(__pAd, __type)
 #define UAPSD_TIMING_RECORD_INDEX(__LoopIndex)
-#endif /* UAPSD_TIMING_RECORD_FUNC */
-
+#endif				/* UAPSD_TIMING_RECORD_FUNC */
 
 /* timing */
 #define UAPSD_TIMESTAMP_GET(__pAd, __TimeStamp)			\
@@ -68,7 +65,6 @@
 		__TimeStamp |= (__Value64 << 32);				\
 	}
 
-
 #define UAPSD_TIME_GET(__pAd, __Time)					\
 	{													\
 		NdisGetSystemUpTime(&__Time);					\
@@ -79,7 +75,7 @@
 #define UAPSD_INSERT_QUEUE_AC	UAPSD_InsertTailQueueAc
 #else
 #define UAPSD_INSERT_QUEUE_AC	InsertTailQueueAc
-#endif /* VENDOR_FEATURE3_SUPPORT */
+#endif				/* VENDOR_FEATURE3_SUPPORT */
 
 /* uapsd initialization */
 #define UAPSD_INFO_INIT(__pInfo)						\
@@ -98,8 +94,7 @@
 /* for AP, we maybe sleep until all SPs are closed */
 #define UAPSD_SP_END(__pAd, __pEntry)					\
 	__pEntry->bAPSDFlagSPStart = 0;
-#endif /* CONFIG_STA_SUPPORT */
-
+#endif				/* CONFIG_STA_SUPPORT */
 
 #ifdef CONFIG_STA_SUPPORT
 
@@ -129,7 +124,7 @@
 		__pMacEntry->Addr[0], __pMacEntry->Addr[1], __pMacEntry->Addr[2],	\
 		__pMacEntry->Addr[3], __pMacEntry->Addr[4], __pMacEntry->Addr[5]));											\
 }
-#endif /* CONFIG_STA_SUPPORT */
+#endif				/* CONFIG_STA_SUPPORT */
 
 /* recover the peer power save mode virtually */
 #define RTMP_PS_VIRTUAL_SLEEP(__pMacEntry)									\
@@ -282,22 +277,19 @@
 
 #ifdef RTMP_MAC_USB
 #define UAPSD_MR_MIX_PS_POLL_RCV(__pAd, __pMacEntry)
-#endif /* RTMP_MAC_USB */
+#endif				/* RTMP_MAC_USB */
 
 #else
 
 #define UAPSD_EXTERN
 #define UAPSD_QOS_NULL_QUE_ID	0x7f
 
+#define UAPSD_EPT_SP_INT		(100000/(1000000/OS_HZ))	/* 100ms */
 
-#define UAPSD_EPT_SP_INT		(100000/(1000000/OS_HZ)) /* 100ms */
-
-#endif /* MODULE_WMM_UAPSD */
-
+#endif				/* MODULE_WMM_UAPSD */
 
 /* max UAPSD buffer queue size */
 #define MAX_PACKETS_IN_UAPSD_QUEUE	16	/* for each AC = 16*4 = 64 */
-
 
 /* Public function list */
 /*
@@ -314,9 +306,7 @@ Return Value:
 Note:
 ========================================================================
 */
-UAPSD_EXTERN VOID UAPSD_Init(
-	IN	PRTMP_ADAPTER		pAd);
-
+UAPSD_EXTERN VOID UAPSD_Init(IN PRTMP_ADAPTER pAd);
 
 /*
 ========================================================================
@@ -332,9 +322,7 @@ Return Value:
 Note:
 ========================================================================
 */
-UAPSD_EXTERN VOID UAPSD_Release(
-	IN	PRTMP_ADAPTER		pAd);
-
+UAPSD_EXTERN VOID UAPSD_Release(IN PRTMP_ADAPTER pAd);
 
 /*
 ========================================================================
@@ -350,8 +338,7 @@ Return Value:
 Note:
 ========================================================================
 */
-UAPSD_EXTERN VOID RtmpAsicSleepHandle(
-    IN  PRTMP_ADAPTER       pAd);
+UAPSD_EXTERN VOID RtmpAsicSleepHandle(IN PRTMP_ADAPTER pAd);
 
 /*
 ========================================================================
@@ -368,9 +355,8 @@ Return Value:
 Note:
 ========================================================================
 */
-UAPSD_EXTERN VOID UAPSD_SP_Close(
-    IN  PRTMP_ADAPTER       pAd,
-	IN	MAC_TABLE_ENTRY		*pEntry);
+UAPSD_EXTERN VOID UAPSD_SP_Close(IN PRTMP_ADAPTER pAd,
+				 IN MAC_TABLE_ENTRY * pEntry);
 
 /*
 ========================================================================
@@ -387,9 +373,8 @@ Return Value:
 Note:
 ========================================================================
 */
-UAPSD_EXTERN BOOLEAN UAPSD_SP_IsClosed(
-    IN  PRTMP_ADAPTER       pAd,
-	IN	MAC_TABLE_ENTRY		*pEntry);
+UAPSD_EXTERN BOOLEAN UAPSD_SP_IsClosed(IN PRTMP_ADAPTER pAd,
+				       IN MAC_TABLE_ENTRY * pEntry);
 
 /*
 ========================================================================
@@ -407,10 +392,8 @@ Note:
 	SMP protection by caller for packet enqueue.
 ========================================================================
 */
-UAPSD_EXTERN VOID UAPSD_AllPacketDeliver(
-	IN	PRTMP_ADAPTER		pAd,
-	IN	MAC_TABLE_ENTRY		*pEntry);
-
+UAPSD_EXTERN VOID UAPSD_AllPacketDeliver(IN PRTMP_ADAPTER pAd,
+					 IN MAC_TABLE_ENTRY * pEntry);
 
 /*
 ========================================================================
@@ -442,12 +425,9 @@ Note:
 		backup static UAPSD settings in Reassociation
 ========================================================================
 */
-UAPSD_EXTERN VOID UAPSD_AssocParse(
-	IN	PRTMP_ADAPTER		pAd,
-	IN	MAC_TABLE_ENTRY		*pEntry,
-	IN	UCHAR				*pElm,
-	IN	BOOLEAN				FlgApsdCapable);
-
+UAPSD_EXTERN VOID UAPSD_AssocParse(IN PRTMP_ADAPTER pAd,
+				   IN MAC_TABLE_ENTRY * pEntry,
+				   IN UCHAR * pElm, IN BOOLEAN FlgApsdCapable);
 
 /*
 ========================================================================
@@ -466,12 +446,9 @@ Return Value:
 Note:
 ========================================================================
 */
-UAPSD_EXTERN VOID UAPSD_PacketEnqueue(
-	IN	PRTMP_ADAPTER		pAd,
-	IN	MAC_TABLE_ENTRY		*pEntry,
-	IN	PNDIS_PACKET		pPacket,
-	IN	UINT32				IdAc);
-
+UAPSD_EXTERN VOID UAPSD_PacketEnqueue(IN PRTMP_ADAPTER pAd,
+				      IN MAC_TABLE_ENTRY * pEntry,
+				      IN PNDIS_PACKET pPacket, IN UINT32 IdAc);
 
 /*
 ========================================================================
@@ -489,11 +466,9 @@ Return Value:
 Note:
 ========================================================================
 */
-UAPSD_EXTERN VOID UAPSD_QoSNullTxMgmtTxDoneHandle(
-	IN	PRTMP_ADAPTER		pAd,
-	IN	PNDIS_PACKET		pPacket,
-	IN	UCHAR				*pDstMac);
-
+UAPSD_EXTERN VOID UAPSD_QoSNullTxMgmtTxDoneHandle(IN PRTMP_ADAPTER pAd,
+						  IN PNDIS_PACKET pPacket,
+						  IN UCHAR * pDstMac);
 
 /*
 ========================================================================
@@ -511,10 +486,8 @@ Note:
 	If in RT2870, pEntry can not be removed during UAPSD_QueueMaintenance()
 ========================================================================
 */
-UAPSD_EXTERN VOID UAPSD_QueueMaintenance(
-	IN	PRTMP_ADAPTER		pAd,
-	IN	MAC_TABLE_ENTRY		*pEntry);
-
+UAPSD_EXTERN VOID UAPSD_QueueMaintenance(IN PRTMP_ADAPTER pAd,
+					 IN MAC_TABLE_ENTRY * pEntry);
 
 /*
 ========================================================================
@@ -539,11 +512,9 @@ Note:
 	use UAPSD_SP_AUE_Handle().
 ========================================================================
 */
-UAPSD_EXTERN VOID UAPSD_SP_AUE_Handle(
-	IN RTMP_ADAPTER		*pAd,
-    IN MAC_TABLE_ENTRY	*pEntry,
-	IN UCHAR			FlgSuccess);
-
+UAPSD_EXTERN VOID UAPSD_SP_AUE_Handle(IN RTMP_ADAPTER * pAd,
+				      IN MAC_TABLE_ENTRY * pEntry,
+				      IN UCHAR FlgSuccess);
 
 /*
 ========================================================================
@@ -565,9 +536,7 @@ Note:
 	So we must close the old SP in receive done ISR to avoid the problem.
 ========================================================================
 */
-UAPSD_EXTERN VOID UAPSD_SP_CloseInRVDone(
-	IN	PRTMP_ADAPTER		pAd);
-
+UAPSD_EXTERN VOID UAPSD_SP_CloseInRVDone(IN PRTMP_ADAPTER pAd);
 
 /*
 ========================================================================
@@ -587,11 +556,9 @@ Note:
 	2. SMP protection by caller for packet enqueue.
 ========================================================================
 */
-UAPSD_EXTERN VOID UAPSD_SP_PacketCheck(
-	IN	PRTMP_ADAPTER		pAd,
-	IN	PNDIS_PACKET		pPacket,
-	IN	UCHAR				*pDstMac);
-
+UAPSD_EXTERN VOID UAPSD_SP_PacketCheck(IN PRTMP_ADAPTER pAd,
+				       IN PNDIS_PACKET pPacket,
+				       IN UCHAR * pDstMac);
 
 #ifdef UAPSD_TIMING_RECORD_FUNC
 /*
@@ -609,8 +576,7 @@ Return Value:
 Note:
 ========================================================================
 */
-UAPSD_EXTERN VOID UAPSD_TimingRecordCtrl(
-	IN	UINT32				Flag);
+UAPSD_EXTERN VOID UAPSD_TimingRecordCtrl(IN UINT32 Flag);
 
 /*
 ========================================================================
@@ -632,9 +598,7 @@ Note:
 	UAPSD_TIMING_RECORD_TX2AIR
 ========================================================================
 */
-UAPSD_EXTERN VOID UAPSD_TimingRecord(
-	IN	PRTMP_ADAPTER		pAd,
-	IN	UINT32				Type);
+UAPSD_EXTERN VOID UAPSD_TimingRecord(IN PRTMP_ADAPTER pAd, IN UINT32 Type);
 
 /*
 ========================================================================
@@ -651,10 +615,8 @@ Return Value:
 Note:
 ========================================================================
 */
-UAPSD_EXTERN VOID UAPSD_TimeingRecordLoopIndex(
-	IN	UINT32				LoopIndex);
-#endif /* UAPSD_TIMING_RECORD_FUNC */
-
+UAPSD_EXTERN VOID UAPSD_TimeingRecordLoopIndex(IN UINT32 LoopIndex);
+#endif				/* UAPSD_TIMING_RECORD_FUNC */
 
 /*
 ========================================================================
@@ -675,14 +637,12 @@ Return Value:
 Note:
 ========================================================================
 */
-VOID UAPSD_QueueStatusGet(
-	IN	PRTMP_ADAPTER		pAd,
-	IN	MAC_TABLE_ENTRY		*pEntry,
-	OUT	BOOLEAN				*pFlgIsAnyPktForBK,
-	OUT BOOLEAN				*pFlgIsAnyPktForBE,
-	OUT BOOLEAN				*pFlgIsAnyPktForVI,
-	OUT BOOLEAN				*pFlgIsAnyPktForVO);
-
+VOID UAPSD_QueueStatusGet(IN PRTMP_ADAPTER pAd,
+			  IN MAC_TABLE_ENTRY * pEntry,
+			  OUT BOOLEAN * pFlgIsAnyPktForBK,
+			  OUT BOOLEAN * pFlgIsAnyPktForBE,
+			  OUT BOOLEAN * pFlgIsAnyPktForVI,
+			  OUT BOOLEAN * pFlgIsAnyPktForVO);
 
 /*
 ========================================================================
@@ -700,11 +660,9 @@ Return Value:
 Note:
 ========================================================================
 */
-UAPSD_EXTERN VOID UAPSD_TriggerFrameHandle(
-	IN	PRTMP_ADAPTER		pAd,
-	IN	MAC_TABLE_ENTRY		*pEntry,
-	IN	UCHAR				UpOfFrame);
-
+UAPSD_EXTERN VOID UAPSD_TriggerFrameHandle(IN PRTMP_ADAPTER pAd,
+					   IN MAC_TABLE_ENTRY * pEntry,
+					   IN UCHAR UpOfFrame);
 
 #ifdef RTMP_MAC_USB
 /*
@@ -725,12 +683,9 @@ Note:
 	Only for RT2870.
 ========================================================================
 */
-UAPSD_EXTERN VOID UAPSD_TagFrame(
-	IN	RTMP_ADAPTER		*pAd,
-	IN	NDIS_PACKET			*pPkt,
-	IN	UCHAR				Wcid,
-	IN	UINT32				PktOffset);
-
+UAPSD_EXTERN VOID UAPSD_TagFrame(IN RTMP_ADAPTER * pAd,
+				 IN NDIS_PACKET * pPkt,
+				 IN UCHAR Wcid, IN UINT32 PktOffset);
 
 /*
 ========================================================================
@@ -750,11 +705,9 @@ Note:
 	Only for RT2870.
 ========================================================================
 */
-UAPSD_EXTERN VOID UAPSD_UnTagFrame(
-	IN	RTMP_ADAPTER	*pAd,
-	IN	UCHAR			AcQueId,
-	IN	UINT32			bulkStartPos,
-	IN	UINT32			bulkEnPos);
-#endif /* RTMP_MAC_USB */
+UAPSD_EXTERN VOID UAPSD_UnTagFrame(IN RTMP_ADAPTER * pAd,
+				   IN UCHAR AcQueId,
+				   IN UINT32 bulkStartPos, IN UINT32 bulkEnPos);
+#endif				/* RTMP_MAC_USB */
 
 /* End of ap_uapsd.h */

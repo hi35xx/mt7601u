@@ -15,25 +15,22 @@
 
     Abstract:
 
-
  */
-
 
 #ifndef __AUTOCHSELECT_CMM_H__
 #define __AUTOCHSELECT_CMM_H__
 
-#define RSSI_TO_DBM_OFFSET 120 /* RSSI-115 = dBm */
-
+#define RSSI_TO_DBM_OFFSET 120	/* RSSI-115 = dBm */
 
 typedef struct {
-	ULONG dirtyness[MAX_NUM_OF_CHANNELS+1];
-	ULONG ApCnt[MAX_NUM_OF_CHANNELS+1];
-	UINT32 FalseCCA[MAX_NUM_OF_CHANNELS+1];
-    BOOLEAN SkipList[MAX_NUM_OF_CHANNELS+1];
+	ULONG dirtyness[MAX_NUM_OF_CHANNELS + 1];
+	ULONG ApCnt[MAX_NUM_OF_CHANNELS + 1];
+	UINT32 FalseCCA[MAX_NUM_OF_CHANNELS + 1];
+	BOOLEAN SkipList[MAX_NUM_OF_CHANNELS + 1];
 #ifdef AP_QLOAD_SUPPORT
-	UINT32 chanbusytime[MAX_NUM_OF_CHANNELS+1]; /* QLOAD ALARM */
-#endif /* AP_QLOAD_SUPPORT */
-        BOOLEAN IsABand;
+	UINT32 chanbusytime[MAX_NUM_OF_CHANNELS + 1];	/* QLOAD ALARM */
+#endif				/* AP_QLOAD_SUPPORT */
+	BOOLEAN IsABand;
 } CHANNELINFO, *PCHANNELINFO;
 
 typedef struct {
@@ -47,15 +44,13 @@ typedef struct {
 
 typedef struct {
 	UCHAR BssNr;
-	BSSENTRY BssEntry[MAX_LEN_OF_BSS_TABLE];	
+	BSSENTRY BssEntry[MAX_LEN_OF_BSS_TABLE];
 } BSSINFO, *PBSSINFO;
 
-typedef enum ChannelSelAlg
-{
-	ChannelAlgRandom, /*use by Dfs */
+typedef enum ChannelSelAlg {
+	ChannelAlgRandom,	/*use by Dfs */
 	ChannelAlgApCnt,
 	ChannelAlgCCA
 } ChannelSel_Alg;
 
-#endif /* __AUTOCHSELECT_CMM_H__ */
-
+#endif				/* __AUTOCHSELECT_CMM_H__ */

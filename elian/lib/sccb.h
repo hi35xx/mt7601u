@@ -11,7 +11,7 @@
 //#define MSC_DROP_MGMT BIT(1)
 //#define MSC_DROP_MULTICAST BIT(2)
 //#define MSC_DROP_BROADCAST BIT(3)
-#if 0 
+#if 0
 enum sc_ctrl_id {
 	MSC_CTRLID_ENABLE_MONITOR_MODE = 0x00,
 	MSC_CTRLID_DISABLE_MONITOR_MODE,
@@ -84,4 +84,3 @@ int sccb_rx(char *data, unsigned int data_len);
 int sccb_enable_input(void);
 int sccb_disable_input(void);
 #endif
-

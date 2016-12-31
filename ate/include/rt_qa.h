@@ -32,19 +32,19 @@
 #ifdef RALINK_QA
 #ifndef RALINK_ATE
 #error "For supporting QA GUI, please set HAS_ATE=y and HAS_QA_SUPPORT=y."
-#endif /* RALINK_ATE */
+#endif				/* RALINK_ATE */
 
 #include "rt_ate.h"
 
 typedef struct ate_racfghdr {
- 	UINT32		magic_no;
-	USHORT		command_type;
-	USHORT		command_id;
-	USHORT		length;
-	USHORT		sequence;
-	USHORT		status;
-	UCHAR		data[2046];
-}  __attribute__((packed))RACFGHDR, *pRACFGHDR;
+	UINT32 magic_no;
+	USHORT command_type;
+	USHORT command_id;
+	USHORT length;
+	USHORT sequence;
+	USHORT status;
+	UCHAR data[2046];
+} __attribute__ ((packed)) RACFGHDR, *pRACFGHDR;
 
 /* Stop Transmission */
 #define ATE_TXSTOP                  ((~(fATE_TX_ENABLE))&(~(fATE_TXCONT_ENABLE))&(~(fATE_TXCARR_ENABLE))&(~(fATE_TXCARRSUPP_ENABLE)))
@@ -125,21 +125,19 @@ typedef struct ate_racfghdr {
 #define RACFG_CMD_ATE_TXBF_PHASE_CAL		0x011f
 #define RACFG_CMD_ATE_TXBF_GOLDEN_INIT		0x0120
 #define RACFG_CMD_ATE_TXBF_VERIFY		0x0121
-#endif /* TXBF_SUPPORT */
-
+#endif				/* TXBF_SUPPORT */
 
 /* QA RACFG Command for ate test from localhost */
 #define RACFG_CMD_ATE_SHOW_PARAM 0xff00
 
 /* ATE export paramters to uppler layer */
-typedef struct __ATE_EX_PARAM
-{
+typedef struct __ATE_EX_PARAM {
 	unsigned char mode;
 	char TxPower0;
 	char TxPower1;
 #ifdef DOT11N_SS3_SUPPORT
 	char TxPower2;
-#endif /* DOT11N_SS3_SUPPORT */
+#endif				/* DOT11N_SS3_SUPPORT */
 	char TxAntennaSel;
 	char RxAntennaSel;
 	unsigned char DA[MAC_ADDR_LEN];
@@ -168,14 +166,12 @@ typedef struct __ATE_EX_PARAM
 	short AvgRssi0X8;
 	short AvgRssi1X8;
 	short AvgRssi2X8;
-}ATE_EX_PARAM, *pATE_EX_PARAM;
+} ATE_EX_PARAM, *pATE_EX_PARAM;
 
-NDIS_STATUS TXSTOP(
-	IN PRTMP_ADAPTER pAd);
+NDIS_STATUS TXSTOP(IN PRTMP_ADAPTER pAd);
 
-NDIS_STATUS RXSTOP(
-	IN PRTMP_ADAPTER pAd);
+NDIS_STATUS RXSTOP(IN PRTMP_ADAPTER pAd);
 
-#endif /* RALINK_QA */
+#endif				/* RALINK_QA */
 
-#endif /* __RT_QA_H__ */
+#endif				/* __RT_QA_H__ */

@@ -28,7 +28,7 @@
 #define __RTMP_UTIL_H__
 
 /* maximum of PCI, USB, or RBUS, int PCI, it is 0 but in USB, it is 11 */
-#define RTMP_PKT_TAIL_PADDING 	11 /* 3(max 4 byte padding) + 4 (last packet padding) + 4 (MaxBulkOutsize align padding) */
+#define RTMP_PKT_TAIL_PADDING 	11	/* 3(max 4 byte padding) + 4 (last packet padding) + 4 (MaxBulkOutsize align padding) */
 
 #ifdef PCI_MSI_SUPPORT
 #define RTMP_MSI_ENABLE(_pAd) \
@@ -46,13 +46,10 @@
 #else
 #define RTMP_MSI_ENABLE(_pAd)					do{}while(0)
 #define RTMP_MSI_DISABLE(_pci_dev, _pHaveMsi)	do{}while(0)
-#endif /* PCI_MSI_SUPPORT */
+#endif				/* PCI_MSI_SUPPORT */
 
 #define RTMP_PCI_DMA_TODEVICE		0xFF00
 #define RTMP_PCI_DMA_FROMDEVICE		0xFF01
-
-
-
 
 #define UNLINK_TIMEOUT_MS		3
 
@@ -63,7 +60,4 @@
 
 #define OS_RTUSBMlmeUp					RtmpOsMlmeUp
 
-
-
-
-#endif /* __RTMP_UTIL_H__ */
+#endif				/* __RTMP_UTIL_H__ */

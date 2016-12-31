@@ -36,19 +36,14 @@
 ==========================================================================
 */
 VOID
-TDLS_InsertActField(
-	IN	PRTMP_ADAPTER	pAd,
-	OUT	PUCHAR	pFrameBuf,
-	OUT	PULONG	pFrameLen,
-	IN	UINT8	Category,
-	IN	UINT8	ActCode)
+TDLS_InsertActField(IN PRTMP_ADAPTER pAd,
+		    OUT PUCHAR pFrameBuf,
+		    OUT PULONG pFrameLen, IN UINT8 Category, IN UINT8 ActCode)
 {
 	ULONG TempLen;
 
-	MakeOutgoingFrame(pFrameBuf,		&TempLen,
-						1,				&Category,
-						1,				&ActCode,
-						END_OF_ARGS);
+	MakeOutgoingFrame(pFrameBuf, &TempLen,
+			  1, &Category, 1, &ActCode, END_OF_ARGS);
 
 	*pFrameLen = *pFrameLen + TempLen;
 
@@ -63,18 +58,14 @@ TDLS_InsertActField(
 ==========================================================================
 */
 VOID
-TDLS_InsertStatusCode(
-	IN	PRTMP_ADAPTER	pAd,
-	OUT	PUCHAR	pFrameBuf,
-	OUT	PULONG	pFrameLen,
-	IN	UINT16	StatusCode)
+TDLS_InsertStatusCode(IN PRTMP_ADAPTER pAd,
+		      OUT PUCHAR pFrameBuf,
+		      OUT PULONG pFrameLen, IN UINT16 StatusCode)
 {
 	ULONG TempLen;
 
 	StatusCode = cpu2le16(StatusCode);
-	MakeOutgoingFrame(	pFrameBuf,		&TempLen,
-						2,				&StatusCode,
-						END_OF_ARGS);
+	MakeOutgoingFrame(pFrameBuf, &TempLen, 2, &StatusCode, END_OF_ARGS);
 
 	*pFrameLen = *pFrameLen + TempLen;
 
@@ -89,18 +80,14 @@ TDLS_InsertStatusCode(
 ==========================================================================
 */
 VOID
-TDLS_InsertReasonCode(
-	IN	PRTMP_ADAPTER	pAd,
-	OUT	PUCHAR	pFrameBuf,
-	OUT	PULONG	pFrameLen,
-	IN	UINT16	ReasonCode)
+TDLS_InsertReasonCode(IN PRTMP_ADAPTER pAd,
+		      OUT PUCHAR pFrameBuf,
+		      OUT PULONG pFrameLen, IN UINT16 ReasonCode)
 {
 	ULONG TempLen;
 
 	ReasonCode = cpu2le16(ReasonCode);
-	MakeOutgoingFrame(	pFrameBuf,		&TempLen,
-						2,				&ReasonCode,
-						END_OF_ARGS);
+	MakeOutgoingFrame(pFrameBuf, &TempLen, 2, &ReasonCode, END_OF_ARGS);
 
 	*pFrameLen = *pFrameLen + TempLen;
 
@@ -115,17 +102,13 @@ TDLS_InsertReasonCode(
 ==========================================================================
 */
 VOID
-TDLS_InsertDialogToken(
-	IN	PRTMP_ADAPTER	pAd,
-	OUT	PUCHAR	pFrameBuf,
-	OUT	PULONG	pFrameLen,
-	IN	UINT8	DialogToken)
+TDLS_InsertDialogToken(IN PRTMP_ADAPTER pAd,
+		       OUT PUCHAR pFrameBuf,
+		       OUT PULONG pFrameLen, IN UINT8 DialogToken)
 {
 	ULONG TempLen;
 
-	MakeOutgoingFrame(pFrameBuf,		&TempLen,
-						1,				&DialogToken,
-						END_OF_ARGS);
+	MakeOutgoingFrame(pFrameBuf, &TempLen, 1, &DialogToken, END_OF_ARGS);
 
 	*pFrameLen = *pFrameLen + TempLen;
 
@@ -140,24 +123,20 @@ TDLS_InsertDialogToken(
 ==========================================================================
 */
 VOID
-TDLS_InsertLinkIdentifierIE(
-	IN	PRTMP_ADAPTER pAd,
-	OUT	PUCHAR	pFrameBuf,
-	OUT	PULONG	pFrameLen,
-	IN	PUCHAR	pInitAddr,
-	IN	PUCHAR	pRespAddr)
+TDLS_InsertLinkIdentifierIE(IN PRTMP_ADAPTER pAd,
+			    OUT PUCHAR pFrameBuf,
+			    OUT PULONG pFrameLen,
+			    IN PUCHAR pInitAddr, IN PUCHAR pRespAddr)
 {
 	ULONG TempLen;
 	UCHAR TDLS_IE = IE_TDLS_LINK_IDENTIFIER;
 	UCHAR TDLS_IE_LEN = TDLS_ELM_LEN_LINK_IDENTIFIER;
 
-	MakeOutgoingFrame(pFrameBuf,		&TempLen,
-						1,				&TDLS_IE,
-						1,				&TDLS_IE_LEN,
-						6,				pAd->CommonCfg.Bssid,
-						6,				pInitAddr,
-						6,				pRespAddr,
-						END_OF_ARGS);
+	MakeOutgoingFrame(pFrameBuf, &TempLen,
+			  1, &TDLS_IE,
+			  1, &TDLS_IE_LEN,
+			  6, pAd->CommonCfg.Bssid,
+			  6, pInitAddr, 6, pRespAddr, END_OF_ARGS);
 
 	*pFrameLen = *pFrameLen + TempLen;
 
@@ -172,16 +151,13 @@ TDLS_InsertLinkIdentifierIE(
 ==========================================================================
 */
 VOID
-TDLS_InsertCapIE(
-	IN	PRTMP_ADAPTER	pAd,
-	OUT	PUCHAR	pFrameBuf,
-	OUT	PULONG	pFrameLen)
+TDLS_InsertCapIE(IN PRTMP_ADAPTER pAd,
+		 OUT PUCHAR pFrameBuf, OUT PULONG pFrameLen)
 {
 	ULONG TempLen;
 
-	MakeOutgoingFrame(pFrameBuf,		&TempLen,
-						2,				&pAd->StaActive.CapabilityInfo,
-						END_OF_ARGS);
+	MakeOutgoingFrame(pFrameBuf, &TempLen,
+			  2, &pAd->StaActive.CapabilityInfo, END_OF_ARGS);
 
 	*pFrameLen = *pFrameLen + TempLen;
 
@@ -196,18 +172,16 @@ TDLS_InsertCapIE(
 ==========================================================================
 */
 VOID
-TDLS_InsertSSIDIE(
-	IN	PRTMP_ADAPTER pAd,
-	OUT	PUCHAR	pFrameBuf,
-	OUT	PULONG	pFrameLen)
+TDLS_InsertSSIDIE(IN PRTMP_ADAPTER pAd,
+		  OUT PUCHAR pFrameBuf, OUT PULONG pFrameLen)
 {
 	ULONG TempLen;
 
-	MakeOutgoingFrame(pFrameBuf,					&TempLen,
-						1,							&SsidIe,
-						1,							&pAd->CommonCfg.SsidLen, 
-						pAd->CommonCfg.SsidLen,		pAd->CommonCfg.Ssid,
-						END_OF_ARGS);
+	MakeOutgoingFrame(pFrameBuf, &TempLen,
+			  1, &SsidIe,
+			  1, &pAd->CommonCfg.SsidLen,
+			  pAd->CommonCfg.SsidLen, pAd->CommonCfg.Ssid,
+			  END_OF_ARGS);
 
 	*pFrameLen = *pFrameLen + TempLen;
 
@@ -222,18 +196,16 @@ TDLS_InsertSSIDIE(
 ==========================================================================
 */
 VOID
-TDLS_InsertSupportRateIE(
-	IN	PRTMP_ADAPTER pAd,
-	OUT	PUCHAR	pFrameBuf,
-	OUT	PULONG	pFrameLen)
+TDLS_InsertSupportRateIE(IN PRTMP_ADAPTER pAd,
+			 OUT PUCHAR pFrameBuf, OUT PULONG pFrameLen)
 {
 	ULONG TempLen;
 
-	MakeOutgoingFrame(pFrameBuf,					&TempLen,
-						1,							&SupRateIe,
-						1,						&pAd->StaActive.SupRateLen,
-						pAd->StaActive.SupRateLen,	pAd->StaActive.SupRate,
-						END_OF_ARGS);
+	MakeOutgoingFrame(pFrameBuf, &TempLen,
+			  1, &SupRateIe,
+			  1, &pAd->StaActive.SupRateLen,
+			  pAd->StaActive.SupRateLen, pAd->StaActive.SupRate,
+			  END_OF_ARGS);
 
 	*pFrameLen = *pFrameLen + TempLen;
 
@@ -248,15 +220,12 @@ TDLS_InsertSupportRateIE(
 ==========================================================================
 */
 VOID
-TDLS_InsertCountryIE(
-	IN	PRTMP_ADAPTER pAd,
-	OUT	PUCHAR	pFrameBuf,
-	OUT	PULONG	pFrameLen)
+TDLS_InsertCountryIE(IN PRTMP_ADAPTER pAd,
+		     OUT PUCHAR pFrameBuf, OUT PULONG pFrameLen)
 {
-    // add country IE, power constraint IE
-	if (pAd->CommonCfg.bCountryFlag)
-	{
-		ULONG TmpLen, TmpLen2=0;
+	// add country IE, power constraint IE
+	if (pAd->CommonCfg.bCountryFlag) {
+		ULONG TmpLen, TmpLen2 = 0;
 		UCHAR TmpFrame[256];
 		UCHAR CountryIe = IE_COUNTRY;
 
@@ -268,35 +237,32 @@ TDLS_InsertCountryIE(
 			UCHAR RegluatoryRxtIdent = 221;
 			UCHAR CoverageClass = 0;
 
-			regclass = TDLS_GetRegulatoryClass(pAd, pAd->CommonCfg.RegTransmitSetting.field.BW, pAd->CommonCfg.Channel);
-			MakeOutgoingFrame(TmpFrame+TmpLen2,	&TmpLen,
-								1,				&RegluatoryRxtIdent,
-								1,				&regclass,
-								1,				&CoverageClass,
-								END_OF_ARGS);
+			regclass =
+			    TDLS_GetRegulatoryClass(pAd,
+						    pAd->CommonCfg.
+						    RegTransmitSetting.field.BW,
+						    pAd->CommonCfg.Channel);
+			MakeOutgoingFrame(TmpFrame + TmpLen2, &TmpLen, 1,
+					  &RegluatoryRxtIdent, 1, &regclass, 1,
+					  &CoverageClass, END_OF_ARGS);
 			TmpLen2 += TmpLen;
 		}
 
 		// need to do the padding bit check, and concatenate it
-		if ((TmpLen2%2) == 0)
-		{
-			UCHAR	TmpLen3 = TmpLen2 + 4;
-			MakeOutgoingFrame(pFrameBuf,		&TmpLen,
-							1,				&CountryIe,
-							1,				&TmpLen3,
-							3,				pAd->CommonCfg.CountryCode,
-							TmpLen2+1,		TmpFrame,
-							END_OF_ARGS);
-		}
-		else
-		{
-			UCHAR	TmpLen3 = TmpLen2+3;
-			MakeOutgoingFrame(pFrameBuf,			&TmpLen,
-								1,				&CountryIe,
-								1,				&TmpLen3,
-								3,				pAd->CommonCfg.CountryCode,
-								TmpLen2,			TmpFrame,
-								END_OF_ARGS);
+		if ((TmpLen2 % 2) == 0) {
+			UCHAR TmpLen3 = TmpLen2 + 4;
+			MakeOutgoingFrame(pFrameBuf, &TmpLen,
+					  1, &CountryIe,
+					  1, &TmpLen3,
+					  3, pAd->CommonCfg.CountryCode,
+					  TmpLen2 + 1, TmpFrame, END_OF_ARGS);
+		} else {
+			UCHAR TmpLen3 = TmpLen2 + 3;
+			MakeOutgoingFrame(pFrameBuf, &TmpLen,
+					  1, &CountryIe,
+					  1, &TmpLen3,
+					  3, pAd->CommonCfg.CountryCode,
+					  TmpLen2, TmpFrame, END_OF_ARGS);
 		}
 
 		*pFrameLen = *pFrameLen + TmpLen;
@@ -313,13 +279,10 @@ TDLS_InsertCountryIE(
 ==========================================================================
 */
 VOID
-TDLS_InsertSupportChannelIE(
-	IN	PRTMP_ADAPTER pAd,
-	OUT	PUCHAR	pFrameBuf,
-	OUT	PULONG	pFrameLen)
+TDLS_InsertSupportChannelIE(IN PRTMP_ADAPTER pAd,
+			    OUT PUCHAR pFrameBuf, OUT PULONG pFrameLen)
 {
-	if (pAd->StaCfg.TdlsInfo.TdlsChSwitchSupp)
-	{
+	if (pAd->StaCfg.TdlsInfo.TdlsChSwitchSupp) {
 		ULONG TempLen;
 		UCHAR SupportChIe = IE_SUPP_CHANNELS;
 		UCHAR FirstChannel = 1;
@@ -327,72 +290,61 @@ TDLS_InsertSupportChannelIE(
 		UCHAR Length = 2;
 
 		if ((pAd->CommonCfg.PhyMode == PHY_11BG_MIXED) ||
-			(pAd->CommonCfg.PhyMode == PHY_11B) ||
-			(pAd->CommonCfg.PhyMode == PHY_11G) ||
-			(pAd->CommonCfg.PhyMode == PHY_11BGN_MIXED))
-		{
-			MakeOutgoingFrame(pFrameBuf,			&TempLen,
-								1,				&SupportChIe,
-								1,				&Length,
-								1,				&FirstChannel,
-								1,				&NumOfCh,
-								END_OF_ARGS);
+		    (pAd->CommonCfg.PhyMode == PHY_11B) ||
+		    (pAd->CommonCfg.PhyMode == PHY_11G) ||
+		    (pAd->CommonCfg.PhyMode == PHY_11BGN_MIXED)) {
+			MakeOutgoingFrame(pFrameBuf, &TempLen,
+					  1, &SupportChIe,
+					  1, &Length,
+					  1, &FirstChannel,
+					  1, &NumOfCh, END_OF_ARGS);
 			*pFrameLen = *pFrameLen + TempLen;
-		}
-		else if ((pAd->CommonCfg.PhyMode == PHY_11A) ||
-				(pAd->CommonCfg.PhyMode == PHY_11AN_MIXED))
-		{
+		} else if ((pAd->CommonCfg.PhyMode == PHY_11A) ||
+			   (pAd->CommonCfg.PhyMode == PHY_11AN_MIXED)) {
 			ULONG TempLen1;
 
 			FirstChannel = 36;
 			NumOfCh = 8;
 			Length = 4;
-			MakeOutgoingFrame(pFrameBuf,			&TempLen1,
-								1,				&SupportChIe,
-								1,				&Length,
-								1,				&FirstChannel,
-								1,				&NumOfCh,
-								END_OF_ARGS);
+			MakeOutgoingFrame(pFrameBuf, &TempLen1,
+					  1, &SupportChIe,
+					  1, &Length,
+					  1, &FirstChannel,
+					  1, &NumOfCh, END_OF_ARGS);
 			*pFrameLen = *pFrameLen + TempLen1;
 
 			FirstChannel = 149;
 			NumOfCh = 4;
-			MakeOutgoingFrame((pFrameBuf + TempLen1),	&TempLen,
-								1,					&FirstChannel,
-								1,					&NumOfCh,
-								END_OF_ARGS);
+			MakeOutgoingFrame((pFrameBuf + TempLen1), &TempLen,
+					  1, &FirstChannel,
+					  1, &NumOfCh, END_OF_ARGS);
 			*pFrameLen = *pFrameLen + TempLen;
-		}
-		else if ((pAd->CommonCfg.PhyMode == PHY_11BG_MIXED) ||
-				(pAd->CommonCfg.PhyMode == PHY_11ABG_MIXED) ||
-				(pAd->CommonCfg.PhyMode == PHY_11BGN_MIXED) ||
-				(pAd->CommonCfg.PhyMode == PHY_11ABGN_MIXED))
-		{
+		} else if ((pAd->CommonCfg.PhyMode == PHY_11BG_MIXED) ||
+			   (pAd->CommonCfg.PhyMode == PHY_11ABG_MIXED) ||
+			   (pAd->CommonCfg.PhyMode == PHY_11BGN_MIXED) ||
+			   (pAd->CommonCfg.PhyMode == PHY_11ABGN_MIXED)) {
 			ULONG TempLen1, TempLen2;
 			Length = 6;
 
-			MakeOutgoingFrame(pFrameBuf,			&TempLen1,
-								1,				&SupportChIe,
-								1,				&Length,
-								1,				&FirstChannel,
-								1,				&NumOfCh,
-								END_OF_ARGS);
+			MakeOutgoingFrame(pFrameBuf, &TempLen1,
+					  1, &SupportChIe,
+					  1, &Length,
+					  1, &FirstChannel,
+					  1, &NumOfCh, END_OF_ARGS);
 			*pFrameLen = *pFrameLen + TempLen1;
 
 			FirstChannel = 36;
 			NumOfCh = 8;
-			MakeOutgoingFrame((pFrameBuf + TempLen1),	&TempLen2,
-								1,					&FirstChannel,
-								1,					&NumOfCh,
-								END_OF_ARGS);
+			MakeOutgoingFrame((pFrameBuf + TempLen1), &TempLen2,
+					  1, &FirstChannel,
+					  1, &NumOfCh, END_OF_ARGS);
 			*pFrameLen = *pFrameLen + TempLen2;
 
 			FirstChannel = 149;
 			NumOfCh = 4;
-			MakeOutgoingFrame((pFrameBuf + TempLen1 + TempLen2),	&TempLen,
-								1,								&FirstChannel,
-								1,								&NumOfCh,
-								END_OF_ARGS);
+			MakeOutgoingFrame((pFrameBuf + TempLen1 + TempLen2),
+					  &TempLen, 1, &FirstChannel, 1,
+					  &NumOfCh, END_OF_ARGS);
 			*pFrameLen = *pFrameLen + TempLen;
 		}
 	}
@@ -408,20 +360,17 @@ TDLS_InsertSupportChannelIE(
 ==========================================================================
 */
 VOID
-TDLS_InsertExtRateIE(
-	IN	PRTMP_ADAPTER pAd,
-	OUT	PUCHAR	pFrameBuf,
-	OUT	PULONG	pFrameLen)
+TDLS_InsertExtRateIE(IN PRTMP_ADAPTER pAd,
+		     OUT PUCHAR pFrameBuf, OUT PULONG pFrameLen)
 {
 	ULONG TempLen;
 
-	if (pAd->StaActive.ExtRateLen != 0)
-	{
-		MakeOutgoingFrame(pFrameBuf,					&TempLen,
-							1,							&ExtRateIe,
-							1,						&pAd->StaActive.ExtRateLen,
-							pAd->StaActive.ExtRateLen,	pAd->StaActive.ExtRate,							
-							END_OF_ARGS);
+	if (pAd->StaActive.ExtRateLen != 0) {
+		MakeOutgoingFrame(pFrameBuf, &TempLen,
+				  1, &ExtRateIe,
+				  1, &pAd->StaActive.ExtRateLen,
+				  pAd->StaActive.ExtRateLen,
+				  pAd->StaActive.ExtRate, END_OF_ARGS);
 
 		*pFrameLen = *pFrameLen + TempLen;
 	}
@@ -437,24 +386,20 @@ TDLS_InsertExtRateIE(
 ==========================================================================
 */
 VOID
-TDLS_InsertQosCapIE(
-	IN	PRTMP_ADAPTER pAd,
-	OUT	PUCHAR	pFrameBuf,
-	OUT	PULONG	pFrameLen)
+TDLS_InsertQosCapIE(IN PRTMP_ADAPTER pAd,
+		    OUT PUCHAR pFrameBuf, OUT PULONG pFrameLen)
 {
 	ULONG TempLen;
 
 	/* if (WMODE_CAP_N(pAd->CommonCfg.PhyMode) || (pAd->CommonCfg.bWmmCapable)) */
-	if (pAd->CommonCfg.bWmmCapable)
-	{
+	if (pAd->CommonCfg.bWmmCapable) {
 		UCHAR QOS_CAP_IE = 46;
 		UCHAR QOS_CAP_IE_LEN = 1;
 		QBSS_STA_INFO_PARM QosInfo;
 
 		NdisZeroMemory(&QosInfo, sizeof(QBSS_STA_INFO_PARM));
 
-		if (pAd->StaCfg.UapsdInfo.bAPSDCapable)
-		{
+		if (pAd->StaCfg.UapsdInfo.bAPSDCapable) {
 			QosInfo.UAPSD_AC_BE = pAd->CommonCfg.TDLS_bAPSDAC_BE;
 			QosInfo.UAPSD_AC_BK = pAd->CommonCfg.TDLS_bAPSDAC_BK;
 			QosInfo.UAPSD_AC_VI = pAd->CommonCfg.TDLS_bAPSDAC_VI;
@@ -462,11 +407,9 @@ TDLS_InsertQosCapIE(
 			QosInfo.MaxSPLength = pAd->CommonCfg.TDLS_MaxSPLength;
 		}
 
-		MakeOutgoingFrame(pFrameBuf,	&TempLen,
-						1,				&QOS_CAP_IE,
-						1,				&QOS_CAP_IE_LEN,
-						1,				&QosInfo,
-						END_OF_ARGS);
+		MakeOutgoingFrame(pFrameBuf, &TempLen,
+				  1, &QOS_CAP_IE,
+				  1, &QOS_CAP_IE_LEN, 1, &QosInfo, END_OF_ARGS);
 
 		*pFrameLen = *pFrameLen + TempLen;
 	}
@@ -482,43 +425,43 @@ TDLS_InsertQosCapIE(
 ==========================================================================
 */
 VOID
-TDLS_InsertWMMIE(
-	IN	PRTMP_ADAPTER pAd,
-	OUT	PUCHAR	pFrameBuf,
-	OUT	PULONG	pFrameLen,
-	IN	BOOLEAN	bEnable)
+TDLS_InsertWMMIE(IN PRTMP_ADAPTER pAd,
+		 OUT PUCHAR pFrameBuf, OUT PULONG pFrameLen, IN BOOLEAN bEnable)
 {
 	ULONG TempLen;
 
-	if (pAd->CommonCfg.bWmmCapable)
-	{
+	if (pAd->CommonCfg.bWmmCapable) {
 		QBSS_STA_INFO_PARM QosInfo;
-		UCHAR WmeParmIe[8] = {IE_VENDOR_SPECIFIC, 7, 0x00, 0x50, 0xf2, 0x02, 0x00, 0x01}; 
+		UCHAR WmeParmIe[8] =
+		    { IE_VENDOR_SPECIFIC, 7, 0x00, 0x50, 0xf2, 0x02, 0x00,
+	   0x01 };
 
 		NdisZeroMemory(&QosInfo, sizeof(QBSS_STA_INFO_PARM));
 
-		if (pAd->StaCfg.UapsdInfo.bAPSDCapable)
-		{
-			if (bEnable)
-			{
-				QosInfo.UAPSD_AC_BE = pAd->CommonCfg.TDLS_bAPSDAC_BE;
-				QosInfo.UAPSD_AC_BK = pAd->CommonCfg.TDLS_bAPSDAC_BK;
-				QosInfo.UAPSD_AC_VI = pAd->CommonCfg.TDLS_bAPSDAC_VI;
-				QosInfo.UAPSD_AC_VO = pAd->CommonCfg.TDLS_bAPSDAC_VO;
-				QosInfo.MaxSPLength = pAd->CommonCfg.TDLS_MaxSPLength;
+		if (pAd->StaCfg.UapsdInfo.bAPSDCapable) {
+			if (bEnable) {
+				QosInfo.UAPSD_AC_BE =
+				    pAd->CommonCfg.TDLS_bAPSDAC_BE;
+				QosInfo.UAPSD_AC_BK =
+				    pAd->CommonCfg.TDLS_bAPSDAC_BK;
+				QosInfo.UAPSD_AC_VI =
+				    pAd->CommonCfg.TDLS_bAPSDAC_VI;
+				QosInfo.UAPSD_AC_VO =
+				    pAd->CommonCfg.TDLS_bAPSDAC_VO;
+				QosInfo.MaxSPLength =
+				    pAd->CommonCfg.TDLS_MaxSPLength;
 			}
-			DBGPRINT(RT_DEBUG_ERROR, ("tdls uapsd> UAPSD %d %d %d %d %d!\n",
-					pAd->CommonCfg.TDLS_bAPSDAC_BE,
-					pAd->CommonCfg.TDLS_bAPSDAC_BK,
-					pAd->CommonCfg.TDLS_bAPSDAC_VI,
-					pAd->CommonCfg.TDLS_bAPSDAC_VO,
-					pAd->CommonCfg.TDLS_MaxSPLength));
+			DBGPRINT(RT_DEBUG_ERROR,
+				 ("tdls uapsd> UAPSD %d %d %d %d %d!\n",
+				  pAd->CommonCfg.TDLS_bAPSDAC_BE,
+				  pAd->CommonCfg.TDLS_bAPSDAC_BK,
+				  pAd->CommonCfg.TDLS_bAPSDAC_VI,
+				  pAd->CommonCfg.TDLS_bAPSDAC_VO,
+				  pAd->CommonCfg.TDLS_MaxSPLength));
 		}
 
-		MakeOutgoingFrame(pFrameBuf,			&TempLen,
-							8,				WmeParmIe,
-							1,				&QosInfo,
-							END_OF_ARGS);
+		MakeOutgoingFrame(pFrameBuf, &TempLen,
+				  8, WmeParmIe, 1, &QosInfo, END_OF_ARGS);
 
 		*pFrameLen = *pFrameLen + TempLen;
 	}
@@ -534,17 +477,15 @@ TDLS_InsertWMMIE(
 ==========================================================================
 */
 VOID
-TDLS_InsertEDCAParameterSetIE(
-	IN	PRTMP_ADAPTER pAd,
-	OUT	PUCHAR	pFrameBuf,
-	OUT	PULONG	pFrameLen,
-	IN PRT_802_11_TDLS	pTDLS)
+TDLS_InsertEDCAParameterSetIE(IN PRTMP_ADAPTER pAd,
+			      OUT PUCHAR pFrameBuf,
+			      OUT PULONG pFrameLen, IN PRT_802_11_TDLS pTDLS)
 {
 	ULONG TempLen;
 
-	if ((WMODE_CAP_N(pAd->CommonCfg.PhyMode) || (pAd->CommonCfg.bWmmCapable)) && (pTDLS->bWmmCapable))
-	{
-		USHORT	idx;
+	if ((WMODE_CAP_N(pAd->CommonCfg.PhyMode)
+	     || (pAd->CommonCfg.bWmmCapable)) && (pTDLS->bWmmCapable)) {
+		USHORT idx;
 
 		/* When the BSS is QoS capable, then the BSS QoS parameters shall be
 		 * used by the TDLS peer STAs on the AP's channel, and the values 
@@ -554,20 +495,22 @@ TDLS_InsertEDCAParameterSetIE(
 		 * because this may optimize the channel switching process.
 		 */
 
-		UCHAR WmeParmIe[26] = {IE_VENDOR_SPECIFIC, 24, 0x00, 0x50, 0xf2, 0x02, 0x01, 0x01, 0, 0}; 
+		UCHAR WmeParmIe[26] =
+		    { IE_VENDOR_SPECIFIC, 24, 0x00, 0x50, 0xf2, 0x02, 0x01,
+	  0x01, 0, 0 };
 
 		/*  Reset EdcaParam */
 		NdisZeroMemory(&pTDLS->EdcaParm, sizeof(EDCA_PARM));
 		/* Enable EdcaParm used in non-QBSS. */
 		pTDLS->EdcaParm.bValid = TRUE;
 
-		pTDLS->EdcaParm.bQAck		   = FALSE;
-		pTDLS->EdcaParm.bQueueRequest   = FALSE;
-		pTDLS->EdcaParm.bTxopRequest    = FALSE;
+		pTDLS->EdcaParm.bQAck = FALSE;
+		pTDLS->EdcaParm.bQueueRequest = FALSE;
+		pTDLS->EdcaParm.bTxopRequest = FALSE;
 
-		WmeParmIe[2] =  ((UCHAR)pTDLS->EdcaParm.bQAck << 4) + 
-						((UCHAR)pTDLS->EdcaParm.bQueueRequest << 5) + 
-						((UCHAR)pTDLS->EdcaParm.bTxopRequest << 6);
+		WmeParmIe[2] = ((UCHAR) pTDLS->EdcaParm.bQAck << 4) +
+		    ((UCHAR) pTDLS->EdcaParm.bQueueRequest << 5) +
+		    ((UCHAR) pTDLS->EdcaParm.bTxopRequest << 6);
 
 		pTDLS->EdcaParm.EdcaUpdateCount = 1;
 		WmeParmIe[8] = pTDLS->EdcaParm.EdcaUpdateCount & 0x0f;
@@ -590,32 +533,29 @@ TDLS_InsertEDCAParameterSetIE(
 		pTDLS->EdcaParm.Cwmax[2] = 4;
 		pTDLS->EdcaParm.Cwmax[3] = 3;
 
-		pTDLS->EdcaParm.Txop[0]  = 0;
-		pTDLS->EdcaParm.Txop[1]  = 0;
-		pTDLS->EdcaParm.Txop[2]  = 96;
-		pTDLS->EdcaParm.Txop[3]  = 48;
+		pTDLS->EdcaParm.Txop[0] = 0;
+		pTDLS->EdcaParm.Txop[1] = 0;
+		pTDLS->EdcaParm.Txop[2] = 96;
+		pTDLS->EdcaParm.Txop[3] = 48;
 
-		for (idx=QID_AC_BE; idx<=QID_AC_VO; idx++)
-		{
-			WmeParmIe[10+ (idx*4)] = (idx << 5)								+	  /* b5-6 is ACI */
-								   ((UCHAR)pTDLS->EdcaParm.bACM[idx] << 4) 	+	  /* b4 is ACM */
-								   (pTDLS->EdcaParm.Aifsn[idx] & 0x0f);			  /* b0-3 is AIFSN */
-			WmeParmIe[11+ (idx*4)] = (pTDLS->EdcaParm.Cwmax[idx] << 4)		+	  /* b5-8 is CWMAX */
-								   (pTDLS->EdcaParm.Cwmin[idx] & 0x0f);			  /* b0-3 is CWMIN */
-			WmeParmIe[12+ (idx*4)] = (UCHAR)(pTDLS->EdcaParm.Txop[idx] & 0xff);	  /* low byte of TXOP */
-			WmeParmIe[13+ (idx*4)] = (UCHAR)(pTDLS->EdcaParm.Txop[idx] >> 8);	  /* high byte of TXOP */
+		for (idx = QID_AC_BE; idx <= QID_AC_VO; idx++) {
+			WmeParmIe[10 + (idx * 4)] = (idx << 5) +	/* b5-6 is ACI */
+			    ((UCHAR) pTDLS->EdcaParm.bACM[idx] << 4) +	/* b4 is ACM */
+			    (pTDLS->EdcaParm.Aifsn[idx] & 0x0f);	/* b0-3 is AIFSN */
+			WmeParmIe[11 + (idx * 4)] = (pTDLS->EdcaParm.Cwmax[idx] << 4) +	/* b5-8 is CWMAX */
+			    (pTDLS->EdcaParm.Cwmin[idx] & 0x0f);	/* b0-3 is CWMIN */
+			WmeParmIe[12 + (idx * 4)] = (UCHAR) (pTDLS->EdcaParm.Txop[idx] & 0xff);	/* low byte of TXOP */
+			WmeParmIe[13 + (idx * 4)] = (UCHAR) (pTDLS->EdcaParm.Txop[idx] >> 8);	/* high byte of TXOP */
 		}
 
-		MakeOutgoingFrame(pFrameBuf,		&TempLen,
-						  26,				WmeParmIe,
-						  END_OF_ARGS);
+		MakeOutgoingFrame(pFrameBuf, &TempLen,
+				  26, WmeParmIe, END_OF_ARGS);
 
 		*pFrameLen = *pFrameLen + TempLen;
 	}
 
 	return;
 }
-
 
 /*
 ==========================================================================
@@ -625,16 +565,14 @@ TDLS_InsertEDCAParameterSetIE(
 ==========================================================================
 */
 VOID
-TDLS_InsertWMMParameterIE(
-	IN	PRTMP_ADAPTER pAd,
-	OUT	PUCHAR	pFrameBuf,
-	OUT	PULONG	pFrameLen)
+TDLS_InsertWMMParameterIE(IN PRTMP_ADAPTER pAd,
+			  OUT PUCHAR pFrameBuf, OUT PULONG pFrameLen)
 {
-	if ((pAd->CommonCfg.PhyMode >= PHY_11ABGN_MIXED) || (pAd->CommonCfg.bWmmCapable))
-	{
+	if ((pAd->CommonCfg.PhyMode >= PHY_11ABGN_MIXED)
+	    || (pAd->CommonCfg.bWmmCapable)) {
 		QBSS_STA_INFO_PARM QosInfo;
 		ULONG TempLen;
-		USHORT	idx;
+		USHORT idx;
 
 		/* When the BSS is QoS capable, then the BSS QoS parameters shall be
 		 * used by the TDLS peer STAs on the AP's channel, and the values 
@@ -644,13 +582,13 @@ TDLS_InsertWMMParameterIE(
 		 * because this may optimize the channel switching process.
 		 */
 
-		UCHAR WmeParmIe[26] = {IE_VENDOR_SPECIFIC, 24, 0x00, 0x50, 0xf2, 0x02, 0x01, 0x01, 0, 0}; 
-
+		UCHAR WmeParmIe[26] =
+		    { IE_VENDOR_SPECIFIC, 24, 0x00, 0x50, 0xf2, 0x02, 0x01,
+	  0x01, 0, 0 };
 
 		NdisZeroMemory(&QosInfo, sizeof(QBSS_STA_INFO_PARM));
 
-		if (pAd->StaCfg.UapsdInfo.bAPSDCapable)
-		{
+		if (pAd->StaCfg.UapsdInfo.bAPSDCapable) {
 
 			QosInfo.UAPSD_AC_BE = pAd->CommonCfg.TDLS_bAPSDAC_BE;
 			QosInfo.UAPSD_AC_BK = pAd->CommonCfg.TDLS_bAPSDAC_BK;
@@ -658,30 +596,29 @@ TDLS_InsertWMMParameterIE(
 			QosInfo.UAPSD_AC_VO = pAd->CommonCfg.TDLS_bAPSDAC_VO;
 			QosInfo.MaxSPLength = pAd->CommonCfg.TDLS_MaxSPLength;
 
-			DBGPRINT(RT_DEBUG_ERROR, ("tdls uapsd> UAPSD %d %d %d %d %d!\n",
-					pAd->CommonCfg.TDLS_bAPSDAC_BE,
-					pAd->CommonCfg.TDLS_bAPSDAC_BK,
-					pAd->CommonCfg.TDLS_bAPSDAC_VI,
-					pAd->CommonCfg.TDLS_bAPSDAC_VO,
-					pAd->CommonCfg.TDLS_MaxSPLength));
+			DBGPRINT(RT_DEBUG_ERROR,
+				 ("tdls uapsd> UAPSD %d %d %d %d %d!\n",
+				  pAd->CommonCfg.TDLS_bAPSDAC_BE,
+				  pAd->CommonCfg.TDLS_bAPSDAC_BK,
+				  pAd->CommonCfg.TDLS_bAPSDAC_VI,
+				  pAd->CommonCfg.TDLS_bAPSDAC_VO,
+				  pAd->CommonCfg.TDLS_MaxSPLength));
 		}
 
-		WmeParmIe[8] |= *(PUCHAR)&QosInfo;
+		WmeParmIe[8] |= *(PUCHAR) & QosInfo;
 
-		for (idx=QID_AC_BE; idx<=QID_AC_VO; idx++)
-		{
-			WmeParmIe[10+ (idx*4)] = (idx << 5)								+	  // b5-6 is ACI
-								   ((UCHAR)pAd->CommonCfg.APEdcaParm.bACM[idx] << 4) 	+	  // b4 is ACM
-								   (pAd->CommonCfg.APEdcaParm.Aifsn[idx] & 0x0f);			  // b0-3 is AIFSN
-			WmeParmIe[11+ (idx*4)] = (pAd->CommonCfg.APEdcaParm.Cwmax[idx] << 4)		+	  // b5-8 is CWMAX
-								   (pAd->CommonCfg.APEdcaParm.Cwmin[idx] & 0x0f);			  // b0-3 is CWMIN
-			WmeParmIe[12+ (idx*4)] = (UCHAR)(pAd->CommonCfg.APEdcaParm.Txop[idx] & 0xff);	  // low byte of TXOP
-			WmeParmIe[13+ (idx*4)] = (UCHAR)(pAd->CommonCfg.APEdcaParm.Txop[idx] >> 8);	  // high byte of TXOP
+		for (idx = QID_AC_BE; idx <= QID_AC_VO; idx++) {
+			WmeParmIe[10 + (idx * 4)] = (idx << 5) +	// b5-6 is ACI
+			    ((UCHAR) pAd->CommonCfg.APEdcaParm.bACM[idx] << 4) +	// b4 is ACM
+			    (pAd->CommonCfg.APEdcaParm.Aifsn[idx] & 0x0f);	// b0-3 is AIFSN
+			WmeParmIe[11 + (idx * 4)] = (pAd->CommonCfg.APEdcaParm.Cwmax[idx] << 4) +	// b5-8 is CWMAX
+			    (pAd->CommonCfg.APEdcaParm.Cwmin[idx] & 0x0f);	// b0-3 is CWMIN
+			WmeParmIe[12 + (idx * 4)] = (UCHAR) (pAd->CommonCfg.APEdcaParm.Txop[idx] & 0xff);	// low byte of TXOP
+			WmeParmIe[13 + (idx * 4)] = (UCHAR) (pAd->CommonCfg.APEdcaParm.Txop[idx] >> 8);	// high byte of TXOP
 		}
 
-		MakeOutgoingFrame(pFrameBuf,			&TempLen,
-							26,				WmeParmIe,
-							END_OF_ARGS);
+		MakeOutgoingFrame(pFrameBuf, &TempLen,
+				  26, WmeParmIe, END_OF_ARGS);
 
 		*pFrameLen = *pFrameLen + TempLen;
 	}
@@ -698,42 +635,43 @@ TDLS_InsertWMMParameterIE(
 ==========================================================================
 */
 VOID
-TDLS_InsertHtCapIE(
-	IN	PRTMP_ADAPTER pAd,
-	OUT	PUCHAR	pFrameBuf,
-	OUT	PULONG	pFrameLen)
+TDLS_InsertHtCapIE(IN PRTMP_ADAPTER pAd,
+		   OUT PUCHAR pFrameBuf, OUT PULONG pFrameLen)
 {
 	ULONG TempLen;
 
-	if (WMODE_CAP_N(pAd->CommonCfg.PhyMode))
-	{
+	if (WMODE_CAP_N(pAd->CommonCfg.PhyMode)) {
 		UCHAR HtLen;
 		HT_CAPABILITY_IE HtCapabilityTmp;
 
 		HtLen = sizeof(HT_CAPABILITY_IE);
 #ifndef RT_BIG_ENDIAN
 		NdisZeroMemory(&HtCapabilityTmp, sizeof(HT_CAPABILITY_IE));
-		NdisMoveMemory(&HtCapabilityTmp, &pAd->CommonCfg.HtCapability, HtLen);
-		HtCapabilityTmp.HtCapInfo.ChannelWidth = pAd->CommonCfg.RegTransmitSetting.field.BW;
-		
-		MakeOutgoingFrame(pFrameBuf,	&TempLen,
-							1,			&HtCapIe,
-							1,			&HtLen,
-							HtLen,		&HtCapabilityTmp, 
-							END_OF_ARGS);
+		NdisMoveMemory(&HtCapabilityTmp, &pAd->CommonCfg.HtCapability,
+			       HtLen);
+		HtCapabilityTmp.HtCapInfo.ChannelWidth =
+		    pAd->CommonCfg.RegTransmitSetting.field.BW;
+
+		MakeOutgoingFrame(pFrameBuf, &TempLen,
+				  1, &HtCapIe,
+				  1, &HtLen,
+				  HtLen, &HtCapabilityTmp, END_OF_ARGS);
 #else
 		NdisZeroMemory(&HtCapabilityTmp, sizeof(HT_CAPABILITY_IE));
-		NdisMoveMemory(&HtCapabilityTmp, &pAd->CommonCfg.HtCapability, HtLen);
-		HtCapabilityTmp.HtCapInfo.ChannelWidth = pAd->CommonCfg.RegTransmitSetting.field.BW;
+		NdisMoveMemory(&HtCapabilityTmp, &pAd->CommonCfg.HtCapability,
+			       HtLen);
+		HtCapabilityTmp.HtCapInfo.ChannelWidth =
+		    pAd->CommonCfg.RegTransmitSetting.field.BW;
 
-		*(USHORT *)(&HtCapabilityTmp.HtCapInfo) = SWAP16(*(USHORT *)(&HtCapabilityTmp.HtCapInfo));
-		*(USHORT *)(&HtCapabilityTmp.ExtHtCapInfo) = SWAP16(*(USHORT *)(&HtCapabilityTmp.ExtHtCapInfo));
+		*(USHORT *) (&HtCapabilityTmp.HtCapInfo) =
+		    SWAP16(*(USHORT *) (&HtCapabilityTmp.HtCapInfo));
+		*(USHORT *) (&HtCapabilityTmp.ExtHtCapInfo) =
+		    SWAP16(*(USHORT *) (&HtCapabilityTmp.ExtHtCapInfo));
 
-		MakeOutgoingFrame(pFrameBuf,	&TempLen,
-							1,			&HtCapIe,
-							1,			&HtLen,
-							HtLen,		&HtCapabilityTmp, 
-							END_OF_ARGS);
+		MakeOutgoingFrame(pFrameBuf, &TempLen,
+				  1, &HtCapIe,
+				  1, &HtLen,
+				  HtLen, &HtCapabilityTmp, END_OF_ARGS);
 #endif
 
 		*pFrameLen = *pFrameLen + TempLen;
@@ -752,10 +690,8 @@ TDLS_InsertHtCapIE(
 */
 /* 20/40 BSS Coexistence (7.3.2.61) */
 VOID
-TDLS_InsertBSSCoexistenceIE(
-	IN	PRTMP_ADAPTER pAd,
-	OUT	PUCHAR	pFrameBuf,
-	OUT	PULONG	pFrameLen)
+TDLS_InsertBSSCoexistenceIE(IN PRTMP_ADAPTER pAd,
+			    OUT PUCHAR pFrameBuf, OUT PULONG pFrameLen)
 {
 	ULONG TempLen;
 
@@ -767,19 +703,18 @@ TDLS_InsertBSSCoexistenceIE(
 		memset(&BssCoexistence, 0, sizeof(BSS_2040_COEXIST_IE));
 		BssCoexistence.field.InfoReq = 1;
 
-		MakeOutgoingFrame(pFrameBuf,		&TempLen,
-							1,				&BssCoexistIe,
-							1,				&Length,
-							1,				&BssCoexistence.word,							
-							END_OF_ARGS);
+		MakeOutgoingFrame(pFrameBuf, &TempLen,
+				  1, &BssCoexistIe,
+				  1, &Length,
+				  1, &BssCoexistence.word, END_OF_ARGS);
 
 		*pFrameLen = *pFrameLen + TempLen;
 	}
 
 	return;
 }
-#endif /* DOT11N_DRAFT3 */
-#endif /* DOT11_N_SUPPORT */
+#endif				/* DOT11N_DRAFT3 */
+#endif				/* DOT11_N_SUPPORT */
 
 /*
 ==========================================================================
@@ -789,27 +724,24 @@ TDLS_InsertBSSCoexistenceIE(
 ==========================================================================
 */
 VOID
-TDLS_InsertExtCapIE(
-	IN	PRTMP_ADAPTER pAd,
-	OUT	PUCHAR	pFrameBuf,
-	OUT	PULONG	pFrameLen)
+TDLS_InsertExtCapIE(IN PRTMP_ADAPTER pAd,
+		    OUT PUCHAR pFrameBuf, OUT PULONG pFrameLen)
 {
 	ULONG TempLen;
 	UCHAR Length = sizeof(EXT_CAP_INFO_ELEMENT);
-	EXT_CAP_INFO_ELEMENT	extCapInfo;
+	EXT_CAP_INFO_ELEMENT extCapInfo;
 
 	Length = sizeof(EXT_CAP_INFO_ELEMENT);
 
 	NdisZeroMemory(&extCapInfo, Length);
-			
+
 #ifdef DOT11N_DRAFT3
-	if ((pAd->CommonCfg.bBssCoexEnable == TRUE) && 
-		(pAd->CommonCfg.PhyMode >= PHY_11ABGN_MIXED) &&
-		(pAd->CommonCfg.Channel <= 14))
-	{
-			extCapInfo.BssCoexistMgmtSupport = 1;
+	if ((pAd->CommonCfg.bBssCoexEnable == TRUE) &&
+	    (pAd->CommonCfg.PhyMode >= PHY_11ABGN_MIXED) &&
+	    (pAd->CommonCfg.Channel <= 14)) {
+		extCapInfo.BssCoexistMgmtSupport = 1;
 	}
-#endif // DOT11N_DRAFT3 //
+#endif				// DOT11N_DRAFT3 //
 
 	if (pAd->StaCfg.TdlsInfo.TdlsChSwitchSupp)
 		extCapInfo.TDLSChSwitchSupport = 1;
@@ -819,13 +751,13 @@ TDLS_InsertExtCapIE(
 
 	extCapInfo.TDLSSupport = 1;
 
-		MakeOutgoingFrame(pFrameBuf,		&TempLen,
-							1,				&ExtCapIe,
-							1,				&Length,
-					sizeof(EXT_CAP_INFO_ELEMENT),	&extCapInfo,
-							END_OF_ARGS);
+	MakeOutgoingFrame(pFrameBuf, &TempLen,
+			  1, &ExtCapIe,
+			  1, &Length,
+			  sizeof(EXT_CAP_INFO_ELEMENT), &extCapInfo,
+			  END_OF_ARGS);
 
-		*pFrameLen = *pFrameLen + TempLen;
+	*pFrameLen = *pFrameLen + TempLen;
 
 	return;
 }
@@ -837,29 +769,25 @@ TDLS_InsertExtCapIE(
 	IRQL = PASSIVE_LEVEL
 ==========================================================================
 */
-VOID TDLS_InsertFTIE(
-	IN PRTMP_ADAPTER pAd,
-	OUT PUCHAR pFrameBuf,
-	OUT PULONG pFrameLen,
-	IN UINT8 Length,
-	IN FT_MIC_CTR_FIELD MICCtr,
-	IN PUINT8 pMic,
-	IN PUINT8 pANonce,
-	IN PUINT8 pSNonce)
+VOID TDLS_InsertFTIE(IN PRTMP_ADAPTER pAd,
+		     OUT PUCHAR pFrameBuf,
+		     OUT PULONG pFrameLen,
+		     IN UINT8 Length,
+		     IN FT_MIC_CTR_FIELD MICCtr,
+		     IN PUINT8 pMic, IN PUINT8 pANonce, IN PUINT8 pSNonce)
 {
 	ULONG TempLen;
 	UINT16 MICCtrBuf;
 	UCHAR FTIE = IE_FT_FTIE;
 
 	MICCtrBuf = cpu2le16(MICCtr.word);
-	MakeOutgoingFrame(	pFrameBuf,		&TempLen,
-						1,				&FTIE,
-						1,				&Length,
-						2,				(PUCHAR)&MICCtrBuf,
-						16,				(PUCHAR)pMic,
-						32,				(PUCHAR)pANonce,
-						32,				(PUCHAR)pSNonce,
-						END_OF_ARGS);
+	MakeOutgoingFrame(pFrameBuf, &TempLen,
+			  1, &FTIE,
+			  1, &Length,
+			  2, (PUCHAR) & MICCtrBuf,
+			  16, (PUCHAR) pMic,
+			  32, (PUCHAR) pANonce,
+			  32, (PUCHAR) pSNonce, END_OF_ARGS);
 
 	*pFrameLen = *pFrameLen + TempLen;
 }
@@ -871,12 +799,11 @@ VOID TDLS_InsertFTIE(
 	IRQL = PASSIVE_LEVEL
 ==========================================================================
 */
-VOID TDLS_InsertTimeoutIntervalIE(
-	IN PRTMP_ADAPTER pAd,
-	OUT PUCHAR pFrameBuf,
-	OUT PULONG pFrameLen,
-	IN FT_TIMEOUT_INTERVAL_TYPE Type,
-	IN UINT32 TimeOutValue)
+VOID TDLS_InsertTimeoutIntervalIE(IN PRTMP_ADAPTER pAd,
+				  OUT PUCHAR pFrameBuf,
+				  OUT PULONG pFrameLen,
+				  IN FT_TIMEOUT_INTERVAL_TYPE Type,
+				  IN UINT32 TimeOutValue)
 {
 	ULONG TempLen;
 	UINT8 Length;
@@ -889,12 +816,11 @@ VOID TDLS_InsertTimeoutIntervalIE(
 	TimeoutType = Type;
 	TimeoutValueBuf = cpu2le32(TimeOutValue);
 
-	MakeOutgoingFrame(	pFrameBuf,		&TempLen,
-						1,				&TimeOutIntervalIE,
-						1,				&Length,
-						1,				(PUCHAR)&TimeoutType,
-						4,				(PUCHAR)&TimeoutValueBuf,
-						END_OF_ARGS);
+	MakeOutgoingFrame(pFrameBuf, &TempLen,
+			  1, &TimeOutIntervalIE,
+			  1, &Length,
+			  1, (PUCHAR) & TimeoutType,
+			  4, (PUCHAR) & TimeoutValueBuf, END_OF_ARGS);
 
 	*pFrameLen = *pFrameLen + TempLen;
 }
@@ -907,17 +833,13 @@ VOID TDLS_InsertTimeoutIntervalIE(
 ==========================================================================
 */
 VOID
-TDLS_InsertTargetChannel(
-	IN	PRTMP_ADAPTER	pAd,
-	OUT	PUCHAR	pFrameBuf,
-	OUT	PULONG	pFrameLen,
-	IN	UINT8	TargetCh)
+TDLS_InsertTargetChannel(IN PRTMP_ADAPTER pAd,
+			 OUT PUCHAR pFrameBuf,
+			 OUT PULONG pFrameLen, IN UINT8 TargetCh)
 {
 	ULONG TempLen;
 
-	MakeOutgoingFrame(pFrameBuf,			&TempLen,
-						1,				&TargetCh,
-						END_OF_ARGS);
+	MakeOutgoingFrame(pFrameBuf, &TempLen, 1, &TargetCh, END_OF_ARGS);
 
 	*pFrameLen = *pFrameLen + TempLen;
 
@@ -932,12 +854,10 @@ TDLS_InsertTargetChannel(
 ==========================================================================
 */
 VOID
-TDLS_InsertRegulatoryClass(
-	IN	PRTMP_ADAPTER	pAd,
-	OUT	PUCHAR	pFrameBuf,
-	OUT	PULONG	pFrameLen,
-	IN	UINT8	TargetCh,
-	IN	UINT8	ChWidth)
+TDLS_InsertRegulatoryClass(IN PRTMP_ADAPTER pAd,
+			   OUT PUCHAR pFrameBuf,
+			   OUT PULONG pFrameLen,
+			   IN UINT8 TargetCh, IN UINT8 ChWidth)
 {
 	ULONG TempLen;
 	UCHAR regclass;
@@ -948,9 +868,7 @@ TDLS_InsertRegulatoryClass(
 
 	regclass = TDLS_GetRegulatoryClass(pAd, BandWidth, TargetCh);
 
-		MakeOutgoingFrame(pFrameBuf,			&TempLen,
-							1,				&regclass,
-							END_OF_ARGS);
+	MakeOutgoingFrame(pFrameBuf, &TempLen, 1, &regclass, END_OF_ARGS);
 
 	*pFrameLen = *pFrameLen + TempLen;
 
@@ -965,53 +883,43 @@ TDLS_InsertRegulatoryClass(
 ==========================================================================
 */
 VOID
-TDLS_InsertSecondaryChOffsetIE(
-	IN	PRTMP_ADAPTER pAd,
-	OUT	PUCHAR	pFrameBuf,
-	OUT	PULONG	pFrameLen,
-	IN	UCHAR	Offset)
+TDLS_InsertSecondaryChOffsetIE(IN PRTMP_ADAPTER pAd,
+			       OUT PUCHAR pFrameBuf,
+			       OUT PULONG pFrameLen, IN UCHAR Offset)
 {
 	ULONG TempLen;
 	UCHAR length = 1;
 
-	MakeOutgoingFrame(pFrameBuf,			&TempLen,
-						1,				&NewExtChanIe,
-						1,				&length,
-						1,				&Offset,							
-						END_OF_ARGS);
+	MakeOutgoingFrame(pFrameBuf, &TempLen,
+			  1, &NewExtChanIe,
+			  1, &length, 1, &Offset, END_OF_ARGS);
 
 	*pFrameLen = *pFrameLen + TempLen;
 
 	return;
 }
 
-
 VOID
-TDLS_InsertChannelSwitchTimingIE(
-	IN	PRTMP_ADAPTER pAd,
-	OUT	PUCHAR	pFrameBuf,
-	OUT	PULONG	pFrameLen,
-	IN	USHORT	SwitchTime,
-	IN	USHORT	SwitchTimeOut)
+TDLS_InsertChannelSwitchTimingIE(IN PRTMP_ADAPTER pAd,
+				 OUT PUCHAR pFrameBuf,
+				 OUT PULONG pFrameLen,
+				 IN USHORT SwitchTime, IN USHORT SwitchTimeOut)
 {
 	ULONG TempLen;
 	UCHAR TDLS_IE = IE_TDLS_CHANNEL_SWITCH_TIMING;
 	UCHAR TDLS_IE_LEN = 4;
-	UINT16	SwitchTimeBuf = cpu2le16(SwitchTime);
-	UINT16	SwitchTimeOutBuf = cpu2le16(SwitchTimeOut); 
+	UINT16 SwitchTimeBuf = cpu2le16(SwitchTime);
+	UINT16 SwitchTimeOutBuf = cpu2le16(SwitchTimeOut);
 
-	MakeOutgoingFrame(pFrameBuf,			&TempLen,
-						1,				&TDLS_IE,
-						1,				&TDLS_IE_LEN,
-						2,				&SwitchTimeBuf,
-						2,				&SwitchTimeOutBuf,
-						END_OF_ARGS);
+	MakeOutgoingFrame(pFrameBuf, &TempLen,
+			  1, &TDLS_IE,
+			  1, &TDLS_IE_LEN,
+			  2, &SwitchTimeBuf, 2, &SwitchTimeOutBuf, END_OF_ARGS);
 
 	*pFrameLen = *pFrameLen + TempLen;
 
 	return;
 }
-
 
 /*
 ==========================================================================
@@ -1021,27 +929,27 @@ TDLS_InsertChannelSwitchTimingIE(
 ==========================================================================
 */
 VOID
-TDLS_SupportedRegulatoryClasses(
-	IN	PRTMP_ADAPTER pAd,
-	OUT	PUCHAR	pFrameBuf,
-	OUT	PULONG	pFrameLen)
+TDLS_SupportedRegulatoryClasses(IN PRTMP_ADAPTER pAd,
+				OUT PUCHAR pFrameBuf, OUT PULONG pFrameLen)
 {
 	ULONG TempLen;
 	UCHAR TDLS_IE = IE_SUPP_REG_CLASS;
 	//UCHAR Length = 6;
 	//UCHAR SuppClassesList[] = {1,2,3,32,33};
 	UCHAR Length = 16;
-	UCHAR SuppClassesList[] = {1, 2, 3, 4, 12, 22, 23, 24, 25, 27, 28, 29, 30, 32, 33};
+	UCHAR SuppClassesList[] =
+	    { 1, 2, 3, 4, 12, 22, 23, 24, 25, 27, 28, 29, 30, 32, 33 };
 	UCHAR regclass;
 
-	regclass = TDLS_GetRegulatoryClass(pAd, pAd->CommonCfg.RegTransmitSetting.field.BW, pAd->CommonCfg.Channel);
+	regclass =
+	    TDLS_GetRegulatoryClass(pAd,
+				    pAd->CommonCfg.RegTransmitSetting.field.BW,
+				    pAd->CommonCfg.Channel);
 
-	MakeOutgoingFrame(pFrameBuf,			&TempLen,
-						1,				&TDLS_IE,
-						1,				&Length,
-						1,				&regclass,
-						15,				SuppClassesList,							
-						END_OF_ARGS);
+	MakeOutgoingFrame(pFrameBuf, &TempLen,
+			  1, &TDLS_IE,
+			  1, &Length,
+			  1, &regclass, 15, SuppClassesList, END_OF_ARGS);
 
 	*pFrameLen = *pFrameLen + TempLen;
 
@@ -1049,13 +957,11 @@ TDLS_SupportedRegulatoryClasses(
 }
 
 #ifdef UAPSD_SUPPORT
-VOID TDLS_InsertPuBufferStatus(
-	IN	PRTMP_ADAPTER				pAd,
-	OUT PUCHAR						pFrameBuf,
-	OUT PULONG						pFrameLen,
-	IN	UCHAR						*pPeerMac)
+VOID TDLS_InsertPuBufferStatus(IN PRTMP_ADAPTER pAd,
+			       OUT PUCHAR pFrameBuf,
+			       OUT PULONG pFrameLen, IN UCHAR * pPeerMac)
 {
-	MAC_TABLE_ENTRY	*pMacEntry;
+	MAC_TABLE_ENTRY *pMacEntry;
 	ULONG TempLen;
 	UINT8 Length;
 	UINT8 IeIdPuBufferStatus;
@@ -1063,14 +969,13 @@ VOID TDLS_InsertPuBufferStatus(
 	UINT8 FlgIsAnyPktForBK, FlgIsAnyPktForBE;
 	UINT8 FlgIsAnyPktForVI, FlgIsAnyPktForVO;
 
-
 	/* get pEntry */
 	pMacEntry = MacTableLookup(pAd, pPeerMac);
 
-	if (pMacEntry == NULL)
-	{
-		DBGPRINT(RT_DEBUG_ERROR, ("tdls_cmd> ERROR! No such peer in %s!\n",
-				__FUNCTION__));
+	if (pMacEntry == NULL) {
+		DBGPRINT(RT_DEBUG_ERROR,
+			 ("tdls_cmd> ERROR! No such peer in %s!\n",
+			  __FUNCTION__));
 		return;
 	}
 
@@ -1081,22 +986,19 @@ VOID TDLS_InsertPuBufferStatus(
 
 	/* get queue status */
 	UAPSD_QueueStatusGet(pAd, pMacEntry,
-						&FlgIsAnyPktForBK, &FlgIsAnyPktForBE,
-						&FlgIsAnyPktForVI, &FlgIsAnyPktForVO);
-	PuBufferStatus |= (FlgIsAnyPktForBK == TRUE)? 0x01: 0x00;
-	PuBufferStatus |= (FlgIsAnyPktForBE == TRUE)? 0x02: 0x00;
-	PuBufferStatus |= (FlgIsAnyPktForVI == TRUE)? 0x04: 0x00;
-	PuBufferStatus |= (FlgIsAnyPktForVO == TRUE)? 0x08: 0x00;
+			     &FlgIsAnyPktForBK, &FlgIsAnyPktForBE,
+			     &FlgIsAnyPktForVI, &FlgIsAnyPktForVO);
+	PuBufferStatus |= (FlgIsAnyPktForBK == TRUE) ? 0x01 : 0x00;
+	PuBufferStatus |= (FlgIsAnyPktForBE == TRUE) ? 0x02 : 0x00;
+	PuBufferStatus |= (FlgIsAnyPktForVI == TRUE) ? 0x04 : 0x00;
+	PuBufferStatus |= (FlgIsAnyPktForVO == TRUE) ? 0x08 : 0x00;
 
 	/* init element */
-	MakeOutgoingFrame(	pFrameBuf,		&TempLen,
-						1,				&IeIdPuBufferStatus,
-						1,				&Length,
-						1,				&PuBufferStatus,
-						END_OF_ARGS);
+	MakeOutgoingFrame(pFrameBuf, &TempLen,
+			  1, &IeIdPuBufferStatus,
+			  1, &Length, 1, &PuBufferStatus, END_OF_ARGS);
 
 	*pFrameLen = *pFrameLen + TempLen;
 }
-#endif /* UAPSD_SUPPORT */
-#endif /* DOT11Z_TDLS_SUPPORT */
-
+#endif				/* UAPSD_SUPPORT */
+#endif				/* DOT11Z_TDLS_SUPPORT */

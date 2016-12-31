@@ -29,13 +29,11 @@
 #ifndef __RAL_OMAC_PBF_H__
 #define __RAL_OMAC_PBF_H__
 
-
 #include "rtmp_type.h"
 
 /* ================================================================================= */
 /* Register format  for PBF                                                                                                                                                     */
 /* ================================================================================= */
-
 
 /* Most are for debug. Driver doesn't touch PBF register. */
 #define PBF_SYS_CTRL 	 0x0400
@@ -43,25 +41,25 @@
 #ifdef RT_BIG_ENDIAN
 typedef union _PBF_SYS_CTRL_STRUC {
 	struct {
-		UINT32 Reserved5:12; /* Reserved */
-		UINT32 SHR_MSEL:1; /* Shared memory access selection */
-		UINT32 PBF_MSEL:2; /* Packet buffer memory access selection */
-		UINT32 HST_PM_SEL:1; /* The write selection of the host program RAM */
-		UINT32 Reserved4:1; /* Reserved */
-		UINT32 CAP_MODE:1; /* Packet buffer capture mode */
-		UINT32 Reserved3:1; /* Reserved */
-		UINT32 CLK_SEL:1; /* MAC/PBF clock source selection */
-		UINT32 PBF_CLK_EN:1; /* PBF clock enable */
-		UINT32 MAC_CLK_EN:1; /* MAC clock enable */
-		UINT32 DMA_CLK_EN:1; /* DMA clock enable */
-		UINT32 Reserved2:1; /* Reserved */
-		UINT32 MCU_READY:1; /* MCU ready */
-		UINT32 Reserved1:2; /* Reserved */
-		UINT32 ASY_RESET:1; /* ASYNC interface reset */
-		UINT32 PBF_RESET:1; /* PBF hardware reset */
-		UINT32 MAC_RESET:1; /* MAC hardware reset */
-		UINT32 DMA_RESET:1; /* DMA hardware reset */
-		UINT32 MCU_RESET:1; /* MCU hardware reset */
+		UINT32 Reserved5:12;	/* Reserved */
+		UINT32 SHR_MSEL:1;	/* Shared memory access selection */
+		UINT32 PBF_MSEL:2;	/* Packet buffer memory access selection */
+		UINT32 HST_PM_SEL:1;	/* The write selection of the host program RAM */
+		UINT32 Reserved4:1;	/* Reserved */
+		UINT32 CAP_MODE:1;	/* Packet buffer capture mode */
+		UINT32 Reserved3:1;	/* Reserved */
+		UINT32 CLK_SEL:1;	/* MAC/PBF clock source selection */
+		UINT32 PBF_CLK_EN:1;	/* PBF clock enable */
+		UINT32 MAC_CLK_EN:1;	/* MAC clock enable */
+		UINT32 DMA_CLK_EN:1;	/* DMA clock enable */
+		UINT32 Reserved2:1;	/* Reserved */
+		UINT32 MCU_READY:1;	/* MCU ready */
+		UINT32 Reserved1:2;	/* Reserved */
+		UINT32 ASY_RESET:1;	/* ASYNC interface reset */
+		UINT32 PBF_RESET:1;	/* PBF hardware reset */
+		UINT32 MAC_RESET:1;	/* MAC hardware reset */
+		UINT32 DMA_RESET:1;	/* DMA hardware reset */
+		UINT32 MCU_RESET:1;	/* MCU hardware reset */
 	} field;
 	UINT32 word;
 } PBF_SYS_CTRL_STRUC;
@@ -87,11 +85,10 @@ typedef union _PBF_SYS_CTRL_STRUC {
 		UINT32 PBF_MSEL:2;
 		UINT32 SHR_MSEL:1;
 		UINT32 Reserved5:12;
-	}field;
+	} field;
 	UINT32 word;
 } PBF_SYS_CTRL_STRUC;
 #endif
-
 
 #define PBF_CFG			0x0408
 #define PBF_MAX_PCNT	0x040C
@@ -100,5 +97,4 @@ typedef union _PBF_SYS_CTRL_STRUC {
 #define BCN_OFFSET0		0x042C
 #define BCN_OFFSET1		0x0430
 
-#endif /* __RAL_OMAC_PBF_H__ */
-
+#endif				/* __RAL_OMAC_PBF_H__ */

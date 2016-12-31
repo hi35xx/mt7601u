@@ -51,4 +51,4 @@ typedef struct GNU_PACKED __FRAME_HT_INFO {
 	HT_INFORMATION_OCTET HT_Info;
 } FRAME_HT_INFO, *PFRAME_HT_INFO;
 
-#endif /* __ACTION_H__ */
+#endif				/* __ACTION_H__ */

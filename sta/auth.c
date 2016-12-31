@@ -46,10 +46,8 @@
     ==========================================================================
  */
 
-void AuthStateMachineInit(
-	IN PRTMP_ADAPTER pAd,
-	IN STATE_MACHINE *Sm,
-	OUT STATE_MACHINE_FUNC Trans[])
+void AuthStateMachineInit(IN PRTMP_ADAPTER pAd,
+			  IN STATE_MACHINE * Sm, OUT STATE_MACHINE_FUNC Trans[])
 {
 	StateMachineInit(Sm, Trans, MAX_AUTH_STATE, MAX_AUTH_MSG,
 			 (STATE_MACHINE_FUNC) Drop, AUTH_REQ_IDLE,
@@ -88,11 +86,9 @@ void AuthStateMachineInit(
 
     ==========================================================================
  */
-VOID AuthTimeout(
-	IN PVOID SystemSpecific1,
-	IN PVOID FunctionContext,
-	IN PVOID SystemSpecific2,
-	IN PVOID SystemSpecific3)
+VOID AuthTimeout(IN PVOID SystemSpecific1,
+		 IN PVOID FunctionContext,
+		 IN PVOID SystemSpecific2, IN PVOID SystemSpecific3)
 {
 	RTMP_ADAPTER *pAd = (RTMP_ADAPTER *) FunctionContext;
 
@@ -100,7 +96,8 @@ VOID AuthTimeout(
 
 	/* Do nothing if the driver is starting halt state. */
 	/* This might happen when timer already been fired before cancel timer with mlmehalt */
-	if (RTMP_TEST_FLAG(pAd, fRTMP_ADAPTER_HALT_IN_PROGRESS | fRTMP_ADAPTER_NIC_NOT_EXIST))
+	if (RTMP_TEST_FLAG
+	    (pAd, fRTMP_ADAPTER_HALT_IN_PROGRESS | fRTMP_ADAPTER_NIC_NOT_EXIST))
 		return;
 
 	/* send a de-auth to reset AP's state machine (Patch AP-Dir635) */
@@ -119,18 +116,18 @@ VOID AuthTimeout(
 
     ==========================================================================
  */
-VOID MlmeAuthReqAction(
-	IN PRTMP_ADAPTER pAd,
-	IN MLME_QUEUE_ELEM *Elem)
+VOID MlmeAuthReqAction(IN PRTMP_ADAPTER pAd, IN MLME_QUEUE_ELEM * Elem)
 {
-	if (AUTH_ReqSend(pAd, Elem, &pAd->MlmeAux.AuthTimer, "AUTH", 1, NULL, 0))
+	if (AUTH_ReqSend
+	    (pAd, Elem, &pAd->MlmeAux.AuthTimer, "AUTH", 1, NULL, 0))
 		pAd->Mlme.AuthMachine.CurrState = AUTH_WAIT_SEQ2;
 	else {
 		USHORT Status;
 
 		pAd->Mlme.AuthMachine.CurrState = AUTH_REQ_IDLE;
 		Status = MLME_INVALID_FORMAT;
-		MlmeEnqueue(pAd, MLME_CNTL_STATE_MACHINE, MT2_AUTH_CONF, 2, &Status, 0);
+		MlmeEnqueue(pAd, MLME_CNTL_STATE_MACHINE, MT2_AUTH_CONF, 2,
+			    &Status, 0);
 	}
 }
 
@@ -142,9 +139,7 @@ VOID MlmeAuthReqAction(
 
     ==========================================================================
  */
-VOID PeerAuthRspAtSeq2Action(
-	IN PRTMP_ADAPTER pAd,
-	IN MLME_QUEUE_ELEM * Elem)
+VOID PeerAuthRspAtSeq2Action(IN PRTMP_ADAPTER pAd, IN MLME_QUEUE_ELEM * Elem)
 {
 	UCHAR Addr2[MAC_ADDR_LEN];
 	USHORT Seq, Status, RemoteStatus, Alg;
@@ -194,7 +189,8 @@ VOID PeerAuthRspAtSeq2Action(
 			if (Status == MLME_SUCCESS) {
 				/* Authentication Mode "LEAP" has allow for CCX 1.X */
 				if (pAd->MlmeAux.Alg == Ndis802_11AuthModeOpen) {
-					pAd->Mlme.AuthMachine.CurrState = AUTH_REQ_IDLE;
+					pAd->Mlme.AuthMachine.CurrState =
+					    AUTH_REQ_IDLE;
 					MlmeEnqueue(pAd,
 						    MLME_CNTL_STATE_MACHINE,
 						    MT2_AUTH_CONF, 2, &Status,
@@ -211,7 +207,8 @@ VOID PeerAuthRspAtSeq2Action(
 					if (NStatus != NDIS_STATUS_SUCCESS) {
 						DBGPRINT(RT_DEBUG_TRACE,
 							 ("AUTH - PeerAuthRspAtSeq2Action() allocate memory fail\n"));
-						pAd->Mlme.AuthMachine.CurrState = AUTH_REQ_IDLE;
+						pAd->Mlme.AuthMachine.
+						    CurrState = AUTH_REQ_IDLE;
 						Status2 = MLME_FAIL_NO_RESOURCE;
 						MlmeEnqueue(pAd,
 							    MLME_CNTL_STATE_MACHINE,
@@ -225,21 +222,31 @@ VOID PeerAuthRspAtSeq2Action(
 					MgtMacHeaderInit(pAd, &AuthHdr,
 							 SUBTYPE_AUTH, 0, Addr2,
 #ifdef P2P_SUPPORT
-							pAd->CurrentAddress,
-#endif /* P2P_SUPPORT */
+							 pAd->CurrentAddress,
+#endif				/* P2P_SUPPORT */
 							 pAd->MlmeAux.Bssid);
 					AuthHdr.FC.Wep = 1;
 
 					/* TSC increment */
-					INC_TX_TSC(pAd->SharedKey[BSS0][pAd->StaCfg.DefaultKeyId].TxTsc, LEN_WEP_TSC);
+					INC_TX_TSC(pAd->
+						   SharedKey[BSS0][pAd->StaCfg.
+								   DefaultKeyId].
+						   TxTsc, LEN_WEP_TSC);
 
 					/* Construct the 4-bytes WEP IV header */
-					RTMPConstructWEPIVHdr(pAd->StaCfg.DefaultKeyId,
-							      pAd->SharedKey[BSS0][pAd->StaCfg.DefaultKeyId].TxTsc, iv_hdr);
+					RTMPConstructWEPIVHdr(pAd->StaCfg.
+							      DefaultKeyId,
+							      pAd->
+							      SharedKey[BSS0]
+							      [pAd->StaCfg.
+							       DefaultKeyId].
+							      TxTsc, iv_hdr);
 
 					Alg = cpu2le16(*(USHORT *) & Alg);
 					Seq = cpu2le16(*(USHORT *) & Seq);
-					RemoteStatus = cpu2le16(*(USHORT *) &RemoteStatus);
+					RemoteStatus =
+					    cpu2le16(*(USHORT *) &
+						     RemoteStatus);
 
 					/* Construct message text */
 					MakeOutgoingFrame(CyperChlgText, &c_len,
@@ -254,10 +261,16 @@ VOID PeerAuthRspAtSeq2Action(
 
 					if (RTMPSoftEncryptWEP(pAd,
 							       iv_hdr,
-							       &pAd->SharedKey[BSS0][pAd->StaCfg.DefaultKeyId],
-							       CyperChlgText, c_len) == FALSE) {
+							       &pAd->
+							       SharedKey[BSS0]
+							       [pAd->StaCfg.
+								DefaultKeyId],
+							       CyperChlgText,
+							       c_len) ==
+					    FALSE) {
 						MlmeFreeMemory(pAd, pOutBuffer);
-						pAd->Mlme.AuthMachine.CurrState = AUTH_REQ_IDLE;
+						pAd->Mlme.AuthMachine.
+						    CurrState = AUTH_REQ_IDLE;
 						Status2 = MLME_FAIL_NO_RESOURCE;
 						MlmeEnqueue(pAd,
 							    MLME_CNTL_STATE_MACHINE,
@@ -278,11 +291,14 @@ VOID PeerAuthRspAtSeq2Action(
 							  CyperChlgText,
 							  END_OF_ARGS);
 
-					MiniportMMRequest(pAd, 0, pOutBuffer, FrameLen);
+					MiniportMMRequest(pAd, 0, pOutBuffer,
+							  FrameLen);
 					MlmeFreeMemory(pAd, pOutBuffer);
 
-					RTMPSetTimer(&pAd->MlmeAux.AuthTimer, AUTH_TIMEOUT);
-					pAd->Mlme.AuthMachine.CurrState = AUTH_WAIT_SEQ4;
+					RTMPSetTimer(&pAd->MlmeAux.AuthTimer,
+						     AUTH_TIMEOUT);
+					pAd->Mlme.AuthMachine.CurrState =
+					    AUTH_WAIT_SEQ4;
 				}
 			} else {
 				pAd->StaCfg.AuthFailReason = Status;
@@ -297,7 +313,7 @@ VOID PeerAuthRspAtSeq2Action(
 			 ("AUTH - PeerAuthSanity() sanity check fail\n"));
 	}
 
-      LabelOK:
+ LabelOK:
 	if (ChlgText != NULL)
 		os_free_mem(NULL, ChlgText);
 
@@ -314,9 +330,7 @@ VOID PeerAuthRspAtSeq2Action(
 
     ==========================================================================
  */
-VOID PeerAuthRspAtSeq4Action(
-	IN PRTMP_ADAPTER pAd,
-	IN MLME_QUEUE_ELEM *Elem)
+VOID PeerAuthRspAtSeq4Action(IN PRTMP_ADAPTER pAd, IN MLME_QUEUE_ELEM * Elem)
 {
 	UCHAR Addr2[MAC_ADDR_LEN];
 	USHORT Alg, Seq, Status;
@@ -370,9 +384,7 @@ VOID PeerAuthRspAtSeq4Action(
 
     ==========================================================================
  */
-VOID MlmeDeauthReqAction(
-	IN PRTMP_ADAPTER pAd,
-	IN MLME_QUEUE_ELEM *Elem)
+VOID MlmeDeauthReqAction(IN PRTMP_ADAPTER pAd, IN MLME_QUEUE_ELEM * Elem)
 {
 	MLME_DEAUTH_REQ_STRUCT *pInfo;
 	HEADER_802_11 DeauthHdr;
@@ -397,17 +409,17 @@ VOID MlmeDeauthReqAction(
 	WAPI_InternalCmdAction(pAd,
 			       pAd->StaCfg.AuthMode,
 			       BSS0, pAd->MlmeAux.Bssid, WAI_MLME_DISCONNECT);
-#endif /* WAPI_SUPPORT */
+#endif				/* WAPI_SUPPORT */
 
 	DBGPRINT(RT_DEBUG_TRACE,
 		 ("AUTH - Send DE-AUTH request (Reason=%d)...\n",
 		  pInfo->Reason));
 	MgtMacHeaderInit(pAd, &DeauthHdr, SUBTYPE_DEAUTH, 0, pInfo->Addr,
 #ifdef P2P_SUPPORT
-						pAd->CurrentAddress,
-#endif /* P2P_SUPPORT */
-						pAd->MlmeAux.Bssid);
-	MakeOutgoingFrame(pOutBuffer, &FrameLen, sizeof (HEADER_802_11),
+			 pAd->CurrentAddress,
+#endif				/* P2P_SUPPORT */
+			 pAd->MlmeAux.Bssid);
+	MakeOutgoingFrame(pOutBuffer, &FrameLen, sizeof(HEADER_802_11),
 			  &DeauthHdr, 2, &pInfo->Reason, END_OF_ARGS);
 	MiniportMMRequest(pAd, 0, pOutBuffer, FrameLen);
 	MlmeFreeMemory(pAd, pOutBuffer);
@@ -431,9 +443,7 @@ VOID MlmeDeauthReqAction(
 
     ==========================================================================
  */
-VOID AuthTimeoutAction(
-	IN PRTMP_ADAPTER pAd,
-	IN MLME_QUEUE_ELEM *Elem)
+VOID AuthTimeoutAction(IN PRTMP_ADAPTER pAd, IN MLME_QUEUE_ELEM * Elem)
 {
 	USHORT Status;
 	DBGPRINT(RT_DEBUG_TRACE, ("AUTH - AuthTimeoutAction\n"));
@@ -450,9 +460,7 @@ VOID AuthTimeoutAction(
 
     ==========================================================================
  */
-VOID InvalidStateWhenAuth(
-	IN PRTMP_ADAPTER pAd,
-	IN MLME_QUEUE_ELEM *Elem)
+VOID InvalidStateWhenAuth(IN PRTMP_ADAPTER pAd, IN MLME_QUEUE_ELEM * Elem)
 {
 	USHORT Status;
 	DBGPRINT(RT_DEBUG_TRACE,
@@ -475,9 +483,7 @@ VOID InvalidStateWhenAuth(
 
     ==========================================================================
  */
-VOID Cls2errAction(
-	IN PRTMP_ADAPTER pAd,
-	IN PUCHAR pAddr)
+VOID Cls2errAction(IN PRTMP_ADAPTER pAd, IN PUCHAR pAddr)
 {
 	HEADER_802_11 DeauthHdr;
 	PUCHAR pOutBuffer = NULL;
@@ -493,10 +499,10 @@ VOID Cls2errAction(
 		 ("AUTH - Class 2 error, Send DEAUTH frame...\n"));
 	MgtMacHeaderInit(pAd, &DeauthHdr, SUBTYPE_DEAUTH, 0, pAddr,
 #ifdef P2P_SUPPORT
-						pAd->CurrentAddress,
-#endif /* P2P_SUPPORT */
-						pAd->MlmeAux.Bssid);
-	MakeOutgoingFrame(pOutBuffer, &FrameLen, sizeof (HEADER_802_11),
+			 pAd->CurrentAddress,
+#endif				/* P2P_SUPPORT */
+			 pAd->MlmeAux.Bssid);
+	MakeOutgoingFrame(pOutBuffer, &FrameLen, sizeof(HEADER_802_11),
 			  &DeauthHdr, 2, &Reason, END_OF_ARGS);
 	MiniportMMRequest(pAd, 0, pOutBuffer, FrameLen);
 	MlmeFreeMemory(pAd, pOutBuffer);
@@ -505,14 +511,12 @@ VOID Cls2errAction(
 	COPY_MAC_ADDR(pAd->StaCfg.DeauthSta, pAddr);
 }
 
-BOOLEAN AUTH_ReqSend(
-	IN PRTMP_ADAPTER pAd,
-	IN PMLME_QUEUE_ELEM pElem,
-	IN PRALINK_TIMER_STRUCT pAuthTimer,
-	IN PSTRING pSMName,
-	IN USHORT SeqNo,
-	IN PUCHAR pNewElement,
-	IN ULONG ElementLen)
+BOOLEAN AUTH_ReqSend(IN PRTMP_ADAPTER pAd,
+		     IN PMLME_QUEUE_ELEM pElem,
+		     IN PRALINK_TIMER_STRUCT pAuthTimer,
+		     IN PSTRING pSMName,
+		     IN USHORT SeqNo,
+		     IN PUCHAR pNewElement, IN ULONG ElementLen)
 {
 	USHORT Alg, Seq, Status;
 	UCHAR Addr[6];
@@ -560,10 +564,10 @@ BOOLEAN AUTH_ReqSend(
 			  Alg));
 		MgtMacHeaderInit(pAd, &AuthHdr, SUBTYPE_AUTH, 0, Addr,
 #ifdef P2P_SUPPORT
-							pAd->CurrentAddress,
-#endif /* P2P_SUPPORT */
-							pAd->MlmeAux.Bssid);
-		MakeOutgoingFrame(pOutBuffer, &FrameLen, sizeof (HEADER_802_11),
+				 pAd->CurrentAddress,
+#endif				/* P2P_SUPPORT */
+				 pAd->MlmeAux.Bssid);
+		MakeOutgoingFrame(pOutBuffer, &FrameLen, sizeof(HEADER_802_11),
 				  &AuthHdr, 2, &Alg, 2, &Seq, 2, &Status,
 				  END_OF_ARGS);
 

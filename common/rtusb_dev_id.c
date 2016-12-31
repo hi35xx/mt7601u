@@ -30,18 +30,21 @@
 #include "rt_os_util.h"
 #include "rt_os_net.h"
 
-
 /* module table */
 USB_DEVICE_ID rtusb_dev_id[] = {
 #ifdef RT6570
-	{USB_DEVICE(0x148f,0x6570)}, /* Ralink 6570 */
-#endif /* RT6570 */
-	{USB_DEVICE(0x148f, 0x7650)}, /* MT7650 */
+	{USB_DEVICE(0x148f, 0x6570)}
+	,			/* Ralink 6570 */
+#endif				/* RT6570 */
+	{USB_DEVICE(0x148f, 0x7650)}
+	,			/* MT7650 */
 #ifdef MT7601U
-	{USB_DEVICE(0x148f,0x6370)}, /* Ralink 6370 */
-	{USB_DEVICE(0x148f,0x7601)}, /* MT 6370 */
-#endif /* MT7601U */
-	{ }/* Terminating entry */
+	{USB_DEVICE(0x148f, 0x6370)}
+	,			/* Ralink 6370 */
+	{USB_DEVICE(0x148f, 0x7601)}
+	,			/* MT 6370 */
+#endif				/* MT7601U */
+	{}			/* Terminating entry */
 };
 
 INT const rtusb_usb_id_len = sizeof(rtusb_dev_id) / sizeof(USB_DEVICE_ID);

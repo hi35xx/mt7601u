@@ -28,12 +28,9 @@
 
 #ifdef RT28xx
 
-VOID RT28xx_ChipSwitchChannel(
-	IN struct _RTMP_ADAPTER 	*pAd,
-	IN UCHAR					Channel,
-	IN BOOLEAN					bScan);
+VOID RT28xx_ChipSwitchChannel(IN struct _RTMP_ADAPTER *pAd,
+			      IN UCHAR Channel, IN BOOLEAN bScan);
 
-#endif /* RT28xx */
+#endif				/* RT28xx */
 
 #endif /*__RT28XX_H__ */
-

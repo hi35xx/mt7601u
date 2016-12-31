@@ -22,7 +22,7 @@
     Who          When          What
     ---------    ----------    ----------------------------------------------
  */
- 
+
 #ifndef __RT_LED_H__
 #define __RT_LED_H__
 
@@ -34,10 +34,10 @@
 #define MCU_SET_LED_POLARITY			0x54
 #ifdef WSC_INCLUDED
 #ifdef WSC_LED_SUPPORT
-#define MCU_SET_WPS_LED_MODE			0x55 /* Set WPS LED mode (based on WPS specification V1.0). */
+#define MCU_SET_WPS_LED_MODE			0x55	/* Set WPS LED mode (based on WPS specification V1.0). */
 #define MCU_SET_ANT_DIVERSITY			0x73
-#endif /* WSC_LED_SUPPORT */
-#endif /* WSC_INCLUDED */
+#endif				/* WSC_LED_SUPPORT */
+#endif				/* WSC_INCLUDED */
 
 /* LED Mode */
 #define LED_MODE(pAd) ((pAd)->LedCntl.MCULedCntl.field.LedMode & 0x7F)
@@ -49,10 +49,10 @@
 #define LED_MODE_WPS_LOW_POLARITY		4	/* Same as LED mode 1; except that make ACT steady on during WPS period */
 #define LED_MODE_WPS_HIGH_POLARITY		5	/* Same as LED mode 1; except that make ACT steady on during WPS period */
 /*#define LED_MODE_SIGNAL_STREGTH		8   // EEPROM define =8 */
-#define LED_MODE_SIGNAL_STREGTH			0x40 /* EEPROM define = 64 */
+#define LED_MODE_SIGNAL_STREGTH			0x40	/* EEPROM define = 64 */
 #ifdef WSC_INCLUDED
 #ifdef WSC_LED_SUPPORT
-#define LED_WPS_MODE10_TURN_ON			16 	/* For Dlink WPS LED, turn the WPS LED on */
+#define LED_WPS_MODE10_TURN_ON			16	/* For Dlink WPS LED, turn the WPS LED on */
 #define LED_WPS_MODE10_FLASH			17	/* For Dlink WPS LED, let the WPS LED flash */
 #define LED_WPS_MODE10_TURN_OFF			18	/* For Dlink WPS LED, turn the WPS LED off */
 #define WPS_LED_MODE_7					0x07
@@ -68,8 +68,8 @@
 /* */
 #define WPS_LED_MODE_11				0x0b
 #define WPS_LED_MODE_12				0x0c
-#endif /* WSC_LED_SUPPORT */
-#endif /* WSC_INCLUDED */
+#endif				/* WSC_LED_SUPPORT */
+#endif				/* WSC_INCLUDED */
 
 /* Driver LED Status */
 #define LED_LINK_DOWN			0
@@ -83,17 +83,17 @@
 #ifdef WSC_INCLUDED
 #ifdef WSC_LED_SUPPORT
 /* For LED mode = 7 only */
-#define LED_WPS_IN_PROCESS						8  /* The protocol is searching for a partner, connecting, or exchanging network parameters. */
-#define LED_WPS_ERROR							9  /* Some error occurred which was not related to security, such as failed to find any partner or protocol prematurely aborted. */
-#define LED_WPS_SESSION_OVERLAP_DETECTED		10 /* The Protocol detected overlapping operation (more than one Registrar in PBC mode): could be a security risk. */
-#define LED_WPS_SUCCESS							11 /* The protocol is finished: no uncorrectable errors occured. Normally after guard time period. */
-#define LED_WPS_TURN_LED_OFF					12 /* Turn the WPS LEDs off. */
-#define LED_WPS_TURN_ON_BLUE_LED				13 /* Turn on the WPS blue LED. */
-#define LED_NORMAL_CONNECTION_WITHOUT_SECURITY	14 /* Successful connection with an AP using OPEN-NONE. */
-#define LED_NORMAL_CONNECTION_WITH_SECURITY		15 /* Successful connection with an AP using an encryption algorithm. */
+#define LED_WPS_IN_PROCESS						8	/* The protocol is searching for a partner, connecting, or exchanging network parameters. */
+#define LED_WPS_ERROR							9	/* Some error occurred which was not related to security, such as failed to find any partner or protocol prematurely aborted. */
+#define LED_WPS_SESSION_OVERLAP_DETECTED		10	/* The Protocol detected overlapping operation (more than one Registrar in PBC mode): could be a security risk. */
+#define LED_WPS_SUCCESS							11	/* The protocol is finished: no uncorrectable errors occured. Normally after guard time period. */
+#define LED_WPS_TURN_LED_OFF					12	/* Turn the WPS LEDs off. */
+#define LED_WPS_TURN_ON_BLUE_LED				13	/* Turn on the WPS blue LED. */
+#define LED_NORMAL_CONNECTION_WITHOUT_SECURITY	14	/* Successful connection with an AP using OPEN-NONE. */
+#define LED_NORMAL_CONNECTION_WITH_SECURITY		15	/* Successful connection with an AP using an encryption algorithm. */
 /* For LED Share Mode */
-#endif /* WSC_LED_SUPPORT */
-#endif /* WSC_INCLUDED */
+#endif				/* WSC_LED_SUPPORT */
+#endif				/* WSC_INCLUDED */
 
 /* MCU Led Link Status */
 #define LINK_STATUS_LINK_DOWN		0x20
@@ -108,22 +108,21 @@
 #ifdef WSC_INCLUDED
 #ifdef WSC_LED_SUPPORT
 /* LED mode = 7 and 8 only */
-#define LINK_STATUS_WPS_IN_PROCESS						0x00 /* The protocol is searching for a partner, connecting, or exchanging network parameters. */
-#define LINK_STATUS_WPS_SUCCESS_WITH_SECURITY			0x01 /* The protocol is finished (with security): no uncorrectable errors occured. Normally after guard time period. */
-#define LINK_STATUS_WPS_ERROR							0x02 /* Some error occurred which was not related to security, such as failed to find any partner or protocol prematurely aborted. */
-#define LINK_STATUS_WPS_SESSION_OVERLAP_DETECTED		0x03 /* The Protocol detected overlapping operation (more than one Registrar in PBC mode): could be a security risk. */
-#define LINK_STATUS_WPS_TURN_LED_OFF					0x04 /* Turn the WPS LEDs off. */
-#define LINK_STATUS_WPS_SUCCESS_WITHOUT_SECURITY		0X05 /* The protocol is finished (without security): no uncorrectable errors occured. Normally after guard time period. */
-#define LINK_STATUS_NORMAL_CONNECTION_WITHOUT_SECURITY	0x06 /* Successful connection with an AP using OPEN-NONE. */
-#define LINK_STATUS_NORMAL_CONNECTION_WITH_SECURITY		0x0E /* Successful connection with an AP using an encryption algorithm. */
-#define LINK_STATUS_WPS_BLUE_LED						0x01 /* WPS blue LED. */
+#define LINK_STATUS_WPS_IN_PROCESS						0x00	/* The protocol is searching for a partner, connecting, or exchanging network parameters. */
+#define LINK_STATUS_WPS_SUCCESS_WITH_SECURITY			0x01	/* The protocol is finished (with security): no uncorrectable errors occured. Normally after guard time period. */
+#define LINK_STATUS_WPS_ERROR							0x02	/* Some error occurred which was not related to security, such as failed to find any partner or protocol prematurely aborted. */
+#define LINK_STATUS_WPS_SESSION_OVERLAP_DETECTED		0x03	/* The Protocol detected overlapping operation (more than one Registrar in PBC mode): could be a security risk. */
+#define LINK_STATUS_WPS_TURN_LED_OFF					0x04	/* Turn the WPS LEDs off. */
+#define LINK_STATUS_WPS_SUCCESS_WITHOUT_SECURITY		0X05	/* The protocol is finished (without security): no uncorrectable errors occured. Normally after guard time period. */
+#define LINK_STATUS_NORMAL_CONNECTION_WITHOUT_SECURITY	0x06	/* Successful connection with an AP using OPEN-NONE. */
+#define LINK_STATUS_NORMAL_CONNECTION_WITH_SECURITY		0x0E	/* Successful connection with an AP using an encryption algorithm. */
+#define LINK_STATUS_WPS_BLUE_LED						0x01	/* WPS blue LED. */
 /* LED moe = 10 */
 #define LINK_STATUS_WPS_MODE10_TURN_ON					0x00	/*Use only on Dlink WPS LED (mode 10), turn the WPS LED on. */
 #define LINK_STATUS_WPS_MODE10_FLASH					0x01	/*Use only on Dlink WPS LED (mode 10), let the WPS LED flash, three times persecond. */
 #define LINK_STATUS_WPS_MODE10_TURN_OFF					0x02	/*Use only on Dlink WPS LED (mode 10), turn the WPS LED off. */
-#endif /* WSC_LED_SUPPORT */
-#endif /* WSC_INCLUDED */
-
+#endif				/* WSC_LED_SUPPORT */
+#endif				/* WSC_INCLUDED */
 
 #define ACTIVE_LOW 	0
 #define ACTIVE_HIGH 1
@@ -131,26 +130,24 @@
 /* */
 /* MCU_LEDCS: MCU LED Control Setting. */
 /* */
-typedef union  _MCU_LEDCS_STRUC {
-	struct	{
+typedef union _MCU_LEDCS_STRUC {
+	struct {
 #ifdef RT_BIG_ENDIAN
-		UCHAR		Polarity:1;
-		UCHAR		LedMode:7;
+		UCHAR Polarity:1;
+		UCHAR LedMode:7;
 #else
-		UCHAR		LedMode:7;		
-		UCHAR		Polarity:1;
-#endif /* RT_BIG_ENDIAN */
+		UCHAR LedMode:7;
+		UCHAR Polarity:1;
+#endif				/* RT_BIG_ENDIAN */
 	} field;
-	UCHAR				word;
+	UCHAR word;
 } MCU_LEDCS_STRUC, *PMCU_LEDCS_STRUC;
 
-void RTMPGetLEDSetting(IN RTMP_ADAPTER *pAd);
-void RTMPInitLEDMode(IN RTMP_ADAPTER *pAd);
-void RTMPExitLEDMode(IN RTMP_ADAPTER *pAd);
+void RTMPGetLEDSetting(IN RTMP_ADAPTER * pAd);
+void RTMPInitLEDMode(IN RTMP_ADAPTER * pAd);
+void RTMPExitLEDMode(IN RTMP_ADAPTER * pAd);
 
-VOID RTMPSetLEDStatus(
-	IN PRTMP_ADAPTER 	pAd, 
-	IN UCHAR			Status);
+VOID RTMPSetLEDStatus(IN PRTMP_ADAPTER pAd, IN UCHAR Status);
 
 #ifdef RTMP_MAC_USB
 #define RTMPSetLED(pAd, Status)	\
@@ -162,39 +159,30 @@ do{								\
 	else\
 		RTEnqueueInternalCmd(pAd, CMDTHREAD_SET_LED_STATUS, &LEDStatus, sizeof(LEDStatus));	\
 }while(0)
-	
-#endif /* RTMP_MAC_USB */
 
+#endif				/* RTMP_MAC_USB */
 
-VOID RTMPSetSignalLED(
-	IN PRTMP_ADAPTER 	pAd, 
-	IN NDIS_802_11_RSSI Dbm);
+VOID RTMPSetSignalLED(IN PRTMP_ADAPTER pAd, IN NDIS_802_11_RSSI Dbm);
 
 #ifdef WSC_STA_SUPPORT
 #ifdef WSC_LED_SUPPORT
-VOID LEDConnectionStart(
-	IN PRTMP_ADAPTER pAd);
+VOID LEDConnectionStart(IN PRTMP_ADAPTER pAd);
 
-VOID LEDConnectionCompletion(
-	IN PRTMP_ADAPTER pAd, 
-	IN BOOLEAN bSuccess);
-#endif /* WSC_LED_SUPPORT */
-#endif /* WSC_STA_SUPPORT */
+VOID LEDConnectionCompletion(IN PRTMP_ADAPTER pAd, IN BOOLEAN bSuccess);
+#endif				/* WSC_LED_SUPPORT */
+#endif				/* WSC_STA_SUPPORT */
 
+typedef struct _LED_CONTROL {
+	MCU_LEDCS_STRUC MCULedCntl;	/* LED Mode EEPROM 0x3b */
+	USHORT LedAGCfg;	/* LED A/G Configuration EEPROM 0x3c */
+	USHORT LedACTCfg;	/* LED ACT Configuration EEPROM 0x3e */
+	USHORT LedPolarity;	/* LED A/G/ACT polarity EEPROM 0x40 */
+	UCHAR LedIndicatorStrength;
+	UCHAR RssiSingalstrengthOffet;
+	BOOLEAN bLedOnScanning;
+	UCHAR LedStatus;
+} LED_CONTROL, *PLED_CONTROL;
 
-typedef struct _LED_CONTROL
-{
-	MCU_LEDCS_STRUC		MCULedCntl; /* LED Mode EEPROM 0x3b */
-	USHORT				LedAGCfg;	/* LED A/G Configuration EEPROM 0x3c */
-	USHORT				LedACTCfg;	/* LED ACT Configuration EEPROM 0x3e */
-	USHORT				LedPolarity;/* LED A/G/ACT polarity EEPROM 0x40 */
-	UCHAR				LedIndicatorStrength;
-	UCHAR				RssiSingalstrengthOffet;
-	BOOLEAN				bLedOnScanning;
-	UCHAR				LedStatus;
-}LED_CONTROL, *PLED_CONTROL;
+void RTMPStartLEDMode(IN RTMP_ADAPTER * pAd);
 
-void RTMPStartLEDMode(IN RTMP_ADAPTER *pAd);
-
-#endif /* __RT_LED_H__ */
-
+#endif				/* __RT_LED_H__ */

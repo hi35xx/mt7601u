@@ -31,16 +31,15 @@
 /* */
 /* The frequency calibration control */
 /* */
-typedef struct _FREQUENCY_CALIBRATION_CONTROL
-{
-	BOOLEAN bEnableFrequencyCalibration; /* Enable the frequency calibration algorithm */
+typedef struct _FREQUENCY_CALIBRATION_CONTROL {
+	BOOLEAN bEnableFrequencyCalibration;	/* Enable the frequency calibration algorithm */
 
-	BOOLEAN bSkipFirstFrequencyCalibration; /* Avoid calibrating frequency at the time the STA is just link-up */
-	BOOLEAN bApproachFrequency; /* Approach the frequency */
-	UCHAR AdaptiveFreqOffset; /* Adaptive frequency offset */
-	CHAR LatestFreqOffsetOverBeacon; /* Latest frequency offset from the beacon */
-	CHAR BeaconPhyMode; /* Latest frequency offset from the beacon */
-	
+	BOOLEAN bSkipFirstFrequencyCalibration;	/* Avoid calibrating frequency at the time the STA is just link-up */
+	BOOLEAN bApproachFrequency;	/* Approach the frequency */
+	UCHAR AdaptiveFreqOffset;	/* Adaptive frequency offset */
+	CHAR LatestFreqOffsetOverBeacon;	/* Latest frequency offset from the beacon */
+	CHAR BeaconPhyMode;	/* Latest frequency offset from the beacon */
+
 } FREQUENCY_CALIBRATION_CONTROL, *PFREQUENCY_CALIBRATION_CONTROL;
 
 #define RTMP_FREQ_CAL_DISABLE(__pAd)									\
@@ -56,7 +55,6 @@ typedef struct _FREQUENCY_CALIBRATION_CONTROL
 /* */
 #define UPPERBOUND_OF_FREQUENCY_OFFSET		127
 #define LOWERBOUND_OF_FREQUENCY_OFFSET	-127
-
 
 /*#ifdef RT5390 */
 /* */
@@ -82,7 +80,7 @@ typedef struct _FREQUENCY_CALIBRATION_CONTROL
 #define MT7601_LOW_FREQUENCY_TRIGGER_POINT_OFDM40		-82
 #define MT7601_DECREASE_FREQUENCY_OFFSET_OFDM40			20
 #define MT7601_INCREASE_FREQUENCY_OFFSET_OFDM40			-20
-#endif /* MT7601 */
+#endif				/* MT7601 */
 
 /* */
 /* The trigger point of decreasng/increasing the frequency offset */
@@ -104,4 +102,4 @@ typedef struct _FREQUENCY_CALIBRATION_CONTROL
 
 #define FREQUENCY_CALIBRATION_PERIOD		100
 
-#endif /* __FRQCAL_H__ */
+#endif				/* __FRQCAL_H__ */

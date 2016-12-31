@@ -5,7 +5,7 @@
 #include "core.h"
 
 #define MSC_RESULT_BUFFER_SIZE 256
-typedef void (*msc_evt_cb)(unsigned int eid);
+typedef void (*msc_evt_cb) (unsigned int eid);
 
 struct msc_param {
 	msc_evt_cb evt_cb;
@@ -31,4 +31,3 @@ int msc_get_result(struct msc_result *result);
 int msc_cmd_handler(char *cmd, int len, char *result_str, void *priv);
 
 #endif
-

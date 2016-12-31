@@ -35,93 +35,92 @@
 	RXWI wireless information format, in PBF. invisible in driver.
 */
 #ifdef RT_BIG_ENDIAN
-typedef	struct GNU_PACKED _RXWI_OMAC{
+typedef struct GNU_PACKED _RXWI_OMAC {
 	/* Word 0 */
-	UINT32		tid:4;
-	UINT32		MPDUtotalByteCnt:12;
-	UINT32		UDF:3;
-	UINT32		bss_idx:3;
-	UINT32		key_idx:2;
-	UINT32		wcid:8;
-	
+	UINT32 tid:4;
+	UINT32 MPDUtotalByteCnt:12;
+	UINT32 UDF:3;
+	UINT32 bss_idx:3;
+	UINT32 key_idx:2;
+	UINT32 wcid:8;
+
 	/* Word 1 */
-	UINT32		phy_mode:2;              /* 1: this RX frame is unicast to me */
-	UINT32		iTxBF:1; /* iTxBF enable */
-	UINT32		Sounding:1; /* Sounding enable */
-	UINT32		eTxBF:1; /* eTxBF enable */
-	UINT32		stbc:2;
-	UINT32		sgi:1;
-	UINT32		bw:1;
-	UINT32		mcs:7;
-	UINT32		SEQUENCE:12;
-	UINT32		FRAG:4;
-	
+	UINT32 phy_mode:2;	/* 1: this RX frame is unicast to me */
+	UINT32 iTxBF:1;		/* iTxBF enable */
+	UINT32 Sounding:1;	/* Sounding enable */
+	UINT32 eTxBF:1;		/* eTxBF enable */
+	UINT32 stbc:2;
+	UINT32 sgi:1;
+	UINT32 bw:1;
+	UINT32 mcs:7;
+	UINT32 SEQUENCE:12;
+	UINT32 FRAG:4;
+
 	/* Word 2 */
-	UINT32		rsv1:8;
-	UINT32		RSSI2:8;
-	UINT32		RSSI1:8;
-	UINT32		RSSI0:8;
-	
+	UINT32 rsv1:8;
+	UINT32 RSSI2:8;
+	UINT32 RSSI1:8;
+	UINT32 RSSI0:8;
+
 	/* Word 3 */
-	UINT32		FOFFSET:8;
-	UINT32		SNR2:8;
-	UINT32		SNR1:8;
-	UINT32		SNR0:8;
-	
-	UINT32		rsv3;
+	UINT32 FOFFSET:8;
+	UINT32 SNR2:8;
+	UINT32 SNR1:8;
+	UINT32 SNR0:8;
+
+	UINT32 rsv3;
 
 #if defined(RT5592) || defined(MT7601)
 	/* Word 5 */
 	/* For Exper Antenna */
-	UINT32		rsv4:24;
-	UINT32		EANT_ID:8;
-#endif /* RT5592 */
-}	RXWI_OMAC, *PRXWI_OMAC;
+	UINT32 rsv4:24;
+	UINT32 EANT_ID:8;
+#endif				/* RT5592 */
+} RXWI_OMAC, *PRXWI_OMAC;
 #else
-typedef	struct GNU_PACKED _RXWI_OMAC{
-	/* Word	0 */
-	UINT32		wcid:8;
-	UINT32		key_idx:2;
-	UINT32		bss_idx:3;
-	UINT32		UDF:3;
-	UINT32		MPDUtotalByteCnt:12;
-	UINT32		tid:4;
+typedef struct GNU_PACKED _RXWI_OMAC {
+	/* Word 0 */
+	UINT32 wcid:8;
+	UINT32 key_idx:2;
+	UINT32 bss_idx:3;
+	UINT32 UDF:3;
+	UINT32 MPDUtotalByteCnt:12;
+	UINT32 tid:4;
 
-	/* Word	1 */
-	UINT32		FRAG:4;
-	UINT32		SEQUENCE:12;
-	UINT32		mcs:7;
-	UINT32		bw:1;
-	UINT32		sgi:1;
-	UINT32		stbc:2;
-	UINT32		eTxBF:1; /* eTxBF enable */
-	UINT32		Sounding:1; /* Sounding enable */
-	UINT32		iTxBF:1; /* iTxBF enable */
-	UINT32		phy_mode:2;              /* 1: this RX frame is unicast to me */
+	/* Word 1 */
+	UINT32 FRAG:4;
+	UINT32 SEQUENCE:12;
+	UINT32 mcs:7;
+	UINT32 bw:1;
+	UINT32 sgi:1;
+	UINT32 stbc:2;
+	UINT32 eTxBF:1;		/* eTxBF enable */
+	UINT32 Sounding:1;	/* Sounding enable */
+	UINT32 iTxBF:1;		/* iTxBF enable */
+	UINT32 phy_mode:2;	/* 1: this RX frame is unicast to me */
 
 	/*Word2 */
-	UINT32		RSSI0:8;
-	UINT32		RSSI1:8;
-	UINT32		RSSI2:8;
-	UINT32		rsv1:8;
+	UINT32 RSSI0:8;
+	UINT32 RSSI1:8;
+	UINT32 RSSI2:8;
+	UINT32 rsv1:8;
 
 	/*Word3 */
-	UINT32		SNR0:8;
-	UINT32		SNR1:8;
-	UINT32		SNR2:8;
-	UINT32		FOFFSET:8;
+	UINT32 SNR0:8;
+	UINT32 SNR1:8;
+	UINT32 SNR2:8;
+	UINT32 FOFFSET:8;
 
-	UINT32		rsv3;
+	UINT32 rsv3;
 
 #if defined(RT5592) || defined(MT7601)
 	/* Word 5 */
 	/* For Exper Antenna */
-	UINT32      EANT_ID:8;
-	UINT32      rsv4:24;
-#endif /* RT5592 */
-}	RXWI_OMAC, *PRXWI_OMAC;
+	UINT32 EANT_ID:8;
+	UINT32 rsv4:24;
+#endif				/* RT5592 */
+} RXWI_OMAC, *PRXWI_OMAC;
 #endif
-
 
 #define RxWIMPDUByteCnt	RXWI_O.MPDUtotalByteCnt
 #define RxWIWirelessCliID	RXWI_O.wcid
@@ -141,7 +140,4 @@ typedef	struct GNU_PACKED _RXWI_OMAC{
 #define RxWISNR2			RXWI_O.SNR2
 #define RxWIFOFFSET			RXWI_O.FOFFSET
 
-
-
-#endif /* __RAL_OMAC_RXWI_H__ */
-
+#endif				/* __RAL_OMAC_RXWI_H__ */

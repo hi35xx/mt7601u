@@ -27,16 +27,13 @@
 
 #ifdef DOT11_VHT_AC
 
-
 #ifndef __DOT11AC_VHT_H
 #define __DOT11AC_VHT_H
 
 #include "rtmp_type.h"
 
-
 #define IE_VHT_CAP		191
 #define IE_VHT_OP		192
-
 
 /*
 	IEEE 802.11AC D2.0, sec 8.4.2.160.2
@@ -144,7 +141,7 @@
 				0: if Tx antenna pattern might change during association
 				1: if Tx antenna pattern does not change during association
 */
-typedef struct GNU_PACKED _VHT_CAP_INFO{
+typedef struct GNU_PACKED _VHT_CAP_INFO {
 #ifdef RT_BIG_ENDIAN
 	UINT32 rsv:2;
 	UINT32 tx_ant_consistency:1;
@@ -189,11 +186,10 @@ typedef struct GNU_PACKED _VHT_CAP_INFO{
 	UINT32 max_ampdu_exp:3;
 	UINT32 vht_link_adapt:2;
 	UINT32 rx_ant_consistency:1;
-	UINT32 tx_ant_consistency:1;	
+	UINT32 tx_ant_consistency:1;
 	UINT32 rsv:2;
-#endif /* RT_BIG_ENDIAN */
-}VHT_CAP_INFO;
-
+#endif				/* RT_BIG_ENDIAN */
+} VHT_CAP_INFO;
 
 /*
 	IEEE 802.11AC D2.0, sec 8.4.2.160.3
@@ -222,7 +218,7 @@ typedef struct GNU_PACKED _VHT_CAP_INFO{
 #define VHT_MCS_CAP_9	2
 #define VHT_MCS_CAP_NA	3
 
-typedef struct GNU_PACKED _VHT_MCS_MAP{
+typedef struct GNU_PACKED _VHT_MCS_MAP {
 #ifdef RT_BIG_ENDIAN
 	UINT16 mcs_ss8:2;
 	UINT16 mcs_ss7:2;
@@ -241,9 +237,8 @@ typedef struct GNU_PACKED _VHT_MCS_MAP{
 	UINT16 mcs_ss6:2;
 	UINT16 mcs_ss7:2;
 	UINT16 mcs_ss8:2;
-#endif /* RT_BIG_ENDIAN */
-}VHT_MCS_MAP;
-
+#endif				/* RT_BIG_ENDIAN */
+} VHT_MCS_MAP;
 
 /*
 	IEEE 802.11AC D2.0, sec 8.4.2.160.3
@@ -269,24 +264,23 @@ typedef struct GNU_PACKED _VHT_MCS_MAP{
 */
 
 // TODO: shiang-6590, check the layout of this data structure!!!!
-typedef struct GNU_PACKED _VHT_MCS_SET{
+typedef struct GNU_PACKED _VHT_MCS_SET {
 #ifdef RT_BIG_ENDIAN
 	UINT16 rsv2:3;
 	UINT16 tx_high_rate:13;
 	struct _VHT_MCS_MAP tx_mcs_map;
 	UINT16 rsv:3;
 	UINT16 rx_high_rate:13;
-	struct _VHT_MCS_MAP rx_mcs_map;	
+	struct _VHT_MCS_MAP rx_mcs_map;
 #else
-	struct _VHT_MCS_MAP rx_mcs_map;	
+	struct _VHT_MCS_MAP rx_mcs_map;
 	UINT16 rx_high_rate:13;
 	UINT16 rsv:3;
 	struct _VHT_MCS_MAP tx_mcs_map;
 	UINT16 tx_high_rate:13;
 	UINT16 rsv2:3;
-#endif /* RT_BIG_ENDIAN */
-}VHT_MCS_SET;
-
+#endif				/* RT_BIG_ENDIAN */
+} VHT_MCS_SET;
 
 /*
 	IEEE 802.11AC D2.0, sec 8.4.2.160.1
@@ -303,11 +297,10 @@ typedef struct GNU_PACKED _VHT_MCS_SET{
 		->Used to convey the combinations of MCSs and spatial streams a STA
 			supports for both reception and transmission.
 */
-typedef struct GNU_PACKED _VHT_CAP_IE{
+typedef struct GNU_PACKED _VHT_CAP_IE {
 	VHT_CAP_INFO vht_cap;
 	VHT_MCS_SET mcs_set;
-}VHT_CAP_IE;
-
+} VHT_CAP_IE;
 
 /*
 	IEEE 802.11AC D2.0, sec 8.4.2.161
@@ -341,12 +334,11 @@ typedef struct GNU_PACKED _VHT_CAP_IE{
 			frequency index of the 80MHz channel of frequency segment 2 on
 			which the VHT BSS operates. Reserved otherwise.
 */
-typedef struct GNU_PACKED _VHT_OP_INFO{
+typedef struct GNU_PACKED _VHT_OP_INFO {
 	UINT8 ch_width;
 	UINT8 center_freq_1;
 	UINT8 center_freq_2;
-}VHT_OP_INFO;
-
+} VHT_OP_INFO;
 
 /*
 	IEEE 802.11AC D2.0, sec 8.4.2.161
@@ -362,11 +354,10 @@ typedef struct GNU_PACKED _VHT_OP_INFO{
 	vht_op_info: VHT Operation Information
 	basic_mcs_set: VHT Basic MCS Set
 */
-typedef struct GNU_PACKED _VHT_OP_IE{
+typedef struct GNU_PACKED _VHT_OP_IE {
 	VHT_OP_INFO vht_op_info;
 	VHT_MCS_MAP basic_mcs_set;
-}VHT_OP_IE;
-
+} VHT_OP_IE;
 
 /*
 	IEEE 802.11AC D2.0, sec 8.4.2.163
@@ -380,14 +371,13 @@ typedef struct GNU_PACKED _VHT_OP_IE{
 
 	The definition of upper subfields is the same as "VHT_OP_INFO"
 */
-typedef struct GNU_PACKED _WIDE_BW_CH_SWITCH_IE{
+typedef struct GNU_PACKED _WIDE_BW_CH_SWITCH_IE {
 	UINT8 e_id;
 	UINT len;
 	UINT8 new_ch_width;
 	UINT8 center_freq_1;
 	UINT8 center_freq_2;
-}WIDE_BW_CH_SWITCH_IE;
-
+} WIDE_BW_CH_SWITCH_IE;
 
 /*
 	IEEE 802.11AC D2.0, sec 8.4.2.164
@@ -395,11 +385,10 @@ typedef struct GNU_PACKED _WIDE_BW_CH_SWITCH_IE{
 
 	
 */
-typedef struct GNU_PACKED _CH_SEG_PAIR{
+typedef struct GNU_PACKED _CH_SEG_PAIR {
 	UINT8 ch_center_freq;
 	UINT8 seg_ch_width;
-}CH_SEG_PAIR;
-
+} CH_SEG_PAIR;
 
 /*
 	IEEE 802.11AC D2.0, sec 8.4.2.164
@@ -415,16 +404,14 @@ typedef struct GNU_PACKED _CH_SEG_PAIR{
 		center_freq_1: Channel Center Frequency Segment
 		ch_seg_width: Segment Channel Width
 */
-typedef struct GNU_PACKED _VHT_TXPWR_ENV_IE{
+typedef struct GNU_PACKED _VHT_TXPWR_ENV_IE {
 	UINT8 e_id;
 	UINT8 len;
 	UINT8 max_txpwr;
 	CH_SEG_PAIR ch_seg_pair[0];
-}VHT_TXPWR_ENV_IE;
+} VHT_TXPWR_ENV_IE;
 
-
-
-typedef struct  GNU_PACKED _VHT_CONTROL{
+typedef struct GNU_PACKED _VHT_CONTROL {
 #ifdef RT_BIG_ENDIAN
 	UINT32 RDG:1;
 	UINT32 ACConstraint:1;
@@ -460,20 +447,16 @@ typedef struct  GNU_PACKED _VHT_CONTROL{
 	UINT32 ACConstraint:1;
 	UINT32 RDG:1;
 #endif
-}VHT_CONTROL;
+} VHT_CONTROL;
 
-
-typedef struct GNU_PACKED _NDPA_PKT{
+typedef struct GNU_PACKED _NDPA_PKT {
 	USHORT frm_ctrl;
 	USHORT duration;
 	UINT8 ra[MAC_ADDR_LEN];
 	UINT8 ta[MAC_ADDR_LEN];
 	UINT8 snd_seq;
-}DNPA_PKT;
+} DNPA_PKT;
 
+#endif				/* __DOT11AC_VHT_H */
 
-	
-#endif /* __DOT11AC_VHT_H */
-
-#endif /* DOT11_VHT_AC */
-
+#endif				/* DOT11_VHT_AC */

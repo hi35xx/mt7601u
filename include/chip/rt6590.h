@@ -40,23 +40,22 @@ struct _RTMP_ADAPTER;
 	mss: Max Segment size (in unit of byte)
 */
 #ifdef RT_BIG_ENDIAN
-typedef struct _TSO_INFO_{
+typedef struct _TSO_INFO_ {
 	UINT32 mss:16;
 	UINT32 ips:8;
-	UINT32 tups:6;	
-	UINT32 tcp:1;	
+	UINT32 tups:6;
+	UINT32 tcp:1;
 	UINT32 rsv:1;
-}TSO_INFO;
+} TSO_INFO;
 #else
-typedef struct _TSO_INFO_{
+typedef struct _TSO_INFO_ {
 	UINT32 rsv:1;
 	UINT32 tcp:1;
 	UINT32 tups:6;
 	UINT32 ips:8;
 	UINT32 mss:16;
-}TSO_INFO;
-#endif /* RT_BIG_ENDIAN */
-
+} TSO_INFO;
+#endif				/* RT_BIG_ENDIAN */
 
 /* 
  * Frequency plan item  for RT85592 
@@ -74,7 +73,7 @@ typedef struct _RT8592_FREQ_ITEM {
 } RT8592_FREQ_ITEM;
 
 #define RT6590_RF_VER	"MT7650_WiFi_RF_Register_20120516.xls"
-//#define RT6590_BBP_VER	"TC6008_BBP_CR_20120518.xls"
+//#define RT6590_BBP_VER        "TC6008_BBP_CR_20120518.xls"
 #define RT6590_BBP_VER	"TC6008_BBP_CR_20120522.xls"
 
 /* 
@@ -100,7 +99,7 @@ typedef struct _RT6590_FREQ_ITEM {
 	UINT8 LFC_R33;
 	UINT8 LFC_R34;
 	UINT32 Pll_idiv;
-	UINT8 Pll_LDO; // 5G only
+	UINT8 Pll_LDO;		// 5G only
 } RT6590_FREQ_ITEM;
 
 #define RF_G_BAND 		0x01
@@ -111,13 +110,13 @@ typedef struct _RT6590_FREQ_ITEM {
 typedef struct _RT6590_RF_SWITCH_ITEM {
 	UCHAR Bank;
 	UCHAR Register;
-	UCHAR Band; /* G_Band, A_Band_LB, A_Band_MB, A_Band_HB */
+	UCHAR Band;		/* G_Band, A_Band_LB, A_Band_MB, A_Band_HB */
 	UCHAR BW;
 	UCHAR Value;
 } RT6590_RF_SWITCH_ITEM, *PRT6590_RF_SWITCH_ITEM;
 
 typedef struct _RT6590_DCOC_Table {
-	UCHAR Band; /* G_Band, A_Band_LB, A_Band_MB, A_Band_HB */
+	UCHAR Band;		/* G_Band, A_Band_LB, A_Band_MB, A_Band_HB */
 	RTMP_REG_PAIR RegDate;
 } RT6590_DOCO_Table, *PRT6590_DOCO_Table;
 
@@ -128,10 +127,9 @@ INT RT6590_ReadChannelPwr(struct _RTMP_ADAPTER *pAd);
 VOID RT85592_Init(struct _RTMP_ADAPTER *pAd);
 INT RT85592_ReadChannelPwr(struct _RTMP_ADAPTER *pAd);
 VOID RT85592ReadTxPwrPerRate(struct _RTMP_ADAPTER *pAd);
-#endif /* RT8592 */
+#endif				/* RT8592 */
 VOID RT6590ReadTxPwrPerRate(struct _RTMP_ADAPTER *pAd);
 
 VOID dump_bw_info(struct _RTMP_ADAPTER *pAd);
 
-#endif /* __RT6590_H__ */
-
+#endif				/* __RT6590_H__ */

@@ -8,37 +8,37 @@
 #include "rt_os_net.h"
 #include "rt_config.h"
 
-
-static unsigned char msc_listen_chls[] = {1, 6, 11, 2, 5, 7, 1, 6, 11, 10, 12, 3, 1, 6, 11, 8, 13, 4, 9};
+static unsigned char msc_listen_chls[] =
+    { 1, 6, 11, 2, 5, 7, 1, 6, 11, 10, 12, 3, 1, 6, 11, 8, 13, 4, 9 };
 #if 0
 struct chan_info msc_listen_chls[] = {
-	{1, 	MSC_CHAN_WIDTH_40_PLUS, 0},
-	{6, 	MSC_CHAN_WIDTH_40_PLUS, 0},
-	{6, 	MSC_CHAN_WIDTH_40_MINUS, 0},
-	{11, 	MSC_CHAN_WIDTH_40_MINUS, 0},
-	{2, 	MSC_CHAN_WIDTH_40_PLUS, 0},
-	{5, 	MSC_CHAN_WIDTH_40_PLUS, 0},
-	{5, 	MSC_CHAN_WIDTH_40_MINUS, 0},
-	{7, 	MSC_CHAN_WIDTH_40_PLUS, 0},
-	{7, 	MSC_CHAN_WIDTH_40_MINUS, 0},
-	{1, 	MSC_CHAN_WIDTH_40_PLUS, 0},
-	{6, 	MSC_CHAN_WIDTH_40_PLUS, 0},
-	{6, 	MSC_CHAN_WIDTH_40_MINUS, 0},
-	{11, 	MSC_CHAN_WIDTH_40_MINUS, 0},
-	{10, 	MSC_CHAN_WIDTH_40_MINUS, 0},
-	{12, 	MSC_CHAN_WIDTH_40_MINUS, 0},
-	{3, 	MSC_CHAN_WIDTH_40_PLUS, 0},
-	{1, 	MSC_CHAN_WIDTH_40_PLUS, 0},
-	{6, 	MSC_CHAN_WIDTH_40_PLUS, 0},
-	{6, 	MSC_CHAN_WIDTH_40_MINUS, 0},
-	{11, 	MSC_CHAN_WIDTH_40_MINUS, 0},
-	{8, 	MSC_CHAN_WIDTH_40_MINUS, 0},
-	{13, 	MSC_CHAN_WIDTH_40_MINUS, 0},
-	{4, 	MSC_CHAN_WIDTH_40_PLUS, 0},
-	{9, 	MSC_CHAN_WIDTH_40_MINUS, 0},
+	{1, MSC_CHAN_WIDTH_40_PLUS, 0},
+	{6, MSC_CHAN_WIDTH_40_PLUS, 0},
+	{6, MSC_CHAN_WIDTH_40_MINUS, 0},
+	{11, MSC_CHAN_WIDTH_40_MINUS, 0},
+	{2, MSC_CHAN_WIDTH_40_PLUS, 0},
+	{5, MSC_CHAN_WIDTH_40_PLUS, 0},
+	{5, MSC_CHAN_WIDTH_40_MINUS, 0},
+	{7, MSC_CHAN_WIDTH_40_PLUS, 0},
+	{7, MSC_CHAN_WIDTH_40_MINUS, 0},
+	{1, MSC_CHAN_WIDTH_40_PLUS, 0},
+	{6, MSC_CHAN_WIDTH_40_PLUS, 0},
+	{6, MSC_CHAN_WIDTH_40_MINUS, 0},
+	{11, MSC_CHAN_WIDTH_40_MINUS, 0},
+	{10, MSC_CHAN_WIDTH_40_MINUS, 0},
+	{12, MSC_CHAN_WIDTH_40_MINUS, 0},
+	{3, MSC_CHAN_WIDTH_40_PLUS, 0},
+	{1, MSC_CHAN_WIDTH_40_PLUS, 0},
+	{6, MSC_CHAN_WIDTH_40_PLUS, 0},
+	{6, MSC_CHAN_WIDTH_40_MINUS, 0},
+	{11, MSC_CHAN_WIDTH_40_MINUS, 0},
+	{8, MSC_CHAN_WIDTH_40_MINUS, 0},
+	{13, MSC_CHAN_WIDTH_40_MINUS, 0},
+	{4, MSC_CHAN_WIDTH_40_PLUS, 0},
+	{9, MSC_CHAN_WIDTH_40_MINUS, 0},
 };
 #endif
-#define MSC_CHANNEL_DWELL_TIME 400 //ms in unit
+#define MSC_CHANNEL_DWELL_TIME 400	//ms in unit
 /* On linux OS, timer handler is running in INTR context.
    It can't call any function which may cause sleep. we have
    to handle this case carefully.
@@ -49,8 +49,8 @@ struct chan_info msc_listen_chls[] = {
 
 struct msc_contex {
 	/* event call back, when received ssid&pwd,
-	 this function will be call with parameter
-	 struct msc_param. */
+	   this function will be call with parameter
+	   struct msc_param. */
 	msc_evt_cb evt_cb;
 #if MSC_CHANNEL_SWITCH_USE_THREAD
 	osal_thread chl_thread;
@@ -82,23 +82,22 @@ static int msc_init(struct msc_param *param, void *priv);
 int msc_get_current_channel_info(void)
 {
 	int cur_chl = 0;
-	PRTMP_ADAPTER pAd = (PRTMP_ADAPTER)(msc_ctx.priv);
+	PRTMP_ADAPTER pAd = (PRTMP_ADAPTER) (msc_ctx.priv);
 	cur_chl = pAd->CommonCfg.Channel;
-	MSC_INFO("[MSC] current channel = %d\n",cur_chl);
+	MSC_INFO("[MSC] current channel = %d\n", cur_chl);
 	return cur_chl;
 }
 
-
-static void msc_core_evt_cbk(enum eevent_id eid) 
+static void msc_core_evt_cbk(enum eevent_id eid)
 {
 	osal_lock(&msc_ctx.lock);
-	switch(eid) {
+	switch (eid) {
 	case EVT_ID_SYNCSUC:
 		if (msc_ctx.chl_num > 1) {
 #if MSC_CHANNEL_SWITCH_USE_THREAD
 			/*We don't used osal_thread_stop because this function
-			  may cause sleep on linux(kthread_stop), and we this runtine
-			  may be called from intr context.*/
+			   may cause sleep on linux(kthread_stop), and we this runtine
+			   may be called from intr context. */
 			msc_ctx.cur_chl = msc_get_current_channel_info();
 			msc_ctx.chl_thread_running = 0;
 			MSC_INFO("[MSC]stop chl_switch thread.\n");
@@ -133,17 +132,16 @@ static int chl_switch_thread(void *data)
 	chl_info.width = MSC_CHAN_WIDTH_40_PLUS;
 
 	//while(!osal_thread_should_stop(&msc_ctx.chl_thread)) {
-	while(1) {//msc_ctx.chl_thread_running) {
+	while (1) {		//msc_ctx.chl_thread_running) {
 		osal_msleep(MSC_CHANNEL_DWELL_TIME);
 		osal_lock(&msc_ctx.lock);
-		if(!msc_ctx.chl_thread_running)
-		{
+		if (!msc_ctx.chl_thread_running) {
 			osal_unlock(&msc_ctx.lock);
 			break;
 		}
 		msc_ctx.is_thread_run_to_end = 0;
-		chl_info.chan_id = msc_ctx.channel[(idx++)%msc_ctx.chl_num];
-		if (chl_info.chan_id >= 8  && chl_info.chan_id <= 14) {
+		chl_info.chan_id = msc_ctx.channel[(idx++) % msc_ctx.chl_num];
+		if (chl_info.chan_id >= 8 && chl_info.chan_id <= 14) {
 			chl_info.width = MSC_CHAN_WIDTH_40_MINUS;
 		} else {
 			chl_info.width = MSC_CHAN_WIDTH_40_PLUS;
@@ -152,21 +150,21 @@ static int chl_switch_thread(void *data)
 		sccb_set_monitor_chan(&chl_info, msc_ctx.priv);
 		msc_ctx.is_thread_run_to_end = 1;
 		osal_unlock(&msc_ctx.lock);
-		}
-	if ((msc_ctx.cur_chl != chl_info.chan_id) && (chl_info.chan_id != 0) &&  (msc_ctx.cur_chl != 0))
-	{
+	}
+	if ((msc_ctx.cur_chl != chl_info.chan_id) && (chl_info.chan_id != 0)
+	    && (msc_ctx.cur_chl != 0)) {
 		osal_msleep(100);
 		chl_info.chan_id = msc_ctx.cur_chl;
-		if (chl_info.chan_id >= 8  && chl_info.chan_id <= 14) {
+		if (chl_info.chan_id >= 8 && chl_info.chan_id <= 14) {
 			chl_info.width = MSC_CHAN_WIDTH_40_MINUS;
 		} else {
 			chl_info.width = MSC_CHAN_WIDTH_40_PLUS;
 		}
 		chl_info.flags = 0x0;
 		sccb_set_monitor_chan(&chl_info, msc_ctx.priv);
-		MSC_INFO("[MSC] chl_info.chan_id = %d\n",chl_info.chan_id);
+		MSC_INFO("[MSC] chl_info.chan_id = %d\n", chl_info.chan_id);
 	}
-	
+
 	return 0;
 }
 #else
@@ -176,8 +174,8 @@ static void timeout_handler(unsigned long data)
 	struct chan_info chl_info;
 
 	osal_lock(&msc_ctx.lock);
-	chl_info.chan_id = msc_ctx.channel[(idx++)%msc_ctx.chl_id];
-	if (chl_info.chan_id >= 8  && chl_info.chan_id <= 14) {
+	chl_info.chan_id = msc_ctx.channel[(idx++) % msc_ctx.chl_id];
+	if (chl_info.chan_id >= 8 && chl_info.chan_id <= 14) {
 		chl_info.width = MSC_CHAN_WIDTH_40_MINUS;
 	} else {
 		chl_info.width = MSC_CHAN_WIDTH_40_PLUS;
@@ -202,7 +200,6 @@ static int msc_init(struct msc_param *param, void *priv)
 {
 	int ret = 0;
 
-	
 	osal_memset(&msc_ctx, 0, sizeof(msc_ctx));
 
 	osal_lock_init(&msc_ctx.lock);
@@ -222,7 +219,6 @@ static int msc_init(struct msc_param *param, void *priv)
 		MSC_WARN("[MSC] Get sc fsm init failed.\n");
 		//Add error handler.
 	}
-
 #if MSC_CHANNEL_SWITCH_USE_THREAD
 	msc_ctx.chl_thread.thread_func = chl_switch_thread;
 	msc_ctx.chl_thread.data = NULL;
@@ -239,7 +235,7 @@ int msc_start(struct msc_param *param, void *priv)
 {
 	int ret = 0;
 
-	if(msc_ctx.state == MSC_STATE_STARTED)
+	if (msc_ctx.state == MSC_STATE_STARTED)
 		return 0;
 
 	msc_init(param, priv);
@@ -249,7 +245,8 @@ int msc_start(struct msc_param *param, void *priv)
 	msc_ctx.m_info.filter = 0x00000000;
 	msc_ctx.m_info.priv = NULL;
 	msc_ctx.m_info.chl_info.chan_id = msc_ctx.channel[0];
-	if (msc_ctx.m_info.chl_info.chan_id >= 8  && msc_ctx.m_info.chl_info.chan_id <= 14) {
+	if (msc_ctx.m_info.chl_info.chan_id >= 8
+	    && msc_ctx.m_info.chl_info.chan_id <= 14) {
 		msc_ctx.m_info.chl_info.width = MSC_CHAN_WIDTH_40_MINUS;
 	} else {
 		msc_ctx.m_info.chl_info.width = MSC_CHAN_WIDTH_40_PLUS;
@@ -278,12 +275,12 @@ int msc_start(struct msc_param *param, void *priv)
 
 void msc_stop(void *priv)
 {
-	unsigned int count=0;
+	unsigned int count = 0;
 	bool timeout = 0;
 
 	if (msc_ctx.state == MSC_STATE_STOPED)
 		return;
-	
+
 	osal_lock(&msc_ctx.lock);
 	if (msc_ctx.chl_num > 1) {
 #if MSC_CHANNEL_SWITCH_USE_THREAD
@@ -298,24 +295,21 @@ void msc_stop(void *priv)
 	sccb_disable_input();
 
 	/*there is a problem if chl_switch_thread haven't finish "sccb_set_monitor_chan()" function.
-	so we use a flag "msc_ctx.is_thread_run_to_end" to avoid that case*/
-	while(msc_ctx.is_thread_run_to_end == 0) 
-	{	
+	   so we use a flag "msc_ctx.is_thread_run_to_end" to avoid that case */
+	while (msc_ctx.is_thread_run_to_end == 0) {
 		MSC_INFO("chl_switch thread not finished, waiting 50ms!\n");
 		osal_msleep(50);
-		if(count++ >= 40)
-		{
-			timeout=1;
+		if (count++ >= 40) {
+			timeout = 1;
 			break;
 		}
 	}
 
-	if(timeout)
-	{
+	if (timeout) {
 		MSC_WARN("msc_stop failed (timeout)!\n");
 		return;
 	}
-	
+
 	sccb_leave_monitor_mode(priv);
 
 	msc_ctx.state = MSC_STATE_STOPED;
@@ -325,7 +319,7 @@ void msc_stop(void *priv)
 
 int msc_get_result(struct msc_result *result)
 {
-	char buffer[MSC_RESULT_BUFFER_SIZE] = {0};
+	char buffer[MSC_RESULT_BUFFER_SIZE] = { 0 };
 	int len;
 
 	len = MSC_RESULT_BUFFER_SIZE;
@@ -368,7 +362,7 @@ int msc_reset()
 
 int msc_set_chl(struct chan_info *chl, void *priv)
 {
-	if(msc_ctx.state == MSC_STATE_STOPED)
+	if (msc_ctx.state == MSC_STATE_STOPED)
 		return -1;
 
 	sccb_set_monitor_chan(chl, priv);
@@ -381,8 +375,8 @@ int msc_cmd_handler(char *cmd, int len, char *result_str, void *priv)
 	int tmp_len = 0;
 	int chan_len = 0;
 	char *p = cmd;
-	struct msc_param para = {0};
-	struct msc_result result ={0};
+	struct msc_param para = { 0 };
+	struct msc_result result = { 0 };
 	struct chan_info chl_info;
 	int chl;
 	char result_str_temp[500];
@@ -391,14 +385,15 @@ int msc_cmd_handler(char *cmd, int len, char *result_str, void *priv)
 		return -1;
 
 	MSC_INFO("[MSC] msc_cmd_handler %s %d\n", cmd, len);
-	if(osal_strncmp(p, "start", 5) == 0) {
-		if(len>6) { //+1 for "enter"
+	if (osal_strncmp(p, "start", 5) == 0) {
+		if (len > 6) {	//+1 for "enter"
 			p = osal_strstr(p, "ch=");
-			if(p == NULL){
-				osal_strcpy(result_str, "Format: elian start ch=6");
+			if (p == NULL) {
+				osal_strcpy(result_str,
+					    "Format: elian start ch=6");
 				return -2;
 			}
-			chl = (int)osal_strtol(p+3, NULL, 10);
+			chl = (int)osal_strtol(p + 3, NULL, 10);
 			para.chls = (char *)&chl;
 			MSC_INFO("[MSC] msc_cmd_handler %s %d\n", p, chl);
 			para.chl_num = 1;
@@ -408,26 +403,28 @@ int msc_cmd_handler(char *cmd, int len, char *result_str, void *priv)
 		}
 		msc_start(&para, priv);
 		osal_strcpy(result_str, "ok");
-	} else if(osal_strcmp(p, "stop") == 0) {
-		msc_stop(priv);	
+	} else if (osal_strcmp(p, "stop") == 0) {
+		msc_stop(priv);
 		osal_strcpy(result_str, "ok");
 	} else if (osal_strcmp(p, "clear") == 0) {
-		msc_reset();	
+		msc_reset();
 		osal_strcpy(result_str, "ok");
-	} else if (osal_strcmp(p, "result") == 0){
+	} else if (osal_strcmp(p, "result") == 0) {
 		msc_get_result(&result);
-		MSC_INFO("[MSC] AM=%d, ssid=%s, pwd=%s, user=%s, cust_data_len=%d, cust_data=%s,\n",
-				result.auth_mode, result.ssid, result.pwd, 
-				result.user, result.cust_data_len, result.cust_data);
+		MSC_INFO
+		    ("[MSC] AM=%d, ssid=%s, pwd=%s, user=%s, cust_data_len=%d, cust_data=%s,\n",
+		     result.auth_mode, result.ssid, result.pwd, result.user,
+		     result.cust_data_len, result.cust_data);
 		sprintf(result_str_temp,
 			"AM=%d, ssid=%s, pwd=%s, user=%s, cust_data_len=%d, cust_data=%s,\n",
-			result.auth_mode, result.ssid, result.pwd,
-			result.user, result.cust_data_len, result.cust_data);
+			result.auth_mode, result.ssid, result.pwd, result.user,
+			result.cust_data_len, result.cust_data);
 		if (osal_strlen(result_str_temp) >= MSC_RESULT_BUFFER_SIZE)
 			MSC_INFO("Max result len is 128, Current len is [%d]\n",
-			osal_strlen(result_str_temp));
+				 osal_strlen(result_str_temp));
 		else
-			osal_memcpy(result_str, result_str_temp, osal_strlen(result_str_temp));
+			osal_memcpy(result_str, result_str_temp,
+				    osal_strlen(result_str_temp));
 	} else if (osal_strncmp(p, "set_ch=", 7) == 0) {
 		q = osal_strstr(p, ",bw=");
 		if (q) {
@@ -439,20 +436,25 @@ int msc_cmd_handler(char *cmd, int len, char *result_str, void *priv)
 			} else if (osal_strstr(p, "bw=40l")) {
 				chl_info.width = MSC_CHAN_WIDTH_40_MINUS;
 			} else {
-				if (chl_info.chan_id >= 8  && chl_info.chan_id <= 14)
-					chl_info.width = MSC_CHAN_WIDTH_40_MINUS;
+				if (chl_info.chan_id >= 8
+				    && chl_info.chan_id <= 14)
+					chl_info.width =
+					    MSC_CHAN_WIDTH_40_MINUS;
 				else
 					chl_info.width = MSC_CHAN_WIDTH_40_PLUS;
 			}
 			/* find channel id */
 			tmp_len = osal_strlen(q);
-			chan_len = len-tmp_len-7;
-			chl = (int)osal_strtol(p+7, (char **)p+7+chan_len-1, 10);
+			chan_len = len - tmp_len - 7;
+			chl =
+			    (int)osal_strtol(p + 7,
+					     (char **)p + 7 + chan_len - 1, 10);
 			chl_info.chan_id = chl;
 
 			chl_info.flags = 0x0;
 			if (msc_set_chl(&chl_info, priv))
-				osal_strcpy(result_str, "call start CMD first.");
+				osal_strcpy(result_str,
+					    "call start CMD first.");
 			else
 				osal_strcpy(result_str, "ok");
 		} else {
@@ -464,4 +466,3 @@ int msc_cmd_handler(char *cmd, int len, char *result_str, void *priv)
 	}
 	return 0;
 }
-

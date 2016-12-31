@@ -49,15 +49,12 @@ typedef struct __CFG80211_CB {
 	/* channel information */
 	struct ieee80211_channel ChanInfo[MAX_NUM_OF_CHANNELS];
 
-#if 1 //patch : cfg80211_scan_done() crash issue!
+#if 1				//patch : cfg80211_scan_done() crash issue!
 	/* to protect scan status */
 	spinlock_t scan_notify_lock;
 #endif
 
 } CFG80211_CB;
-
-
-
 
 /*
 ========================================================================
@@ -79,13 +76,9 @@ Note:
 	Can not use pNetDev to replace pDev; Or kernel panic.
 ========================================================================
 */
-BOOLEAN CFG80211_Register(
-	VOID						*pAd,
-	struct device				*pDev,
-	struct net_device			*pNetDev);
+BOOLEAN CFG80211_Register(VOID * pAd,
+			  struct device *pDev, struct net_device *pNetDev);
 
-
-#endif /* RT_CFG80211_SUPPORT */
+#endif				/* RT_CFG80211_SUPPORT */
 
 /* End of cfg80211.h */
-

@@ -26,11 +26,8 @@
 #ifndef __RAL_NMAC_PCI_H__
 #define __RAL_NMAC_PCI_H__
 
-
-
 /* INT_SOURCE_CSR: Interrupt source register. Write one to clear corresponding bit */
 #define INT_SOURCE_CSR		0x200
-
 
 #define INT_R0_DONE		(1<<0)
 #define INT_R1_DONE		(1<<1)
@@ -60,7 +57,7 @@
 #ifdef CARRIER_DETECTION_SUPPORT
 // TODO: shiang-6590, for 6590, what's the interrupt bit for TONE_RADAR?? now just give a reseved bit
 #define RT2860_INT_TONE_RADAR	(1<<29)
-#endif /* CARRIER_DETECTION_SUPPORT*/
+#endif				/* CARRIER_DETECTION_SUPPORT */
 
  /* Delayed Rx or indivi rx */
 #define RxINT			(INT_R0_DONE | INT_R1_DONE /* | INT_RX_DLY */)
@@ -71,7 +68,7 @@
 #define TxMgmtInt		(INT_T5_DONE /*| INT_TX_DLY*/)
 #else
 #define TxMgmtInt		(INT_T9_DONE /*| INT_TX_DLY*/)
-#endif /* RT8592 */
+#endif				/* RT8592 */
 
 #define RxCoherent		INT_RX_COHE
 #define TxCoherent		INT_TX_COHE
@@ -93,7 +90,7 @@
 
 #ifdef CARRIER_DETECTION_SUPPORT
 #define RadarInt			(RT2860_INT_TONE_RADAR)
-#endif /* CARRIER_DETECTION_SUPPORT*/
+#endif				/* CARRIER_DETECTION_SUPPORT */
 
 #define INT_RX			(INT_R0_DONE | INT_R1_DONE)
 
@@ -107,11 +104,11 @@
 #else
 #define INT_HCCA_DLY	(INT_T8_DONE)
 #define INT_MGMT_DLY	(INT_T9_DONE)
-#endif /* RT8592 */
+#endif				/* RT8592 */
 
 #ifdef CARRIER_DETECTION_SUPPORT
 #define INT_TONE_RADAR	(RT2860_INT_TONE_RADAR)
-#endif /* CARRIER_DETECTION_SUPPORT*/
+#endif				/* CARRIER_DETECTION_SUPPORT */
 
 #ifdef CARRIER_DETECTION_SUPPORT
 #define DELAYINTMASK	(0x0DFF3FF3 | (RadarInt))
@@ -119,8 +116,7 @@
 #else
 #define DELAYINTMASK	0x0DFF3FF3
 #define INTMASK			0x0DFF3FF3
-#endif /* CARRIER_DETECTION_SUPPORT */
-
+#endif				/* CARRIER_DETECTION_SUPPORT */
 
 #ifdef RT_BIG_ENDIAN
 typedef union _INT_SOURCE_CSR_STRUC {
@@ -152,9 +148,9 @@ typedef union _INT_SOURCE_CSR_STRUC {
 		UINT32 rsv4:2;
 		UINT32 RxDone1:1;
 		UINT32 RxDone:1;
-	}field;
+	} field;
 	UINT32 word;
-}INT_SOURCE_CSR_STRUC;
+} INT_SOURCE_CSR_STRUC;
 #else
 typedef union _INT_SOURCE_CSR_STRUC {
 	struct {
@@ -185,16 +181,15 @@ typedef union _INT_SOURCE_CSR_STRUC {
 		UINT32 RxDelayINT:1;
 		UINT32 TxDelayINT:1;
 		UINT32 rsv1:4;
-	}field;
+	} field;
 	UINT32 word;
-}INT_SOURCE_CSR_STRUC;
-#endif /* RT_BIG_ENDIAN */
-
+} INT_SOURCE_CSR_STRUC;
+#endif				/* RT_BIG_ENDIAN */
 
 /* INT_MASK_CSR:   Interrupt MASK register.   1: the interrupt is mask OFF */
 #define INT_MASK_CSR        0x204
 #ifdef RT_BIG_ENDIAN
-typedef union _PDMA_INT_MASK{
+typedef union _PDMA_INT_MASK {
 	struct {
 		UINT32 rsv1:4;
 		UINT32 TxDelayINT:1;
@@ -223,11 +218,11 @@ typedef union _PDMA_INT_MASK{
 		UINT32 rsv4:2;
 		UINT32 RxDone1:1;
 		UINT32 RxDone:1;
-	}field;
+	} field;
 	UINT32 word;
-}PMDA_INT_MASK;
+} PMDA_INT_MASK;
 #else
-typedef union _PDMA_INT_MASK{
+typedef union _PDMA_INT_MASK {
 	struct {
 		UINT32 RxDone:1;
 		UINT32 RxDone1:1;
@@ -256,11 +251,10 @@ typedef union _PDMA_INT_MASK{
 		UINT32 RxDelayINT:1;
 		UINT32 TxDelayINT:1;
 		UINT32 rsv1:4;
-	}field;
+	} field;
 	UINT32 word;
-}PMDA_INT_MASK;
-#endif /* RT_BIG_ENDIAN */
-
+} PMDA_INT_MASK;
+#endif				/* RT_BIG_ENDIAN */
 
 /*
 	Tx Ring Layout and assignments
@@ -298,7 +292,7 @@ typedef union _PDMA_INT_MASK{
 #else
 /* Mgmt Tx Ring registers */
 #define TX_MGMT_BASE	(TX_RING_BASE  + RINGREG_DIFF * 9)
-#endif /* RT8592 */
+#endif				/* RT8592 */
 #define TX_MGMT_CNT	(TX_MGMT_BASE + 0x04)
 #define TX_MGMT_CIDX	(TX_MGMT_BASE + 0x08)
 #define TX_MGMT_DIDX	(TX_MGMT_BASE + 0x0c)
@@ -308,11 +302,10 @@ typedef union _PDMA_INT_MASK{
 #else
 /* Mgmt Tx Ring registers */
 #define TX_CTRL_BASE	(TX_RING_BASE  + RINGREG_DIFF * 8)
-#endif /* RT8592 */
+#endif				/* RT8592 */
 #define TX_CTRL_CNT		(TX_CTRL_BASE + 0x04)
 #define TX_CTRL_CIDX	(TX_CTRL_BASE + 0x08)
 #define TX_CTRL_DIDX	(TX_CTRL_BASE + 0x0c)
-
 
 #define TX_CHAN_BASE_1		(TX_RING_BASE + RINGREG_DIFF * 0)
 #define TX_CHAN_BASE_2		(TX_RING_BASE + RINGREG_DIFF * 6)
@@ -338,7 +331,6 @@ typedef union _PDMA_INT_MASK{
 #define TX_RING_VO_CIDX	(TX_RING_VO_BASE + 0x08)
 #define TX_RING_VO_DIDX	(TX_RING_VO_BASE + 0x0c)
 
-
 /*
 	Rx Ring Layput and assignments
 
@@ -360,4 +352,3 @@ typedef union _PDMA_INT_MASK{
 #define RX_RING_DIDX	(RX_RING_BASE + 0x0c)
 
 #endif /*__RAL_NMAC_PCI_H__ */
-

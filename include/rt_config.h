@@ -41,16 +41,15 @@
 #include "rtmp_chip.h"
 #include "rtmp_timer.h"
 
-
 #ifdef LINUX
 #ifdef RT_CFG80211_SUPPORT
 #include "cfg80211extr.h"
-#endif /* RT_CFG80211_SUPPORT */
-#endif /* LINUX */
+#endif				/* RT_CFG80211_SUPPORT */
+#endif				/* LINUX */
 
 #ifdef AGS_SUPPORT
 #include "ags.h"
-#endif /* AGS_SUPPORT */
+#endif				/* AGS_SUPPORT */
 
 #include "mlme.h"
 #include "crypt_md5.h"
@@ -66,7 +65,7 @@
 #include "spectrum.h"
 #ifdef CONFIG_AP_SUPPORT
 #include "ap_autoChSel.h"
-#endif /* CONFIG_AP_SUPPORT */
+#endif				/* CONFIG_AP_SUPPORT */
 #include "rt_os_util.h"
 
 #include "eeprom.h"
@@ -82,74 +81,69 @@
 
 #ifdef UAPSD_SUPPORT
 #include "uapsd.h"
-#endif /* UAPSD_SUPPORT */
+#endif				/* UAPSD_SUPPORT */
 
 #ifdef CONFIG_AP_SUPPORT
 #ifdef MBSS_SUPPORT
 #include "ap_mbss.h"
-#endif /* MBSS_SUPPORT */
-
+#endif				/* MBSS_SUPPORT */
 
 #ifdef APCLI_SUPPORT
 #include "ap_apcli.h"
-#endif /* APCLI_SUPPORT */
+#endif				/* APCLI_SUPPORT */
 
 #ifdef WSC_AP_SUPPORT
 #define AP_WSC_INCLUDED
-#endif /* WSC_AP_SUPPORT */
+#endif				/* WSC_AP_SUPPORT */
 
 #include "ap_ids.h"
 #include "ap_cfg.h"
 
 #ifdef CLIENT_WDS
 #include "client_wds.h"
-#endif /* CLIENT_WDS */
-#endif /* CONFIG_AP_SUPPORT */
+#endif				/* CLIENT_WDS */
+#endif				/* CONFIG_AP_SUPPORT */
 
 #ifdef MAT_SUPPORT
 #include "mat.h"
-#endif /* MAT_SUPPORT */
-
+#endif				/* MAT_SUPPORT */
 
 #ifdef CONFIG_STA_SUPPORT
 #ifdef WSC_STA_SUPPORT
 #define STA_WSC_INCLUDED
-#endif /* WSC_STA_SUPPORT */
-#endif /* CONFIG_STA_SUPPORT */
+#endif				/* WSC_STA_SUPPORT */
+#endif				/* CONFIG_STA_SUPPORT */
 
 #ifdef BLOCK_NET_IF
 #include "netif_block.h"
-#endif /* BLOCK_NET_IF */
+#endif				/* BLOCK_NET_IF */
 
 #ifdef IGMP_SNOOP_SUPPORT
 #include "igmp_snoop.h"
-#endif /* IGMP_SNOOP_SUPPORT */
+#endif				/* IGMP_SNOOP_SUPPORT */
 
 #ifdef RALINK_ATE
 #include "rt_ate.h"
-#endif /* RALINK_ATE */
+#endif				/* RALINK_ATE */
 
 #ifdef RALINK_QA
 #include "rt_qa.h"
-#endif /* RALINK_QA */
+#endif				/* RALINK_QA */
 
 #ifdef RALINK_QA
 #ifndef RALINK_ATE
 #error "For supporting QA GUI, please set HAS_ATE=y and HAS_QA_SUPPORT=y."
-#endif /* RALINK_ATE */
-#endif /* RALINK_QA */
-
-
+#endif				/* RALINK_ATE */
+#endif				/* RALINK_QA */
 
 #ifdef WAPI_SUPPORT
 #include "wapi.h"
-#endif /* WAPI_SUPPORT */
-
+#endif				/* WAPI_SUPPORT */
 
 #ifdef DOT11Z_TDLS_SUPPORT
 #include "tdls.h"
 #include "tdls_uapsd.h"
-#endif /* DOT11Z_TDLS_SUPPORT */
+#endif				/* DOT11Z_TDLS_SUPPORT */
 
 #if defined(AP_WSC_INCLUDED) || defined(STA_WSC_INCLUDED)
 #define WSC_INCLUDED
@@ -161,72 +155,60 @@
 //#endif /* WDS_SUPPORT */
 //#endif /* CONFIG_AP_SUPPORT */
 
-
 #ifdef APCLI_WPA_SUPPLICANT_SUPPORT
 #ifndef APCLI_SUPPORT
 #error "Build Apcli for being controlled by NetworkManager or wext, please set HAS_APCLI_SUPPORT=y and HAS_APCLI_WPA_SUPPLICANT=y"
-#endif /* APCLI_SUPPORT */
-#endif /* APCLI_WPA_SUPPLICANT_SUPPORT */
-
+#endif				/* APCLI_SUPPORT */
+#endif				/* APCLI_WPA_SUPPLICANT_SUPPORT */
 
 #ifdef CONFIG_STA_SUPPORT
 #ifdef NATIVE_WPA_SUPPLICANT_SUPPORT
 #ifndef WPA_SUPPLICANT_SUPPORT
 #error "Build for being controlled by NetworkManager or wext, please set HAS_WPA_SUPPLICANT=y and HAS_NATIVE_WPA_SUPPLICANT_SUPPORT=y"
-#endif /* WPA_SUPPLICANT_SUPPORT */
-#endif /* NATIVE_WPA_SUPPLICANT_SUPPORT */
+#endif				/* WPA_SUPPLICANT_SUPPORT */
+#endif				/* NATIVE_WPA_SUPPLICANT_SUPPORT */
 
-#endif /* CONFIG_STA_SUPPORT */
+#endif				/* CONFIG_STA_SUPPORT */
 
 #ifdef WSC_INCLUDED
 #include "crypt_biginteger.h"
 #include "crypt_dh.h"
 #include "wsc_tlv.h"
-#endif /* WSC_INCLUDED */
-
+#endif				/* WSC_INCLUDED */
 
 #ifdef IKANOS_VX_1X0
 #include "vr_ikans.h"
-#endif /* IKANOS_VX_1X0 */
-
-
-
-
+#endif				/* IKANOS_VX_1X0 */
 
 #ifdef WAPI_SUPPORT
 #include "wapi.h"
-#endif /* WAPI_SUPPORT */
+#endif				/* WAPI_SUPPORT */
 
 #ifdef P2P_SUPPORT
 /*#include "p2p_inf.h" */
 #include "p2p.h"
 #include "p2pcli.h"
-#endif /* P2P_SUPPORT */
+#endif				/* P2P_SUPPORT */
 
 #ifdef DOT11_VHT_AC
 #include "vht.h"
-#endif /* DOT11_VHT_AC */
+#endif				/* DOT11_VHT_AC */
 #ifdef CONFIG_STA_SUPPORT
 #include "sta_cfg.h"
-#endif /* CONFIG_STA_SUPPORT */
-
-
-
+#endif				/* CONFIG_STA_SUPPORT */
 
 #ifdef WORKQUEUE_BH
 #include <linux/workqueue.h>
-#endif /* WORKQUEUE_BH / */
+#endif				/* WORKQUEUE_BH / */
 
 #ifdef RTMP_FREQ_CALIBRATION_SUPPORT
 #include "frq_cal.h"
-#endif /* RTMP_FREQ_CALIBRATION_SUPPORT */
+#endif				/* RTMP_FREQ_CALIBRATION_SUPPORT */
 
 #ifdef TXBF_SUPPORT
 #include "rt_txbf.h"
-#endif /* TXBF_SUPPORT */
-
+#endif				/* TXBF_SUPPORT */
 
 #include "mac_ral/fce.h"
 
-#endif	/* __RT_CONFIG_H__ */
-
+#endif				/* __RT_CONFIG_H__ */

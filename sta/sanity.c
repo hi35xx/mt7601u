@@ -44,12 +44,10 @@ extern UCHAR BROADCOM_OUI[];
         TRUE if all parameters are OK, FALSE otherwise
     ==========================================================================
  */
-BOOLEAN MlmeStartReqSanity(
-	IN PRTMP_ADAPTER pAd,
-	IN VOID *Msg,
-	IN ULONG MsgLen,
-	OUT CHAR Ssid[],
-	OUT UCHAR *pSsidLen)
+BOOLEAN MlmeStartReqSanity(IN PRTMP_ADAPTER pAd,
+			   IN VOID * Msg,
+			   IN ULONG MsgLen,
+			   OUT CHAR Ssid[], OUT UCHAR * pSsidLen)
 {
 	MLME_START_REQ_STRUCT *Info;
 
@@ -57,7 +55,7 @@ BOOLEAN MlmeStartReqSanity(
 
 	if (Info->SsidLen > MAX_LEN_OF_SSID) {
 		DBGPRINT(RT_DEBUG_TRACE, ("%s(): fail - wrong SSID length\n",
-									__FUNCTION__));
+					  __FUNCTION__));
 		return FALSE;
 	}
 
@@ -78,27 +76,13 @@ BOOLEAN MlmeStartReqSanity(
 
     ==========================================================================
  */
-BOOLEAN PeerAssocRspSanity(
-	IN PRTMP_ADAPTER pAd,
-	IN VOID *pMsg,
-	IN ULONG MsgLen,
-	OUT PUCHAR pAddr2,
-	OUT USHORT *pCapabilityInfo,
-	OUT USHORT *pStatus,
-	OUT USHORT *pAid,
-	OUT UCHAR SupRate[],
-	OUT UCHAR *pSupRateLen,
-	OUT UCHAR ExtRate[],
-	OUT UCHAR *pExtRateLen,
-	OUT HT_CAPABILITY_IE *pHtCapability,
-	OUT ADD_HT_INFO_IE *pAddHtInfo,	/* AP might use this additional ht info IE */
-	OUT UCHAR *pHtCapabilityLen,
-	OUT UCHAR *pAddHtInfoLen,
-	OUT UCHAR *pNewExtChannelOffset,
-	OUT PEDCA_PARM pEdcaParm,
-	OUT EXT_CAP_INFO_ELEMENT *pExtCapInfo,
-	OUT UCHAR *pCkipFlag,
-	OUT IE_LISTS *ie_list)
+BOOLEAN PeerAssocRspSanity(IN PRTMP_ADAPTER pAd, IN VOID * pMsg, IN ULONG MsgLen, OUT PUCHAR pAddr2, OUT USHORT * pCapabilityInfo, OUT USHORT * pStatus, OUT USHORT * pAid, OUT UCHAR SupRate[], OUT UCHAR * pSupRateLen, OUT UCHAR ExtRate[], OUT UCHAR * pExtRateLen, OUT HT_CAPABILITY_IE * pHtCapability, OUT ADD_HT_INFO_IE * pAddHtInfo,	/* AP might use this additional ht info IE */
+			   OUT UCHAR * pHtCapabilityLen,
+			   OUT UCHAR * pAddHtInfoLen,
+			   OUT UCHAR * pNewExtChannelOffset,
+			   OUT PEDCA_PARM pEdcaParm,
+			   OUT EXT_CAP_INFO_ELEMENT * pExtCapInfo,
+			   OUT UCHAR * pCkipFlag, OUT IE_LISTS * ie_list)
 {
 	CHAR IeType, *Ptr;
 	PFRAME_802_11 pFrame = (PFRAME_802_11) pMsg;
@@ -134,11 +118,12 @@ BOOLEAN PeerAssocRspSanity(
 	*pSupRateLen = pFrame->Octet[7];
 	if ((IeType != IE_SUPP_RATES)
 	    || (*pSupRateLen > MAX_LEN_OF_SUPPORTED_RATES)) {
-		DBGPRINT(RT_DEBUG_TRACE, ("%s(): fail - wrong SupportedRates IE\n", __FUNCTION__));
+		DBGPRINT(RT_DEBUG_TRACE,
+			 ("%s(): fail - wrong SupportedRates IE\n",
+			  __FUNCTION__));
 		return FALSE;
 	} else
 		NdisMoveMemory(SupRate, &pFrame->Octet[8], *pSupRateLen);
-
 
 	Length = Length + 2 + *pSupRateLen;
 
@@ -162,33 +147,47 @@ BOOLEAN PeerAssocRspSanity(
 		case IE_HT_CAP:
 		case IE_HT_CAP2:
 			if (pEid->Len >= SIZE_HT_CAP_IE) {	/* Note: allow extension.!! */
-				NdisMoveMemory(pHtCapability, pEid->Octet, SIZE_HT_CAP_IE);
+				NdisMoveMemory(pHtCapability, pEid->Octet,
+					       SIZE_HT_CAP_IE);
 
-				*(USHORT *) (&pHtCapability->HtCapInfo) = cpu2le16(*(USHORT *)(&pHtCapability->HtCapInfo));
-				*(USHORT *) (&pHtCapability->ExtHtCapInfo) = cpu2le16(*(USHORT *)(&pHtCapability->ExtHtCapInfo));
+				*(USHORT *) (&pHtCapability->HtCapInfo) =
+				    cpu2le16(*(USHORT *)
+					     (&pHtCapability->HtCapInfo));
+				*(USHORT *) (&pHtCapability->ExtHtCapInfo) =
+				    cpu2le16(*(USHORT *)
+					     (&pHtCapability->ExtHtCapInfo));
 
 				*pHtCapabilityLen = SIZE_HT_CAP_IE;
 			} else {
-				DBGPRINT(RT_DEBUG_WARN, ("%s():wrong IE_HT_CAP\n", __FUNCTION__));
+				DBGPRINT(RT_DEBUG_WARN,
+					 ("%s():wrong IE_HT_CAP\n",
+					  __FUNCTION__));
 			}
 
 			break;
 
 		case IE_ADD_HT:
 		case IE_ADD_HT2:
-			if (pEid->Len >= sizeof (ADD_HT_INFO_IE)) {
+			if (pEid->Len >= sizeof(ADD_HT_INFO_IE)) {
 				/*
 				   This IE allows extension, but we can ignore extra bytes beyond our knowledge , so only
 				   copy first sizeof(ADD_HT_INFO_IE)
 				 */
-				NdisMoveMemory(pAddHtInfo, pEid->Octet, sizeof (ADD_HT_INFO_IE));
+				NdisMoveMemory(pAddHtInfo, pEid->Octet,
+					       sizeof(ADD_HT_INFO_IE));
 
-				*(USHORT *) (&pAddHtInfo->AddHtInfo2) = cpu2le16(*(USHORT *)(&pAddHtInfo->AddHtInfo2));
-				*(USHORT *) (&pAddHtInfo->AddHtInfo3) = cpu2le16(*(USHORT *)(&pAddHtInfo->AddHtInfo3));
+				*(USHORT *) (&pAddHtInfo->AddHtInfo2) =
+				    cpu2le16(*(USHORT *)
+					     (&pAddHtInfo->AddHtInfo2));
+				*(USHORT *) (&pAddHtInfo->AddHtInfo3) =
+				    cpu2le16(*(USHORT *)
+					     (&pAddHtInfo->AddHtInfo3));
 
 				*pAddHtInfoLen = SIZE_ADD_HT_INFO_IE;
 			} else {
-				DBGPRINT(RT_DEBUG_WARN, ("%s():wrong IE_ADD_HT\n", __FUNCTION__));
+				DBGPRINT(RT_DEBUG_WARN,
+					 ("%s():wrong IE_ADD_HT\n",
+					  __FUNCTION__));
 			}
 
 			break;
@@ -196,30 +195,38 @@ BOOLEAN PeerAssocRspSanity(
 			if (pEid->Len == 1) {
 				*pNewExtChannelOffset = pEid->Octet[0];
 			} else {
-				DBGPRINT(RT_DEBUG_WARN, ("%s():wrong IE_SECONDARY_CH_OFFSET\n", __FUNCTION__));
+				DBGPRINT(RT_DEBUG_WARN,
+					 ("%s():wrong IE_SECONDARY_CH_OFFSET\n",
+					  __FUNCTION__));
 			}
 			break;
 
 #ifdef DOT11_VHT_AC
 		case IE_VHT_CAP:
 			if (pEid->Len == sizeof(VHT_CAP_IE)) {
-				NdisMoveMemory(&ie_list->vht_cap, pEid->Octet, sizeof(VHT_CAP_IE));
+				NdisMoveMemory(&ie_list->vht_cap, pEid->Octet,
+					       sizeof(VHT_CAP_IE));
 				ie_list->vht_cap_len = sizeof(VHT_CAP_IE);
 			} else {
-				DBGPRINT(RT_DEBUG_WARN, ("%s():wrong IE_VHT_CAP\n", __FUNCTION__));
+				DBGPRINT(RT_DEBUG_WARN,
+					 ("%s():wrong IE_VHT_CAP\n",
+					  __FUNCTION__));
 			}
 			break;
 
 		case IE_VHT_OP:
 			if (pEid->Len == sizeof(VHT_OP_IE)) {
-				NdisMoveMemory(&ie_list->vht_op, pEid->Octet, sizeof(VHT_OP_IE));
+				NdisMoveMemory(&ie_list->vht_op, pEid->Octet,
+					       sizeof(VHT_OP_IE));
 				ie_list->vht_op_len = sizeof(VHT_OP_IE);
-			}else {
-				DBGPRINT(RT_DEBUG_WARN, ("%s():wrong IE_VHT_OP\n", __FUNCTION__));
+			} else {
+				DBGPRINT(RT_DEBUG_WARN,
+					 ("%s():wrong IE_VHT_OP\n",
+					  __FUNCTION__));
 			}
 			break;
-#endif /* DOT11_VHT_AC */
-#endif /* DOT11_N_SUPPORT */
+#endif				/* DOT11_VHT_AC */
+#endif				/* DOT11_N_SUPPORT */
 
 		case IE_VENDOR_SPECIFIC:
 			/* handle WME PARAMTER ELEMENT */
@@ -250,20 +257,22 @@ BOOLEAN PeerAssocRspSanity(
 			}
 			break;
 		case IE_EXT_CAPABILITY:
-			if (pEid->Len >= 1)
-			{
+			if (pEid->Len >= 1) {
 				UCHAR MaxSize;
 				UCHAR MySize = sizeof(EXT_CAP_INFO_ELEMENT);
 
 				MaxSize = min(pEid->Len, MySize);
-				NdisMoveMemory(pExtCapInfo, &pEid->Octet[0], MaxSize);
-				DBGPRINT(RT_DEBUG_WARN, ("PeerAssocReqSanity - IE_EXT_CAPABILITY!\n"));
+				NdisMoveMemory(pExtCapInfo, &pEid->Octet[0],
+					       MaxSize);
+				DBGPRINT(RT_DEBUG_WARN,
+					 ("PeerAssocReqSanity - IE_EXT_CAPABILITY!\n"));
 			}
 			break;
 
 		default:
 			DBGPRINT(RT_DEBUG_TRACE,
-				 ("%s():ignore unrecognized EID = %d\n", __FUNCTION__, pEid->Eid));
+				 ("%s():ignore unrecognized EID = %d\n",
+				  __FUNCTION__, pEid->Eid));
 			break;
 		}
 
@@ -271,10 +280,8 @@ BOOLEAN PeerAssocRspSanity(
 		pEid = (PEID_STRUCT) ((UCHAR *) pEid + 2 + pEid->Len);
 	}
 
-
 	return TRUE;
 }
-
 
 /* 
     ==========================================================================
@@ -284,14 +291,12 @@ BOOLEAN PeerAssocRspSanity(
 
     ==========================================================================
  */
-BOOLEAN GetTimBit(
-	IN CHAR *Ptr,
-	IN USHORT Aid,
-	OUT UCHAR *TimLen,
-	OUT UCHAR *BcastFlag,
-	OUT UCHAR *DtimCount,
-	OUT UCHAR *DtimPeriod,
-	OUT UCHAR *MessageToMe)
+BOOLEAN GetTimBit(IN CHAR * Ptr,
+		  IN USHORT Aid,
+		  OUT UCHAR * TimLen,
+		  OUT UCHAR * BcastFlag,
+		  OUT UCHAR * DtimCount,
+		  OUT UCHAR * DtimPeriod, OUT UCHAR * MessageToMe)
 {
 	UCHAR BitCntl, N1, N2, MyByte, MyBit;
 	CHAR *IdxPtr;

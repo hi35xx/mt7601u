@@ -12,15 +12,15 @@ extern UCHAR EpToQueue[6];
 #define MAX_MLME_HANDLER_MEMORY 20
 #define CMD_RSP_BULK_SIZE	1024
 #ifdef USB_BULK_BUF_ALIGMENT
-//#define ALIGMENT_BULKAGGRE_SIZE	16
+//#define ALIGMENT_BULKAGGRE_SIZE       16
 #ifndef ALIGMENT_BULKAGGRE_SIZE
 //#undef
-#define ALIGMENT_BULKAGGRE_SIZE	7/* must >=  4*/
+#define ALIGMENT_BULKAGGRE_SIZE	7	/* must >=  4 */
 #endif
 #define MAX_ALIGMENT_TXBULK_SIZE			(LOCAL_TXBUF_SIZE*ALIGMENT_BULKAGGRE_SIZE)
 #define BULKOUT_SIZE	(LOCAL_TXBUF_SIZE * (ALIGMENT_BULKAGGRE_SIZE -2))
 
-#endif /* USB_BULK_BUF_ALIGMENT */
+#endif				/* USB_BULK_BUF_ALIGMENT */
 
 //#define BULKOUT_SIZE  0x00006000
 
@@ -30,7 +30,6 @@ extern UCHAR EpToQueue[6];
 #define CID1MASK		0x0000ff00
 #define CID2MASK		0x00ff0000
 #define CID3MASK		0xff000000
-
 
 /* Flags for Bulkflags control for bulk out data */
 /* */
@@ -52,8 +51,7 @@ extern UCHAR EpToQueue[6];
 /* TODO:move to ./ate/include/iface/ate_usb.h */
 #ifdef RALINK_ATE
 #define	fRTUSB_BULK_OUT_DATA_ATE			0x00100000
-#endif /* RALINK_ATE */
-
+#endif				/* RALINK_ATE */
 
 #define FREE_HTTX_RING(_pCookie, _pipeId, _txContext)			\
 {										\
@@ -66,20 +64,15 @@ extern UCHAR EpToQueue[6];
 
 #define NT_SUCCESS(status)			(((status) >=0) ? (TRUE):(FALSE))
 
-
-
-
 #define PIRP		PVOID
 /*#define NDIS_OID	UINT */
 #ifndef USB_ST_NOERROR
 #define USB_ST_NOERROR     0
 #endif
 
-
 /* vendor-specific control operations */
 #define CONTROL_TIMEOUT_JIFFIES ( (300 * OS_HZ) / 1000)
 /*#define UNLINK_TIMEOUT_MS		3 // os abl move */
-
 
 #define DEVICE_VENDOR_REQUEST_OUT       0x40
 #define DEVICE_VENDOR_REQUEST_IN        0xc0
@@ -91,4 +84,4 @@ extern UCHAR EpToQueue[6];
 #define RTUSB_CLEAR_BULK_FLAG(_M, _F)	((_M)->BulkFlags &= ~(_F))
 #define RTUSB_TEST_BULK_FLAG(_M, _F)	(((_M)->BulkFlags & (_F)) != 0)
 
-#endif /* __RTMP_USB_H__ */
+#endif				/* __RTMP_USB_H__ */

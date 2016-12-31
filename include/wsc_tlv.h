@@ -67,7 +67,7 @@
 #define WSC_ID_NW_KEY              0x1027
 #define WSC_ID_NW_KEY_INDEX        0x1028
 #define WSC_ID_NEW_DEVICE_NAME     0x1029
-#define WSC_ID_NEW_PWD             0x102A       
+#define WSC_ID_NEW_PWD             0x102A
 #define WSC_ID_OOB_DEV_PWD         0x102C
 #define WSC_ID_OS_VERSION          0x102D
 #define WSC_ID_POWER_LEVEL         0x102F
@@ -125,7 +125,7 @@
 #define WSC_ID_ENROLLEE_IPV4       0x1071
 #define WSC_ID_IPV4_SUBMASK_LIST   0x1072
 #define WSC_ID_IP_ADDR_CONF_METHOD 0x1073
-#endif /* IWSC_SUPPORT */
+#endif				/* IWSC_SUPPORT */
 
 /* WFA Vendor Extension Subelements */
 #define WFA_EXT_ID_VERSION2				0x00
@@ -241,9 +241,9 @@
 #define WSC_ID_MESSAGE_ACK       0x0D
 #define WSC_ID_MESSAGE_NACK      0x0E
 #define WSC_ID_MESSAGE_DONE      0x0F
-#define	WSC_ID_MESSAGE_EAP_REQ_ID		0x21	
-#define	WSC_ID_MESSAGE_EAP_REQ_START	0x22	
-#define	WSC_ID_MESSAGE_EAP_FAIL			0x23	
+#define	WSC_ID_MESSAGE_EAP_REQ_ID		0x21
+#define	WSC_ID_MESSAGE_EAP_REQ_START	0x22
+#define	WSC_ID_MESSAGE_EAP_FAIL			0x23
 #define	WSC_ID_MESSAGE_UNKNOWN			0xFF
 
 /* Device Type categories for primary and secondary device types */
@@ -280,10 +280,9 @@
 #define WSC_DEVICE_TYPE_SUB_CAT_GAM_PS          3
 #define WSC_DEVICE_TYPE_SUB_CAT_PHONE_WM        1
 
-typedef	struct _WSC_TLV_0B {
-	/*USHORT	tag;*/
-	USHORT	len;
+typedef struct _WSC_TLV_0B {
+	/*USHORT        tag; */
+	USHORT len;
 } WSC_TLV_0B, *PWSC_TLV_0B;
 
-#endif	/* __WSC_TLV_H__ */
-
+#endif				/* __WSC_TLV_H__ */

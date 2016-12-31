@@ -28,5 +28,3 @@
 	Sean Wang	2009-08-12		Create
 	John Li		2009-12-23		Modified
 */
-
-

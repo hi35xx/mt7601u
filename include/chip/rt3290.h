@@ -41,9 +41,7 @@
 
 struct _RTMP_ADAPTER;
 
-
 #define NIC3290_PCIe_DEVICE_ID 0x3290
-
 
 #define RT3290_CHECK_SW_EEP_BUSY(pAd)	\
 {	\
@@ -83,32 +81,21 @@ struct _RTMP_ADAPTER;
 	}	\
 }
 
+VOID MlmeAntSelection(IN struct _RTMP_ADAPTER *pAd,
+		      IN ULONG AccuTxTotalCnt,
+		      IN ULONG TxErrorRatio, IN ULONG TxSuccess, IN CHAR Rssi);
 
-VOID MlmeAntSelection(
-	IN struct _RTMP_ADAPTER *pAd,
-	IN ULONG	 AccuTxTotalCnt,
-	IN ULONG	 TxErrorRatio,
-	IN ULONG TxSuccess,
-	IN CHAR Rssi);
+INT RT3290_eeprom_access_grant(IN struct _RTMP_ADAPTER *pAd,
+			       IN BOOLEAN bGetCtrl);
 
-INT RT3290_eeprom_access_grant(
-	IN struct _RTMP_ADAPTER *pAd,
-	IN BOOLEAN bGetCtrl);
-	
-VOID RTMP_MAC_PWRSV_EN(
-	IN struct _RTMP_ADAPTER *pAd,
-	IN BOOLEAN EnterIdle,
-	IN BOOLEAN use40M);
+VOID RTMP_MAC_PWRSV_EN(IN struct _RTMP_ADAPTER *pAd,
+		       IN BOOLEAN EnterIdle, IN BOOLEAN use40M);
 
-VOID RTMPEnableWlan(
-	IN struct _RTMP_ADAPTER *pAd,
-	IN BOOLEAN bOn,
-	IN BOOLEAN bResetWLAN);
+VOID RTMPEnableWlan(IN struct _RTMP_ADAPTER *pAd,
+		    IN BOOLEAN bOn, IN BOOLEAN bResetWLAN);
 
-VOID RT3290_Init(
-	IN struct _RTMP_ADAPTER *pAd);
+VOID RT3290_Init(IN struct _RTMP_ADAPTER *pAd);
 
-#endif /* RT3290 */
+#endif				/* RT3290 */
 
-#endif /* __RT5390_H__ */
-
+#endif				/* __RT5390_H__ */

@@ -35,10 +35,9 @@ enum MCU_TYPE {
 	ANDES,
 };
 
-
 struct _RTMP_ADAPTER;
 
-typedef void (*CMD_RSP_HANDLER)(struct _RTMP_ADAPTER *pAd, UCHAR *Data);
+typedef void (*CMD_RSP_HANDLER) (struct _RTMP_ADAPTER * pAd, UCHAR * Data);
 
 /*
  * CMD Unit (8051, Andes, ...,and etc)
@@ -65,20 +64,18 @@ struct CMD_UNIT {
 	} u;
 };
 
-
 struct MCU_CTRL {
 	UCHAR CmdSeq;
 	NDIS_SPIN_LOCK CmdRspEventListLock;
 	DL_LIST CmdRspEventList;
 };
 
-
 struct CMD_RSP_EVENT {
 	DL_LIST List;
-	UCHAR CmdSeq;	
+	UCHAR CmdSeq;
 	UINT32 Timeout;
 	BOOLEAN NeedWait;
-	PVOID	AckDone;
+	PVOID AckDone;
 	UCHAR **RspPayload;
 	USHORT *RspPayloadLen;
 };
@@ -86,8 +83,6 @@ struct CMD_RSP_EVENT {
 VOID ChipOpsMCUHook(struct _RTMP_ADAPTER *pAd, enum MCU_TYPE MCUType);
 VOID MCUCtrlInit(struct _RTMP_ADAPTER *pAd);
 VOID MCUCtrlExit(struct _RTMP_ADAPTER *pAd);
-NDIS_STATUS isMCUNeedToLoadFIrmware(
-        struct _RTMP_ADAPTER *pAd);
+NDIS_STATUS isMCUNeedToLoadFIrmware(struct _RTMP_ADAPTER *pAd);
 
-
-#endif 
+#endif

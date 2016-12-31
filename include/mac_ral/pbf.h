@@ -29,25 +29,22 @@
 #ifndef __PBF_H__
 #define __PBF_H__
 
-
 #ifdef RLT_MAC
 #include "mac_ral/nmac/ral_nmac_pbf.h"
-#endif /* RLT_MAC */
+#endif				/* RLT_MAC */
 
 #ifdef RTMP_MAC
 #include "mac_ral/omac/ral_omac_pbf.h"
-#endif /* RTMP_MAC */
-
+#endif				/* RTMP_MAC */
 
 /* ================================================================================= */
 /* Register format  for PBF                                                                                                                                                     */
 /* ================================================================================= */
 
-
 #define WPDMA_GLO_CFG 	0x208
 #ifdef RT_BIG_ENDIAN
-typedef	union _WPDMA_GLO_CFG_STRUC	{
-	struct	{
+typedef union _WPDMA_GLO_CFG_STRUC {
+	struct {
 		UINT32 rx_2b_offset:1;
 		UINT32 clk_gate_dis:1;
 		UINT32 rsv:14;
@@ -59,11 +56,11 @@ typedef	union _WPDMA_GLO_CFG_STRUC	{
 		UINT32 EnableRxDMA:1;
 		UINT32 TxDMABusy:1;
 		UINT32 EnableTxDMA:1;
-	}	field;
+	} field;
 	UINT32 word;
-}WPDMA_GLO_CFG_STRUC, *PWPDMA_GLO_CFG_STRUC;
+} WPDMA_GLO_CFG_STRUC, *PWPDMA_GLO_CFG_STRUC;
 #else
-typedef	union _WPDMA_GLO_CFG_STRUC	{
+typedef union _WPDMA_GLO_CFG_STRUC {
 	struct {
 		UINT32 EnableTxDMA:1;
 		UINT32 TxDMABusy:1;
@@ -81,13 +78,10 @@ typedef	union _WPDMA_GLO_CFG_STRUC	{
 } WPDMA_GLO_CFG_STRUC, *PWPDMA_GLO_CFG_STRUC;
 #endif
 
-
 #define PBF_CTRL			0x0410
 #define MCU_INT_STA		0x0414
 #define MCU_INT_ENA	0x0418
 #define TXRXQ_PCNT		0x0438
 #define PBF_DBG			0x043c
 
-
-#endif /* __PBF_H__ */
-
+#endif				/* __PBF_H__ */

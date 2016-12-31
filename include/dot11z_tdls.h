@@ -31,7 +31,6 @@
 #ifndef __DOT11Z_TDLS_H
 #define __DOT11Z_TDLS_H
 
-
 /* TDLS definitions in 802.11z D13.0 specification */
 #define	PROTO_NAME_TDLS				2
 #define	TDLS_AKM_SUITE_1X			5	// <ANA>
@@ -42,12 +41,12 @@
 #define TDLS_ACTION_CODE_SETUP_RESPONSE				1
 #define TDLS_ACTION_CODE_SETUP_CONFIRM				2
 #define TDLS_ACTION_CODE_TEARDOWN					3
-#define TDLS_ACTION_CODE_PEER_TRAFFIC_INDICATION	4 /* for TDLS UAPSD */
+#define TDLS_ACTION_CODE_PEER_TRAFFIC_INDICATION	4	/* for TDLS UAPSD */
 #define TDLS_ACTION_CODE_CHANNEL_SWITCH_REQUEST		5
 #define TDLS_ACTION_CODE_CHANNEL_SWITCH_RESPONSE	6
 #define TDLS_ACTION_CODE_PEER_PSM_REQUEST			7
 #define TDLS_ACTION_CODE_PEER_PSM_RESPONSE			8
-#define TDLS_ACTION_CODE_PEER_TRAFFIC_RESPONSE		9 /* for TDLS UAPSD */
+#define TDLS_ACTION_CODE_PEER_TRAFFIC_RESPONSE		9	/* for TDLS UAPSD */
 #define TDLS_ACTION_CODE_DISCOVERY_REQUEST			10
 
 /* Status codes defined in 802.11zD13.0 specification. */
@@ -69,16 +68,15 @@
 #define IE_TDLS_PTI_CONTROL				105
 #define IE_TDLS_PU_BUFFER_STATUS		106
 
-
 #define TDLS_ELM_LEN_LINK_IDENTIFIER		18
 #define TDLS_ELM_LEN_WAKEUP_SCHEDULE		18
 #define TDLS_ELM_LEN_CHANNEL_SWITCH_TIMING	6
 #define TDLS_ELM_LEN_PTI_CONTROL			5
 #define TDLS_ELM_LEN_BUFFER_STATUS			3
 
-#define TDLS_KEY_TIMEOUT			3600      /* unit: sec */
+#define TDLS_KEY_TIMEOUT			3600	/* unit: sec */
 
-#define TDLS_KEY_TIMEOUT			300      // unit: sec
+#define TDLS_KEY_TIMEOUT			300	// unit: sec
 #define TDLS_LEY_LIFETIME			3600
 
 #define FT_MIC_LEN					16
@@ -91,7 +89,6 @@
 #define IE_FT_RIC_DATA			57
 #define IE_FT_RIC_DESCRIPTOR	75
 
-
 /* RIC Type */
 #define FT_RIC_TYPE_BA			1
 
@@ -99,20 +96,18 @@
 #define FT_AKM_SUITE_1X		3
 #define FT_AKM_SUITE_PSK	4
 
-typedef union GNU_PACKED _FT_MIC_CTR_FIELD
-{
+typedef union GNU_PACKED _FT_MIC_CTR_FIELD {
 	/*
-		IECnt: contains the number of IEs
-		that are included int eht MIC calculation.
-	*/
-	struct GNU_PACKED
-	{
+	   IECnt: contains the number of IEs
+	   that are included int eht MIC calculation.
+	 */
+	struct GNU_PACKED {
 #ifdef RT_BIG_ENDIAN
-	UINT16 IECnt:8;
-	UINT16 :8;
+		UINT16 IECnt:8;
+		 UINT16:8;
 #else
-	UINT16 :8;
-	UINT16 IECnt:8;
+		 UINT16:8;
+		UINT16 IECnt:8;
 #endif
 	} field;
 	UINT16 word;
@@ -121,61 +116,54 @@ typedef union GNU_PACKED _FT_MIC_CTR_FIELD
 /*
 ** FTIE: Fast Transition IE.
 */
-typedef struct GNU_PACKED _FT_FTIE
-{
-	FT_MIC_CTR_FIELD MICCtr;		/* 2 Octects. */
-	UINT8 MIC[FT_MIC_LEN];			/* 16 Octects. */
-	UINT8 ANonce[FT_NONCE_LEN];		/* 32 Octects. */
-	UINT8 SNonce[FT_NONCE_LEN];		/* 32 Octects. */
-	UINT8 Option[0];				/* 1:R1KHID, 2:GTK, 3:ROKHId, else:Res */ 
+typedef struct GNU_PACKED _FT_FTIE {
+	FT_MIC_CTR_FIELD MICCtr;	/* 2 Octects. */
+	UINT8 MIC[FT_MIC_LEN];	/* 16 Octects. */
+	UINT8 ANonce[FT_NONCE_LEN];	/* 32 Octects. */
+	UINT8 SNonce[FT_NONCE_LEN];	/* 32 Octects. */
+	UINT8 Option[0];	/* 1:R1KHID, 2:GTK, 3:ROKHId, else:Res */
 } FT_FTIE, *PFT_FTIE;
 
 /*
 ** Timeout Interval IE.
 */
-typedef enum _FT_TIMEOUT_INTERVAL_TYPE
-{
+typedef enum _FT_TIMEOUT_INTERVAL_TYPE {
 	REASSOC_DEADLINE_INTERVAL = 1,	/* TUs */
-	KEY_LIFETIME_INTERVAL,				/* seconds. */
+	KEY_LIFETIME_INTERVAL,	/* seconds. */
 	RESERVED_INTERVAL
 } FT_TIMEOUT_INTERVAL_TYPE, *PFT_TIMEOUT_INTERVAL_TYPE;
 
-typedef struct GNU_PACKED _FT_TIMEOUT_INTERVAL_IE
-{
+typedef struct GNU_PACKED _FT_TIMEOUT_INTERVAL_IE {
 	UINT8 TimeoutIntervalType;
 	UINT32 TimeoutIntervalValue;
 } FT_TIMEOUT_INTERVAL_IE, *PFT_TIMEOUT_INTERVAL_IE;
 
-typedef struct GNU_PACKED _TDLS_LINK_IDENT_ELEMENT{
-	UCHAR	BSSID[MAC_ADDR_LEN];
-	UCHAR	InitiatorAddr[MAC_ADDR_LEN];
-	UCHAR	ResponderAddr[MAC_ADDR_LEN];
-}TDLS_LINK_IDENT_ELEMENT, *PTDLS_LINK_IDENT_ELEMENT;
+typedef struct GNU_PACKED _TDLS_LINK_IDENT_ELEMENT {
+	UCHAR BSSID[MAC_ADDR_LEN];
+	UCHAR InitiatorAddr[MAC_ADDR_LEN];
+	UCHAR ResponderAddr[MAC_ADDR_LEN];
+} TDLS_LINK_IDENT_ELEMENT, *PTDLS_LINK_IDENT_ELEMENT;
 
-typedef struct GNU_PACKED _TDLS_CH_SWITCH_TIMING_ELEMENT{
-	USHORT	ChSwitchTime;
-	USHORT	ChSwitchTimeOut;
-}TDLS_CH_SWITCH_TIMING_ELEMENT, *PTDLS_CH_SWITCH_TIMING_ELEMENT;
+typedef struct GNU_PACKED _TDLS_CH_SWITCH_TIMING_ELEMENT {
+	USHORT ChSwitchTime;
+	USHORT ChSwitchTimeOut;
+} TDLS_CH_SWITCH_TIMING_ELEMENT, *PTDLS_CH_SWITCH_TIMING_ELEMENT;
 
-typedef struct GNU_PACKED _TDLS_WAKEUP_SCHEDULE_IE
-{
-	UINT32	Interval;
-	UINT32	AwakeDuration;
-	UINT16	IdleCount;
+typedef struct GNU_PACKED _TDLS_WAKEUP_SCHEDULE_IE {
+	UINT32 Interval;
+	UINT32 AwakeDuration;
+	UINT16 IdleCount;
 } TDLS_WAKEUP_SCHEDULE_IE, *PTDLS_WAKEUP_SCHEDULE_IE;
 
-typedef struct GNU_PACKED _TDLS_AP_PHY_DATA_RATE_IE
-{
-	UINT32	AP_PHY_Data_Rate;
+typedef struct GNU_PACKED _TDLS_AP_PHY_DATA_RATE_IE {
+	UINT32 AP_PHY_Data_Rate;
 } TDLS_AP_PHY_DATA_RATE_IE, *PTDLS_AP_PHY_DATA_RATE_IE;
 
-typedef struct GNU_PACKED _TDLS_CHANNEL_SWITCH_TIMING_IE
-{
-	UINT16	SwitchTime;
-	UINT16	SwitchTimeout;
+typedef struct GNU_PACKED _TDLS_CHANNEL_SWITCH_TIMING_IE {
+	UINT16 SwitchTime;
+	UINT16 SwitchTimeout;
 } TDLS_CHANNEL_SWITCH_TIMING_IE, *PTDLS_CHANNEL_SWITCH_TIMING_IE;
 
-#endif /* __DOT11Z_TDLS_H */
+#endif				/* __DOT11Z_TDLS_H */
 
-#endif /* DOT11Z_TDLS_SUPPORT */
-
+#endif				/* DOT11Z_TDLS_SUPPORT */

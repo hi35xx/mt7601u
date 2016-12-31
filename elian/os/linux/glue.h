@@ -6,4 +6,3 @@ int msc_proc_create(void *priv);
 void msc_proc_destroy(void);
 
 #endif
-

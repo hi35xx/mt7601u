@@ -28,25 +28,20 @@
 */
 #include "rt_config.h"
 
-static VOID P2PCtrlDiscoveryAction(
-	IN PRTMP_ADAPTER pAd,
-	IN MLME_QUEUE_ELEM *Elem);
+static VOID P2PCtrlDiscoveryAction(IN PRTMP_ADAPTER pAd,
+				   IN MLME_QUEUE_ELEM * Elem);
 
-static VOID P2PCtrlDiscoveryCancelAction(
-	IN PRTMP_ADAPTER pAd,
-	IN MLME_QUEUE_ELEM *Elem);
+static VOID P2PCtrlDiscoveryCancelAction(IN PRTMP_ADAPTER pAd,
+					 IN MLME_QUEUE_ELEM * Elem);
 
-static VOID P2PCtrlDiscoveryDoneAction(
-	IN PRTMP_ADAPTER pAd,
-	IN MLME_QUEUE_ELEM *Elem);
+static VOID P2PCtrlDiscoveryDoneAction(IN PRTMP_ADAPTER pAd,
+				       IN MLME_QUEUE_ELEM * Elem);
 
-static VOID P2PCtrlGroupFormationAction(
-	IN PRTMP_ADAPTER pAd,
-	IN MLME_QUEUE_ELEM *Elem);
+static VOID P2PCtrlGroupFormationAction(IN PRTMP_ADAPTER pAd,
+					IN MLME_QUEUE_ELEM * Elem);
 
-static VOID P2PCtrlGroupFormationDoneAction(
-	IN PRTMP_ADAPTER pAd,
-	IN MLME_QUEUE_ELEM *Elem);
+static VOID P2PCtrlGroupFormationDoneAction(IN PRTMP_ADAPTER pAd,
+					    IN MLME_QUEUE_ELEM * Elem);
 
 /*
 	==========================================================================
@@ -58,8 +53,8 @@ static VOID P2PCtrlGroupFormationDoneAction(
 		the state machine looks like the following
 	==========================================================================
  */
-	
- #ifdef RELEAE_EXCLUDE
+
+#ifdef RELEAE_EXCLUDE
 /*
 							Scan command			P2P Periodic				P2P Scan							CntlOidScanProc 			MlmeCntlMachinePerformAction						  P2P Periodic
 	P2P_ENABLE_LISTEN_ONLY ---------------> P2P_IDLE -----------> P2P_SEARCH ---------> P2P_SEARCH_COMMAND ---------------> P2P_SEARCH ---------------------------> P2P_SEARCH_COMPLETE -----------> P2P_IDLE
@@ -80,7 +75,7 @@ static VOID P2PCtrlGroupFormationDoneAction(
 		. Init ScanNextRound
 		. change in P2P_IDLE
 */
-	
+
 /*
 
 	P2P_CTRL_IDLE : do not scan / search / listen.
@@ -95,32 +90,51 @@ static VOID P2PCtrlGroupFormationDoneAction(
 					After AsicKey write done, can change to IDLE state.
 
 */
-#endif /* RELEASE_EXCLUDE */
-	 
-VOID P2PCtrlStateMachineInit(
-	IN PRTMP_ADAPTER pAd,
-	IN STATE_MACHINE *Sm,
-	OUT STATE_MACHINE_FUNC Trans[])
+#endif				/* RELEASE_EXCLUDE */
+
+VOID P2PCtrlStateMachineInit(IN PRTMP_ADAPTER pAd,
+			     IN STATE_MACHINE * Sm,
+			     OUT STATE_MACHINE_FUNC Trans[])
 {
-	StateMachineInit(Sm, (STATE_MACHINE_FUNC*)Trans, (ULONG)P2P_CTRL_MAX_STATES,
-		(ULONG)P2P_CTRL_MAX_EVENTS, (STATE_MACHINE_FUNC)Drop, P2P_CTRL_IDLE, P2P_CTRL_IDLE);
+	StateMachineInit(Sm, (STATE_MACHINE_FUNC *) Trans,
+			 (ULONG) P2P_CTRL_MAX_STATES,
+			 (ULONG) P2P_CTRL_MAX_EVENTS, (STATE_MACHINE_FUNC) Drop,
+			 P2P_CTRL_IDLE, P2P_CTRL_IDLE);
 
 	/* P2P_CTRL_IDLE state */
-	StateMachineSetAction(Sm, P2P_CTRL_IDLE, P2P_CTRL_DISC_EVT, (STATE_MACHINE_FUNC)P2PCtrlDiscoveryAction);
-	StateMachineSetAction(Sm, P2P_CTRL_IDLE, P2P_CTRL_GO_NEGO_EVT, (STATE_MACHINE_FUNC)P2PCtrlGroupFormationAction);
+	StateMachineSetAction(Sm, P2P_CTRL_IDLE, P2P_CTRL_DISC_EVT,
+			      (STATE_MACHINE_FUNC) P2PCtrlDiscoveryAction);
+	StateMachineSetAction(Sm, P2P_CTRL_IDLE, P2P_CTRL_GO_NEGO_EVT,
+			      (STATE_MACHINE_FUNC) P2PCtrlGroupFormationAction);
 
 	/* P2P_CTRL_DISCOVERY state */
-	StateMachineSetAction(Sm, P2P_CTRL_DISCOVERY, P2P_CTRL_DISC_EVT, (STATE_MACHINE_FUNC)P2PCtrlDiscoveryAction);
-	StateMachineSetAction(Sm, P2P_CTRL_DISCOVERY, P2P_CTRL_DISC_CANL_EVT, (STATE_MACHINE_FUNC)P2PCtrlDiscoveryCancelAction);
-	StateMachineSetAction(Sm, P2P_CTRL_DISCOVERY, P2P_CTRL_DISC_DONE_EVT, (STATE_MACHINE_FUNC)P2PCtrlDiscoveryDoneAction);
-	StateMachineSetAction(Sm, P2P_CTRL_DISCOVERY, P2P_CTRL_GO_NEGO_EVT, (STATE_MACHINE_FUNC)P2PCtrlGroupFormationAction);
+	StateMachineSetAction(Sm, P2P_CTRL_DISCOVERY, P2P_CTRL_DISC_EVT,
+			      (STATE_MACHINE_FUNC) P2PCtrlDiscoveryAction);
+	StateMachineSetAction(Sm, P2P_CTRL_DISCOVERY, P2P_CTRL_DISC_CANL_EVT,
+			      (STATE_MACHINE_FUNC)
+			      P2PCtrlDiscoveryCancelAction);
+	StateMachineSetAction(Sm, P2P_CTRL_DISCOVERY, P2P_CTRL_DISC_DONE_EVT,
+			      (STATE_MACHINE_FUNC) P2PCtrlDiscoveryDoneAction);
+	StateMachineSetAction(Sm, P2P_CTRL_DISCOVERY, P2P_CTRL_GO_NEGO_EVT,
+			      (STATE_MACHINE_FUNC) P2PCtrlGroupFormationAction);
 
 	/* P2P_CTRL_GROUP_FORMATION state */
-	StateMachineSetAction(Sm, P2P_CTRL_GROUP_FORMATION, P2P_CTRL_GO_NEGO_EVT, (STATE_MACHINE_FUNC)P2PCtrlGroupFormationAction);
-	StateMachineSetAction(Sm, P2P_CTRL_GROUP_FORMATION, P2P_CTRL_GO_NEGO_CANL_EVT, (STATE_MACHINE_FUNC)P2PCtrlGroupFormationDoneAction);
-	StateMachineSetAction(Sm, P2P_CTRL_GROUP_FORMATION, P2P_CTRL_DISC_CANL_EVT, (STATE_MACHINE_FUNC)P2PCtrlDiscoveryDoneAction);
-	StateMachineSetAction(Sm, P2P_CTRL_GROUP_FORMATION, P2P_CTRL_GO_NEGO_DONE_EVT, (STATE_MACHINE_FUNC)P2PCtrlGroupFormationDoneAction);
-	StateMachineSetAction(Sm, P2P_CTRL_GROUP_FORMATION, P2P_CTRL_DISC_EVT, (STATE_MACHINE_FUNC)P2PCtrlDiscoveryAction);
+	StateMachineSetAction(Sm, P2P_CTRL_GROUP_FORMATION,
+			      P2P_CTRL_GO_NEGO_EVT,
+			      (STATE_MACHINE_FUNC) P2PCtrlGroupFormationAction);
+	StateMachineSetAction(Sm, P2P_CTRL_GROUP_FORMATION,
+			      P2P_CTRL_GO_NEGO_CANL_EVT,
+			      (STATE_MACHINE_FUNC)
+			      P2PCtrlGroupFormationDoneAction);
+	StateMachineSetAction(Sm, P2P_CTRL_GROUP_FORMATION,
+			      P2P_CTRL_DISC_CANL_EVT,
+			      (STATE_MACHINE_FUNC) P2PCtrlDiscoveryDoneAction);
+	StateMachineSetAction(Sm, P2P_CTRL_GROUP_FORMATION,
+			      P2P_CTRL_GO_NEGO_DONE_EVT,
+			      (STATE_MACHINE_FUNC)
+			      P2PCtrlGroupFormationDoneAction);
+	StateMachineSetAction(Sm, P2P_CTRL_GROUP_FORMATION, P2P_CTRL_DISC_EVT,
+			      (STATE_MACHINE_FUNC) P2PCtrlDiscoveryAction);
 
 	/* P2P_CTRL_DONE state */
 	/*StateMachineSetAction(Sm, P2P_CTRL_DONE, Event, (STATE_MACHINE_FUNC)Action); */
@@ -132,47 +146,48 @@ VOID P2PCtrlStateMachineInit(
 }
 
 /* Ctrl Action */
-static VOID P2PCtrlDiscoveryAction(
-	IN PRTMP_ADAPTER pAd,
-	IN MLME_QUEUE_ELEM *Elem)
+static VOID P2PCtrlDiscoveryAction(IN PRTMP_ADAPTER pAd,
+				   IN MLME_QUEUE_ELEM * Elem)
 {
 	P2P_CTRL_STATE *pCurrState = &(pAd->P2pCfg.CtrlCurrentState);
 
 	DBGPRINT(RT_DEBUG_TRACE, ("%s:: \n", __FUNCTION__));
 
 	if (P2P_GO_ON(pAd))
-		MlmeEnqueue(pAd, P2P_DISC_STATE_MACHINE, P2P_DISC_LISTEN_CMD_EVT, 0, NULL, 0);
+		MlmeEnqueue(pAd, P2P_DISC_STATE_MACHINE,
+			    P2P_DISC_LISTEN_CMD_EVT, 0, NULL, 0);
 	else
-	MlmeEnqueue(pAd, P2P_DISC_STATE_MACHINE, P2P_DISC_SCAN_CMD_EVT, 0, NULL, 0);
+		MlmeEnqueue(pAd, P2P_DISC_STATE_MACHINE, P2P_DISC_SCAN_CMD_EVT,
+			    0, NULL, 0);
 
 	*pCurrState = P2P_CTRL_DISCOVERY;
 }
 
-static VOID P2PCtrlDiscoveryCancelAction(
-	IN PRTMP_ADAPTER pAd,
-	IN MLME_QUEUE_ELEM *Elem)
+static VOID P2PCtrlDiscoveryCancelAction(IN PRTMP_ADAPTER pAd,
+					 IN MLME_QUEUE_ELEM * Elem)
 {
 	P2P_CTRL_STATE *pCurrState = &(pAd->P2pCfg.CtrlCurrentState);
 
 	DBGPRINT(RT_DEBUG_TRACE, ("%s::\n", __FUNCTION__));
 	/* update Discovery State Machine state. */
-	MlmeEnqueue(pAd, P2P_DISC_STATE_MACHINE, P2P_DISC_CANL_CMD_EVT, 0, NULL, 0);
+	MlmeEnqueue(pAd, P2P_DISC_STATE_MACHINE, P2P_DISC_CANL_CMD_EVT, 0, NULL,
+		    0);
 	MlmeHandler(pAd);
 
 	*pCurrState = P2P_CTRL_IDLE;
 }
 
-static VOID P2PCtrlDiscoveryDoneAction(
-	IN PRTMP_ADAPTER pAd,
-	IN MLME_QUEUE_ELEM *Elem)
+static VOID P2PCtrlDiscoveryDoneAction(IN PRTMP_ADAPTER pAd,
+				       IN MLME_QUEUE_ELEM * Elem)
 {
-	/*PRT_P2P_CONFIG pP2PCtrl = &pAd->P2pCfg;*/
+	/*PRT_P2P_CONFIG pP2PCtrl = &pAd->P2pCfg; */
 	P2P_CTRL_STATE *pCurrState = &(pAd->P2pCfg.CtrlCurrentState);
 
-	DBGPRINT(RT_DEBUG_TRACE, ("%s::  P2P Device Discovery Finished, found total %d p2p devices.\n", __FUNCTION__, pAd->P2pTable.ClientNumber));
+	DBGPRINT(RT_DEBUG_TRACE,
+		 ("%s::  P2P Device Discovery Finished, found total %d p2p devices.\n",
+		  __FUNCTION__, pAd->P2pTable.ClientNumber));
 
-	if (RTMP_TEST_FLAG(pAd, fRTMP_ADAPTER_BSS_SCAN_IN_PROGRESS))
-	{
+	if (RTMP_TEST_FLAG(pAd, fRTMP_ADAPTER_BSS_SCAN_IN_PROGRESS)) {
 		BOOLEAN bCancelled;
 		/* Stop Scan and resume */
 		RTMPCancelTimer(&pAd->MlmeAux.ScanTimer, &bCancelled);
@@ -184,13 +199,13 @@ static VOID P2PCtrlDiscoveryDoneAction(
 	P2PInitListenTimer(pAd, 0);
 	P2PInitNextScanTimer(pAd, 0);
 	/* update Discovery State Machine state. */
-	MlmeEnqueue(pAd, P2P_DISC_STATE_MACHINE, P2P_DISC_CANL_CMD_EVT, 0, NULL, 0);
+	MlmeEnqueue(pAd, P2P_DISC_STATE_MACHINE, P2P_DISC_CANL_CMD_EVT, 0, NULL,
+		    0);
 	*pCurrState = P2P_CTRL_IDLE;
 }
 
-static VOID P2PCtrlGroupFormationAction(
-	IN PRTMP_ADAPTER pAd,
-	IN MLME_QUEUE_ELEM *Elem)
+static VOID P2PCtrlGroupFormationAction(IN PRTMP_ADAPTER pAd,
+					IN MLME_QUEUE_ELEM * Elem)
 {
 	P2P_CTRL_STATE *pCurrState = &(pAd->P2pCfg.CtrlCurrentState);
 
@@ -198,18 +213,16 @@ static VOID P2PCtrlGroupFormationAction(
 	*pCurrState = P2P_CTRL_GROUP_FORMATION;
 }
 
-static VOID P2PCtrlGroupFormationDoneAction(
-	IN PRTMP_ADAPTER pAd,
-	IN MLME_QUEUE_ELEM *Elem)
+static VOID P2PCtrlGroupFormationDoneAction(IN PRTMP_ADAPTER pAd,
+					    IN MLME_QUEUE_ELEM * Elem)
 {
-	/*PRT_P2P_CONFIG pP2PCtrl = &pAd->P2pCfg;*/
+	/*PRT_P2P_CONFIG pP2PCtrl = &pAd->P2pCfg; */
 	P2P_CTRL_STATE *pCurrState = &(pAd->P2pCfg.CtrlCurrentState);
 
 	DBGPRINT(RT_DEBUG_ERROR, ("%s::\n", __FUNCTION__));
-	/*pAd->StaCfg.bAutoReconnect = TRUE;*/
-	DBGPRINT(RT_DEBUG_ERROR, ("auto re-conect to GO[%s]\n", pAd->MlmeAux.Ssid));
+	/*pAd->StaCfg.bAutoReconnect = TRUE; */
+	DBGPRINT(RT_DEBUG_ERROR,
+		 ("auto re-conect to GO[%s]\n", pAd->MlmeAux.Ssid));
 
 	*pCurrState = P2P_CTRL_DONE;
 }
-
-

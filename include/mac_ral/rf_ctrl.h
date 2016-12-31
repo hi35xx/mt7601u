@@ -31,12 +31,11 @@
 
 #ifdef RTMP_MAC
 #include "mac_ral/omac/ral_omac_rf_ctrl.h"
-#endif /* RTMP_MAC */
+#endif				/* RTMP_MAC */
 
 #ifdef RLT_MAC
 
-#endif /* RLT_MAC */
-
+#endif				/* RLT_MAC */
 
 /* ================================================================================= */
 /* Register format  for RFCTRL                                                                                                                                               */
@@ -82,7 +81,7 @@
 	RF_CSR_DATA:8
 			DATA written to/read from RF
 */
-typedef	union _RLT_RF_CSR_CFG {
+typedef union _RLT_RF_CSR_CFG {
 #ifdef RT_BIG_ENDIAN
 	struct {
 		UINT RF_CSR_KICK:1;
@@ -94,7 +93,7 @@ typedef	union _RLT_RF_CSR_CFG {
 #else
 		UINT RF_CSR_REG_BANK:3;
 		UINT RF_CSR_REG_ID:7;
-#endif /* MT7601 */
+#endif				/* MT7601 */
 		UINT RF_CSR_DATA:8;
 	} field;
 #else
@@ -106,41 +105,39 @@ typedef	union _RLT_RF_CSR_CFG {
 #else
 		UINT RF_CSR_REG_ID:7;
 		UINT RF_CSR_REG_BANK:3;
-#endif /* MT7601 */
+#endif				/* MT7601 */
 		UINT rsv:12;
 		UINT RF_CSR_WR:1;
 		UINT RF_CSR_KICK:1;
 	} field;
-#endif /* RT_BIG_ENDIAN */
+#endif				/* RT_BIG_ENDIAN */
 	UINT word;
-}RLT_RF_CSR_CFG;
-#endif /* RLT_RF */
+} RLT_RF_CSR_CFG;
+#endif				/* RLT_RF */
 
-
-typedef	union _RF_CSR_CFG_STRUC {
+typedef union _RF_CSR_CFG_STRUC {
 #ifdef RT_BIG_ENDIAN
 	struct {
-		UINT32	Rsvd1:14;				/* Reserved */
-		UINT32	RF_CSR_KICK:1;			/* kick RF register read/write */
-		UINT32	RF_CSR_WR:1;			/* 0: read  1: write */
-		UINT32	TESTCSR_RFACC_REGNUM:8;	/* RF register ID */
-		UINT32	RF_CSR_DATA:8;			/* DATA */
+		UINT32 Rsvd1:14;	/* Reserved */
+		UINT32 RF_CSR_KICK:1;	/* kick RF register read/write */
+		UINT32 RF_CSR_WR:1;	/* 0: read  1: write */
+		UINT32 TESTCSR_RFACC_REGNUM:8;	/* RF register ID */
+		UINT32 RF_CSR_DATA:8;	/* DATA */
 	} field;
 #else
 	struct {
-		UINT32	RF_CSR_DATA:8;
-		UINT32	TESTCSR_RFACC_REGNUM:8;
-		UINT32	RF_CSR_WR:1;
-		UINT32	RF_CSR_KICK:1;
-		UINT32	Rsvd1:14;
+		UINT32 RF_CSR_DATA:8;
+		UINT32 TESTCSR_RFACC_REGNUM:8;
+		UINT32 RF_CSR_WR:1;
+		UINT32 RF_CSR_KICK:1;
+		UINT32 Rsvd1:14;
 	} field;
-#endif /* RT_BIG_ENDIAN */
+#endif				/* RT_BIG_ENDIAN */
 	UINT32 word;
-}RF_CSR_CFG_STRUC;
+} RF_CSR_CFG_STRUC;
 
 #define RF_BYPASS_0		0x0504
 
 #define RF_SETTING_0	0x050C
 
-#endif /* __RF_CTRL_H__ */
-
+#endif				/* __RF_CTRL_H__ */

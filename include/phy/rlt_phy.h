@@ -3,10 +3,8 @@
 
 */
 
-
 #ifndef __RLT_PHY_H__
 #define __RLT_PHY_H_
-
 
 #define BBP_CORE	0x2000
 #define BBP_IBI		0x2100
@@ -22,7 +20,6 @@
 #define BBP_CAL		0x2c00
 #define BBP_DSC		0x2d00
 #define BBP_PFMU	0x2f00
-
 
 /* 0x2000 ~ */
 #define CORE_R0		(BBP_CORE + 0x00)
@@ -248,7 +245,6 @@
 #define CAL_R69		(BBP_CAL + 0x114)
 #define CAL_R70		(BBP_CAL + 0x118)
 
-
 #define RTMP_BBP_IO_READ32(_p, _i, _pV)	RTMP_IO_READ32(_p, _i, _pV)
 #define RTMP_BBP_IO_WRITE32(_p, _i, _v)	RTMP_IO_WRITE32(_p, _i, _v)
 
@@ -271,5 +267,4 @@
 
 INT rlt_bbp_is_ready(struct _RTMP_ADAPTER *pAd);
 
-#endif /* __RLT_PHY_H__ */
-
+#endif				/* __RLT_PHY_H__ */

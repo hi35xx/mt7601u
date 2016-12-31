@@ -22,7 +22,6 @@
     Who          When          What
     ---------    ----------    ----------------------------------------------
  */
- 
 
 #ifndef __RTMP_IGMP_SNOOP_H__
 #define __RTMP_IGMP_SNOOP_H__
@@ -51,105 +50,73 @@
 #define IGMP_PKT		1
 #define IGMP_IN_GROUP	2
 
+VOID MulticastFilterTableInit(IN PRTMP_ADAPTER pAd,
+			      IN PMULTICAST_FILTER_TABLE *
+			      ppMulticastFilterTable);
 
-VOID MulticastFilterTableInit(
-	IN PRTMP_ADAPTER pAd,
-	IN PMULTICAST_FILTER_TABLE *ppMulticastFilterTable);
+VOID MultiCastFilterTableReset(IN PMULTICAST_FILTER_TABLE *
+			       ppMulticastFilterTable);
 
-VOID MultiCastFilterTableReset(
-	IN PMULTICAST_FILTER_TABLE *ppMulticastFilterTable);
+BOOLEAN MulticastFilterTableInsertEntry(IN PRTMP_ADAPTER pAd,
+					IN PUCHAR pGrpId,
+					IN PUCHAR pMemberAddr,
+					IN PNET_DEV dev,
+					IN MulticastFilterEntryType type);
 
-BOOLEAN MulticastFilterTableInsertEntry(
-	IN PRTMP_ADAPTER pAd,
-	IN PUCHAR pGrpId,
-	IN PUCHAR pMemberAddr,
-	IN PNET_DEV dev,
-	IN MulticastFilterEntryType type);
+BOOLEAN MulticastFilterTableDeleteEntry(IN PRTMP_ADAPTER pAd,
+					IN PUCHAR pGrpId,
+					IN PUCHAR pMemberAddr, IN PNET_DEV dev);
 
-BOOLEAN MulticastFilterTableDeleteEntry(
-	IN PRTMP_ADAPTER pAd,
-	IN PUCHAR pGrpId,
-	IN PUCHAR pMemberAddr,
-	IN PNET_DEV dev);
+PMULTICAST_FILTER_TABLE_ENTRY MulticastFilterTableLookup(IN
+							 PMULTICAST_FILTER_TABLE
+							 pMulticastFilterTable,
+							 IN PUCHAR pAddr,
+							 IN PNET_DEV dev);
 
-PMULTICAST_FILTER_TABLE_ENTRY MulticastFilterTableLookup(
-	IN PMULTICAST_FILTER_TABLE pMulticastFilterTable,
-	IN PUCHAR pAddr,
-	IN PNET_DEV dev);
+BOOLEAN isIgmpPkt(IN PUCHAR pDstMacAddr, IN PUCHAR pIpHeader);
 
-BOOLEAN isIgmpPkt(
-	IN PUCHAR pDstMacAddr,
-	IN PUCHAR pIpHeader);
+VOID IGMPSnooping(IN PRTMP_ADAPTER pAd,
+		  IN PUCHAR pDstMacAddr,
+		  IN PUCHAR pSrcMacAddr, IN PUCHAR pIpHeader, IN PNET_DEV pDev);
 
-VOID IGMPSnooping(
-	IN PRTMP_ADAPTER pAd,
-	IN PUCHAR pDstMacAddr,
-	IN PUCHAR pSrcMacAddr,
-	IN PUCHAR pIpHeader,
-	IN PNET_DEV pDev);
+BOOLEAN isMldPkt(IN PUCHAR pDstMacAddr,
+		 IN PUCHAR pIpHeader,
+		 OUT UINT8 * pProtoType, OUT PUCHAR * pMldHeader);
 
-BOOLEAN isMldPkt(
-	IN PUCHAR pDstMacAddr,
-	IN PUCHAR pIpHeader,
-	OUT UINT8 *pProtoType,
-	OUT PUCHAR *pMldHeader);
+BOOLEAN IPv6MulticastFilterExcluded(IN PUCHAR pDstMacAddr, IN PUCHAR pIpHeader);
 
-BOOLEAN IPv6MulticastFilterExcluded(
-	IN PUCHAR pDstMacAddr,
-	IN PUCHAR pIpHeader);
+VOID MLDSnooping(IN PRTMP_ADAPTER pAd,
+		 IN PUCHAR pDstMacAddr,
+		 IN PUCHAR pSrcMacAddr, IN PUCHAR pIpHeader, IN PNET_DEV pDev);
 
-VOID MLDSnooping(
-	IN PRTMP_ADAPTER pAd,
-	IN PUCHAR pDstMacAddr,
-	IN PUCHAR pSrcMacAddr,
-	IN PUCHAR pIpHeader,
-	IN PNET_DEV pDev);
+UCHAR IgmpMemberCnt(IN PLIST_HEADER pList);
 
-UCHAR IgmpMemberCnt(
-	IN PLIST_HEADER pList);
+VOID IgmpGroupDelMembers(IN PRTMP_ADAPTER pAd,
+			 IN PUCHAR pMemberAddr, IN PNET_DEV pDev);
 
-VOID IgmpGroupDelMembers(
-	IN PRTMP_ADAPTER pAd,
-	IN PUCHAR pMemberAddr,
-	IN PNET_DEV pDev);
+INT Set_IgmpSn_Enable_Proc(IN PRTMP_ADAPTER pAd, IN PSTRING arg);
 
-INT Set_IgmpSn_Enable_Proc(
-	IN PRTMP_ADAPTER pAd,
-	IN PSTRING arg);
+INT Set_IgmpSn_AddEntry_Proc(IN PRTMP_ADAPTER pAd, IN PSTRING arg);
 
-INT Set_IgmpSn_AddEntry_Proc(
-	IN PRTMP_ADAPTER pAd,
-	IN PSTRING arg);
+INT Set_IgmpSn_DelEntry_Proc(IN PRTMP_ADAPTER pAd, IN PSTRING arg);
 
-INT Set_IgmpSn_DelEntry_Proc(
-	IN PRTMP_ADAPTER pAd,
-	IN PSTRING arg);
+INT Set_IgmpSn_TabDisplay_Proc(IN PRTMP_ADAPTER pAd, IN PSTRING arg);
 
-INT Set_IgmpSn_TabDisplay_Proc(
-	IN PRTMP_ADAPTER pAd,
-	IN PSTRING arg);
+void rtmp_read_igmp_snoop_from_file(IN PRTMP_ADAPTER pAd,
+				    PSTRING tmpbuf, PSTRING buffer);
 
-void rtmp_read_igmp_snoop_from_file(
-	IN  PRTMP_ADAPTER pAd,
-	PSTRING tmpbuf,
-	PSTRING buffer);
+NDIS_STATUS IgmpPktInfoQuery(IN PRTMP_ADAPTER pAd,
+			     IN PUCHAR pSrcBufVA,
+			     IN PNDIS_PACKET pPacket,
+			     IN UCHAR FromWhichBSSID,
+			     OUT INT * pInIgmpGroup,
+			     OUT PMULTICAST_FILTER_TABLE_ENTRY * ppGroupEntry);
 
-NDIS_STATUS IgmpPktInfoQuery(
-	IN PRTMP_ADAPTER pAd,
-	IN PUCHAR pSrcBufVA,
-	IN PNDIS_PACKET pPacket,
-	IN UCHAR FromWhichBSSID,
-	OUT INT *pInIgmpGroup,
-	OUT PMULTICAST_FILTER_TABLE_ENTRY *ppGroupEntry);
+NDIS_STATUS IgmpPktClone(IN PRTMP_ADAPTER pAd,
+			 IN PNDIS_PACKET pPacket,
+			 IN INT IgmpPktInGroup,
+			 IN PMULTICAST_FILTER_TABLE_ENTRY pGroupEntry,
+			 IN UCHAR QueIdx,
+			 IN UINT8 UserPriority, IN PNET_DEV pNetDev);
 
-NDIS_STATUS IgmpPktClone(
-	IN PRTMP_ADAPTER pAd,
-	IN PNDIS_PACKET pPacket,
-	IN INT IgmpPktInGroup,
-	IN PMULTICAST_FILTER_TABLE_ENTRY pGroupEntry,
-	IN UCHAR QueIdx,
-	IN UINT8 UserPriority,
-	IN PNET_DEV pNetDev);
-
-#endif /* __RTMP_IGMP_SNOOP_H__ */
-
+#endif				/* __RTMP_IGMP_SNOOP_H__ */

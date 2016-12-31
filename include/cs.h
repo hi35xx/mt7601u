@@ -3,7 +3,7 @@
 
 #ifdef CARRIER_DETECTION_SUPPORT
 #define CARRIER_DETECT_RECHECK_TIME			3
-#define CARRIER_GONE_TRESHOLD				10 /* Radar tone count in 1 sec */
+#define CARRIER_GONE_TRESHOLD				10	/* Radar tone count in 1 sec */
 #define CARRIER_DETECT_THRESHOLD			0x0fffffff
 #define CARRIER_DETECT_STOP_RATIO			2
 #define CARRIER_DETECT_STOP_RECHECK_TIME		4
@@ -36,7 +36,7 @@ typedef struct CARRIER_DETECTION_s {
 	UINT32 threshold;
 	UINT8 recheck;
 	UINT8 recheck1;
-	UINT32 TimeStamp; /*unit:16us*/
+	UINT32 TimeStamp;	/*unit:16us */
 	UINT32 criteria;
 	ULONG idle_time;
 	ULONG busy_time;
@@ -66,107 +66,73 @@ typedef struct CARRIER_DETECTION_s {
 
 /* Parameters needed to decide the Carrier Detect State */
 typedef struct _CARRIER_DETECT_PARAM {
-		UINT8	RadarToneCount; /* Number of radar tones in 100 msec*/
-		UINT8	ReCheck;
+	UINT8 RadarToneCount;	/* Number of radar tones in 100 msec */
+	UINT8 ReCheck;
 } CARRIER_DETECT_PARAM, *PCARRIER_DETECT_PARAM;
 
 /* For debug print */
 typedef struct _CARRIER_DETECT_DEBUG {
-	 	UINT8	delta_div;
-		UINT8	internalRadarToneCount;
-		UINT16	Criteria;
-		UINT32	Threshold;
-		UINT8	Count;
-		UINT8	CheckCount;
-		UINT8 	Reserved;
-		UINT8	VGA_Mask;
-		UINT8	PckMask;
-		UINT8	RxPeMask;
-		UINT8	RadarToneCount;
-		UINT8	ReCheck;
+	UINT8 delta_div;
+	UINT8 internalRadarToneCount;
+	UINT16 Criteria;
+	UINT32 Threshold;
+	UINT8 Count;
+	UINT8 CheckCount;
+	UINT8 Reserved;
+	UINT8 VGA_Mask;
+	UINT8 PckMask;
+	UINT8 RxPeMask;
+	UINT8 RadarToneCount;
+	UINT8 ReCheck;
 } CARRIER_DETECT_DEBUG, *PCARRIER_DETECT_DEBUG;
-#endif /*CARRIER_DETECTION_FIRMWARE_SUPPORT*/
+#endif				/*CARRIER_DETECTION_FIRMWARE_SUPPORT */
 
-INT isCarrierDetectExist(
-	IN PRTMP_ADAPTER pAd);
+INT isCarrierDetectExist(IN PRTMP_ADAPTER pAd);
 
-INT CarrierDetectReset(
-	IN PRTMP_ADAPTER pAd);
+INT CarrierDetectReset(IN PRTMP_ADAPTER pAd);
 
-extern VOID RtmpOsMsDelay(
-	IN	ULONG	msec);
+extern VOID RtmpOsMsDelay(IN ULONG msec);
 
-INT Set_CarrierCriteria_Proc(
-	IN PRTMP_ADAPTER 	pAd,
-	IN PSTRING 			arg);
+INT Set_CarrierCriteria_Proc(IN PRTMP_ADAPTER pAd, IN PSTRING arg);
 
-INT Set_CarrierReCheck_Proc(
-	IN PRTMP_ADAPTER	pAd,
-	IN PSTRING 			arg);
+INT Set_CarrierReCheck_Proc(IN PRTMP_ADAPTER pAd, IN PSTRING arg);
 
-INT Set_CarrierGoneThreshold_Proc(
-	IN PRTMP_ADAPTER	pAd,
-	IN PSTRING			arg);
+INT Set_CarrierGoneThreshold_Proc(IN PRTMP_ADAPTER pAd, IN PSTRING arg);
 
-INT Set_CarrierStopCheck_Proc(
-	IN PRTMP_ADAPTER 	pAd,
-	IN PSTRING 			arg);
+INT Set_CarrierStopCheck_Proc(IN PRTMP_ADAPTER pAd, IN PSTRING arg);
 
-INT	Set_CarrierDebug_Proc(
-	IN PRTMP_ADAPTER	pAd,
-	IN	PSTRING 		arg);
+INT Set_CarrierDebug_Proc(IN PRTMP_ADAPTER pAd, IN PSTRING arg);
 
-INT	Set_CarrierDelta_Proc(
-	IN	PRTMP_ADAPTER	pAd, 
-	IN	PSTRING			arg);
+INT Set_CarrierDelta_Proc(IN PRTMP_ADAPTER pAd, IN PSTRING arg);
 
-INT	Set_CarrierDivFlag_Proc(
-	IN	PRTMP_ADAPTER	pAd, 
-	IN	PSTRING			arg);
+INT Set_CarrierDivFlag_Proc(IN PRTMP_ADAPTER pAd, IN PSTRING arg);
 
-INT	Set_CarrierThrd_Proc(
-	IN	PRTMP_ADAPTER	pAd, 
-	IN	PSTRING			arg);
+INT Set_CarrierThrd_Proc(IN PRTMP_ADAPTER pAd, IN PSTRING arg);
 
 /* v2 functions */
-INT	Set_CarrierSymRund_Proc(
-	IN	PRTMP_ADAPTER	pAd, 
-	IN	PSTRING			arg);
+INT Set_CarrierSymRund_Proc(IN PRTMP_ADAPTER pAd, IN PSTRING arg);
 
-INT Set_CarrierMask_Proc(
-    IN PRTMP_ADAPTER   pAd,
-    IN PSTRING         arg);
+INT Set_CarrierMask_Proc(IN PRTMP_ADAPTER pAd, IN PSTRING arg);
 
-VOID CSInit(
-	IN PRTMP_ADAPTER pAd);
+VOID CSInit(IN PRTMP_ADAPTER pAd);
 
-VOID CarrierDetectionStart(
-	IN PRTMP_ADAPTER pAd);
+VOID CarrierDetectionStart(IN PRTMP_ADAPTER pAd);
 
-VOID RTMPHandleRadarInterrupt(
-	IN PRTMP_ADAPTER  pAd);
+VOID RTMPHandleRadarInterrupt(IN PRTMP_ADAPTER pAd);
 
-VOID CarrierDetectionStop(
-	IN PRTMP_ADAPTER	pAd);
+VOID CarrierDetectionStop(IN PRTMP_ADAPTER pAd);
 
-VOID ToneRadarProgram_v1(
-	IN PRTMP_ADAPTER pAd,
-	IN ULONG threshold);
+VOID ToneRadarProgram_v1(IN PRTMP_ADAPTER pAd, IN ULONG threshold);
 
-VOID ToneRadarProgram_v2(
-	IN PRTMP_ADAPTER pAd,
-	IN ULONG threshold);
+VOID ToneRadarProgram_v2(IN PRTMP_ADAPTER pAd, IN ULONG threshold);
 
 #ifdef CARRIER_DETECTION_FIRMWARE_SUPPORT
-VOID CarrierDetectionPeriodicStateCtrl(
-	IN PRTMP_ADAPTER pAd);
-#endif /* CARRIER_DETECTION_FIRMWARE_SUPPORT */
+VOID CarrierDetectionPeriodicStateCtrl(IN PRTMP_ADAPTER pAd);
+#endif				/* CARRIER_DETECTION_FIRMWARE_SUPPORT */
 
 #ifdef CONFIG_AP_SUPPORT
-INT Set_CarrierDetect_Proc(
-	IN PRTMP_ADAPTER pAd,
-	IN PSTRING arg);
-#endif /*CONFIG_AP_SUPPORT*/
-#endif /* CARRIER_DETECTION_SUPPORT */
+INT Set_CarrierDetect_Proc(IN PRTMP_ADAPTER pAd, IN PSTRING arg);
+#endif				/*CONFIG_AP_SUPPORT */
+#endif				/* CARRIER_DETECTION_SUPPORT */
 
 #endif /*__CS_H__*/

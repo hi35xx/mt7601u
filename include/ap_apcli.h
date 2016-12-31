@@ -33,12 +33,12 @@
 #ifdef APCLI_SUPPORT
 
 #include "rtmp.h"
-  
-#define AUTH_TIMEOUT	300         /* unit: msec */
-#define ASSOC_TIMEOUT	300         /* unit: msec */
+
+#define AUTH_TIMEOUT	300	/* unit: msec */
+#define ASSOC_TIMEOUT	300	/* unit: msec */
 /*#define JOIN_TIMEOUT	2000        // unit: msec // not used in Ap-client mode, remove it */
-#define PROBE_TIMEOUT	1000        /* unit: msec */
-  
+#define PROBE_TIMEOUT	1000	/* unit: msec */
+
 #define APCLI_ROOT_BSSID_GET(pAd, wcid) ((pAd)->MacTab.Content[(wcid)].Addr)
 
 /* sanity check for apidx */
@@ -52,228 +52,159 @@
 }
 
 typedef struct _APCLI_MLME_JOIN_REQ_STRUCT {
-	UCHAR	Bssid[MAC_ADDR_LEN];
-	UCHAR	SsidLen;
-	UCHAR	Ssid[MAX_LEN_OF_SSID];
+	UCHAR Bssid[MAC_ADDR_LEN];
+	UCHAR SsidLen;
+	UCHAR Ssid[MAX_LEN_OF_SSID];
 } APCLI_MLME_JOIN_REQ_STRUCT;
 
 typedef struct _STA_CTRL_JOIN_REQ_STRUCT {
-	USHORT	Status;
+	USHORT Status;
 } APCLI_CTRL_MSG_STRUCT, *PSTA_CTRL_MSG_STRUCT;
 
-BOOLEAN isValidApCliIf(
-	SHORT ifIndex);
+BOOLEAN isValidApCliIf(SHORT ifIndex);
 
 /* */
 /* Private routines in apcli_ctrl.c */
 /* */
-VOID ApCliCtrlStateMachineInit(
-	IN PRTMP_ADAPTER pAd,
-	IN STATE_MACHINE *Sm,
-	OUT STATE_MACHINE_FUNC Trans[]);
+VOID ApCliCtrlStateMachineInit(IN PRTMP_ADAPTER pAd,
+			       IN STATE_MACHINE * Sm,
+			       OUT STATE_MACHINE_FUNC Trans[]);
 
 /* */
 /* Private routines in apcli_sync.c */
 /* */
-VOID ApCliSyncStateMachineInit(
-    IN PRTMP_ADAPTER pAd, 
-    IN STATE_MACHINE *Sm, 
-    OUT STATE_MACHINE_FUNC Trans[]);
+VOID ApCliSyncStateMachineInit(IN PRTMP_ADAPTER pAd,
+			       IN STATE_MACHINE * Sm,
+			       OUT STATE_MACHINE_FUNC Trans[]);
 
 /* */
 /* Private routines in apcli_auth.c */
 /* */
-VOID ApCliAuthStateMachineInit(
-    IN PRTMP_ADAPTER pAd, 
-    IN STATE_MACHINE *Sm, 
-    OUT STATE_MACHINE_FUNC Trans[]);
+VOID ApCliAuthStateMachineInit(IN PRTMP_ADAPTER pAd,
+			       IN STATE_MACHINE * Sm,
+			       OUT STATE_MACHINE_FUNC Trans[]);
 
 /* */
 /* Private routines in apcli_assoc.c */
 /* */
-VOID ApCliAssocStateMachineInit(
-    IN PRTMP_ADAPTER pAd, 
-    IN STATE_MACHINE *Sm, 
-    OUT STATE_MACHINE_FUNC Trans[]);
+VOID ApCliAssocStateMachineInit(IN PRTMP_ADAPTER pAd,
+				IN STATE_MACHINE * Sm,
+				OUT STATE_MACHINE_FUNC Trans[]);
 
-MAC_TABLE_ENTRY *ApCliTableLookUpByWcid(
-	IN PRTMP_ADAPTER pAd,
-	IN UCHAR wcid,
-	IN PUCHAR pAddrs);
+MAC_TABLE_ENTRY *ApCliTableLookUpByWcid(IN PRTMP_ADAPTER pAd,
+					IN UCHAR wcid, IN PUCHAR pAddrs);
 
+BOOLEAN ApCliAllowToSendPacket(IN RTMP_ADAPTER * pAd,
+			       IN PNDIS_PACKET pPacket, OUT UCHAR * pWcid);
 
-BOOLEAN ApCliAllowToSendPacket(
-	IN RTMP_ADAPTER *pAd,
-	IN PNDIS_PACKET pPacket,
-	OUT UCHAR		*pWcid);
-	
-BOOLEAN 	ApCliValidateRSNIE(
-	IN		PRTMP_ADAPTER	pAd, 
-	IN 		PEID_STRUCT    	pEid_ptr,
-	IN		USHORT			eid_len,
-	IN		USHORT			idx);
+BOOLEAN ApCliValidateRSNIE(IN PRTMP_ADAPTER pAd,
+			   IN PEID_STRUCT pEid_ptr,
+			   IN USHORT eid_len, IN USHORT idx);
 
+VOID ApCli_Remove(IN PRTMP_ADAPTER pAd);
 
-VOID ApCli_Remove(
-	IN PRTMP_ADAPTER 	pAd);
+VOID RT28xx_ApCli_Close(IN PRTMP_ADAPTER pAd);
 
-VOID RT28xx_ApCli_Close(
-	IN PRTMP_ADAPTER 	pAd);
+INT ApCliIfLookUp(IN PRTMP_ADAPTER pAd, IN PUCHAR pAddr);
 
+INT ApCli_VirtualIF_PacketSend(IN PNDIS_PACKET skb_p, IN PNET_DEV dev_p);
 
+INT ApCli_VirtualIF_Ioctl(IN PNET_DEV dev_p, IN OUT VOID * rq_p, IN INT cmd);
 
-INT ApCliIfLookUp(
-	IN PRTMP_ADAPTER pAd,
-	IN PUCHAR pAddr);
-
-
-INT ApCli_VirtualIF_PacketSend(
-	IN PNDIS_PACKET		skb_p, 
-	IN PNET_DEV			dev_p);
-
-INT ApCli_VirtualIF_Ioctl(
-	IN PNET_DEV				dev_p,
-	IN OUT VOID 			*rq_p,
-	IN INT cmd);
-
-	
-VOID ApCliMgtMacHeaderInit(
-    IN	PRTMP_ADAPTER	pAd, 
-    IN OUT PHEADER_802_11 pHdr80211, 
-    IN UCHAR SubType, 
-    IN UCHAR ToDs, 
-    IN PUCHAR pDA, 
-    IN PUCHAR pBssid,
-    IN USHORT ifIndex);
+VOID ApCliMgtMacHeaderInit(IN PRTMP_ADAPTER pAd,
+			   IN OUT PHEADER_802_11 pHdr80211,
+			   IN UCHAR SubType,
+			   IN UCHAR ToDs,
+			   IN PUCHAR pDA, IN PUCHAR pBssid, IN USHORT ifIndex);
 
 #ifdef DOT11_N_SUPPORT
-BOOLEAN ApCliCheckHt(
-	IN		PRTMP_ADAPTER 		pAd,
-	IN		USHORT 				IfIndex,
-	IN OUT	HT_CAPABILITY_IE 	*pHtCapability,
-	IN OUT	ADD_HT_INFO_IE 		*pAddHtInfo);
-#endif /* DOT11_N_SUPPORT */
+BOOLEAN ApCliCheckHt(IN PRTMP_ADAPTER pAd,
+		     IN USHORT IfIndex,
+		     IN OUT HT_CAPABILITY_IE * pHtCapability,
+		     IN OUT ADD_HT_INFO_IE * pAddHtInfo);
+#endif				/* DOT11_N_SUPPORT */
 
-BOOLEAN ApCliLinkUp(
-	IN PRTMP_ADAPTER pAd,
-	IN UCHAR ifIndex);
+BOOLEAN ApCliLinkUp(IN PRTMP_ADAPTER pAd, IN UCHAR ifIndex);
 
-VOID ApCliLinkDown(
-	IN PRTMP_ADAPTER pAd,
-	IN UCHAR ifIndex);
+VOID ApCliLinkDown(IN PRTMP_ADAPTER pAd, IN UCHAR ifIndex);
 
-VOID ApCliIfUp(
-	IN PRTMP_ADAPTER pAd);
+VOID ApCliIfUp(IN PRTMP_ADAPTER pAd);
 
-VOID ApCliIfDown(
-	IN PRTMP_ADAPTER pAd);
+VOID ApCliIfDown(IN PRTMP_ADAPTER pAd);
 
-VOID ApCliIfMonitor(
-	IN PRTMP_ADAPTER pAd);
+VOID ApCliIfMonitor(IN PRTMP_ADAPTER pAd);
 
-BOOLEAN ApCliMsgTypeSubst(
-	IN PRTMP_ADAPTER  pAd,
-	IN PFRAME_802_11 pFrame, 
-	OUT INT *Machine, 
-	OUT INT *MsgType);
+BOOLEAN ApCliMsgTypeSubst(IN PRTMP_ADAPTER pAd,
+			  IN PFRAME_802_11 pFrame,
+			  OUT INT * Machine, OUT INT * MsgType);
 
-BOOLEAN preCheckMsgTypeSubset(
-	IN PRTMP_ADAPTER  pAd,
-	IN PFRAME_802_11 pFrame, 
-	OUT INT *Machine, 
-	OUT INT *MsgType);
+BOOLEAN preCheckMsgTypeSubset(IN PRTMP_ADAPTER pAd,
+			      IN PFRAME_802_11 pFrame,
+			      OUT INT * Machine, OUT INT * MsgType);
 
-BOOLEAN ApCliPeerAssocRspSanity(
-    IN PRTMP_ADAPTER pAd, 
-    IN VOID *pMsg, 
-    IN ULONG MsgLen, 
-    OUT PUCHAR pAddr2, 
-    OUT USHORT *pCapabilityInfo, 
-    OUT USHORT *pStatus, 
-    OUT USHORT *pAid, 
+BOOLEAN ApCliPeerAssocRspSanity(IN PRTMP_ADAPTER pAd,
+				IN VOID * pMsg,
+				IN ULONG MsgLen,
+				OUT PUCHAR pAddr2,
+				OUT USHORT * pCapabilityInfo,
+				OUT USHORT * pStatus, OUT USHORT * pAid,
 #ifdef P2P_SUPPORT
-	OUT ULONG *P2PSubelementLen, 
-	OUT PUCHAR pP2pSubelement,
-#endif /* P2P_SUPPORT */
-    OUT UCHAR SupRate[], 
-    OUT UCHAR *pSupRateLen,
-    OUT UCHAR ExtRate[], 
-    OUT UCHAR *pExtRateLen,
-    OUT HT_CAPABILITY_IE *pHtCapability,
-    OUT ADD_HT_INFO_IE *pAddHtInfo,	/* AP might use this additional ht info IE */
-    OUT UCHAR *pHtCapabilityLen,
-    OUT UCHAR *pAddHtInfoLen,
-    OUT UCHAR *pNewExtChannelOffset,
-    OUT PEDCA_PARM pEdcaParm,
-    OUT UCHAR *pCkipFlag);
+				OUT ULONG * P2PSubelementLen,
+				OUT PUCHAR pP2pSubelement,
+#endif				/* P2P_SUPPORT */
+				OUT UCHAR SupRate[], OUT UCHAR * pSupRateLen, OUT UCHAR ExtRate[], OUT UCHAR * pExtRateLen, OUT HT_CAPABILITY_IE * pHtCapability, OUT ADD_HT_INFO_IE * pAddHtInfo,	/* AP might use this additional ht info IE */
+				OUT UCHAR * pHtCapabilityLen,
+				OUT UCHAR * pAddHtInfoLen,
+				OUT UCHAR * pNewExtChannelOffset,
+				OUT PEDCA_PARM pEdcaParm,
+				OUT UCHAR * pCkipFlag);
 
-VOID	ApCliPeerPairMsg1Action(
-	IN PRTMP_ADAPTER    pAd, 
-    IN MAC_TABLE_ENTRY  *pEntry,
-    IN MLME_QUEUE_ELEM  *Elem);
+VOID ApCliPeerPairMsg1Action(IN PRTMP_ADAPTER pAd,
+			     IN MAC_TABLE_ENTRY * pEntry,
+			     IN MLME_QUEUE_ELEM * Elem);
 
-VOID	ApCliPeerPairMsg3Action(
-	IN PRTMP_ADAPTER    pAd, 
-    IN MAC_TABLE_ENTRY  *pEntry,
-    IN MLME_QUEUE_ELEM  *Elem);
+VOID ApCliPeerPairMsg3Action(IN PRTMP_ADAPTER pAd,
+			     IN MAC_TABLE_ENTRY * pEntry,
+			     IN MLME_QUEUE_ELEM * Elem);
 
-VOID	ApCliPeerGroupMsg1Action(
-	IN PRTMP_ADAPTER    pAd, 
-    IN MAC_TABLE_ENTRY  *pEntry,
-    IN MLME_QUEUE_ELEM  *Elem);
+VOID ApCliPeerGroupMsg1Action(IN PRTMP_ADAPTER pAd,
+			      IN MAC_TABLE_ENTRY * pEntry,
+			      IN MLME_QUEUE_ELEM * Elem);
 
-BOOLEAN ApCliCheckRSNIE(
-	IN  PRTMP_ADAPTER   pAd,
-	IN  PUCHAR          pData,
-	IN  UCHAR           DataLen,
-	IN  MAC_TABLE_ENTRY *pEntry,
-	OUT	UCHAR			*Offset);
+BOOLEAN ApCliCheckRSNIE(IN PRTMP_ADAPTER pAd,
+			IN PUCHAR pData,
+			IN UCHAR DataLen,
+			IN MAC_TABLE_ENTRY * pEntry, OUT UCHAR * Offset);
 
-BOOLEAN ApCliParseKeyData(
-	IN  PRTMP_ADAPTER   pAd,
-	IN  PUCHAR          pKeyData,
-	IN  UCHAR           KeyDataLen,
-	IN  MAC_TABLE_ENTRY *pEntry,
-	IN	UCHAR			IfIdx,
-	IN	UCHAR			bPairewise);
+BOOLEAN ApCliParseKeyData(IN PRTMP_ADAPTER pAd,
+			  IN PUCHAR pKeyData,
+			  IN UCHAR KeyDataLen,
+			  IN MAC_TABLE_ENTRY * pEntry,
+			  IN UCHAR IfIdx, IN UCHAR bPairewise);
 
-BOOLEAN  ApCliHandleRxBroadcastFrame(
-	IN  PRTMP_ADAPTER   pAd,
-	IN	RX_BLK			*pRxBlk,
-	IN  MAC_TABLE_ENTRY *pEntry,
-	IN	UCHAR			FromWhichBSSID);
+BOOLEAN ApCliHandleRxBroadcastFrame(IN PRTMP_ADAPTER pAd,
+				    IN RX_BLK * pRxBlk,
+				    IN MAC_TABLE_ENTRY * pEntry,
+				    IN UCHAR FromWhichBSSID);
 
-VOID APCliInstallPairwiseKey(
-	IN  PRTMP_ADAPTER   pAd,
-	IN  MAC_TABLE_ENTRY *pEntry);
+VOID APCliInstallPairwiseKey(IN PRTMP_ADAPTER pAd, IN MAC_TABLE_ENTRY * pEntry);
 
-BOOLEAN APCliInstallSharedKey(
-	IN  PRTMP_ADAPTER   pAd,
-	IN  PUCHAR          pKey,
-	IN  UCHAR           KeyLen,
-	IN	UCHAR			DefaultKeyIdx,
-	IN  MAC_TABLE_ENTRY *pEntry);
+BOOLEAN APCliInstallSharedKey(IN PRTMP_ADAPTER pAd,
+			      IN PUCHAR pKey,
+			      IN UCHAR KeyLen,
+			      IN UCHAR DefaultKeyIdx,
+			      IN MAC_TABLE_ENTRY * pEntry);
 
-VOID ApCliUpdateMlmeRate(
-	IN PRTMP_ADAPTER	pAd);
+VOID ApCliUpdateMlmeRate(IN PRTMP_ADAPTER pAd);
 
-VOID APCli_Init(
-	IN	PRTMP_ADAPTER				pAd,
-	IN	RTMP_OS_NETDEV_OP_HOOK		*pNetDevOps);
+VOID APCli_Init(IN PRTMP_ADAPTER pAd, IN RTMP_OS_NETDEV_OP_HOOK * pNetDevOps);
 
-BOOLEAN ApCli_Open(
-	IN	PRTMP_ADAPTER		pAd,
-	IN	PNET_DEV			dev_p);
+BOOLEAN ApCli_Open(IN PRTMP_ADAPTER pAd, IN PNET_DEV dev_p);
 
-BOOLEAN ApCli_Close(
-	IN	PRTMP_ADAPTER	pAd,
-	IN	PNET_DEV		dev_p);
+BOOLEAN ApCli_Close(IN PRTMP_ADAPTER pAd, IN PNET_DEV dev_p);
 
-BOOLEAN ApCliWaitProbRsp(
-	IN PRTMP_ADAPTER pAd,
-	IN USHORT ifIndex);
+BOOLEAN ApCliWaitProbRsp(IN PRTMP_ADAPTER pAd, IN USHORT ifIndex);
 
-#endif /* APCLI_SUPPORT */
+#endif				/* APCLI_SUPPORT */
 
-#endif /* _AP_APCLI_H_ */
-
+#endif				/* _AP_APCLI_H_ */

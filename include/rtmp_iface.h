@@ -26,11 +26,9 @@
 #ifndef __RTMP_IFACE_H__
 #define __RTMP_IFACE_H__
 
-
-
 #ifdef RTMP_USB_SUPPORT
 #include "iface/rtmp_usb.h"
-#endif /* RTMP_USB_SUPPORT */
+#endif				/* RTMP_USB_SUPPORT */
 
 typedef struct _INF_PCI_CONFIG_ {
 	unsigned long CSRBaseAddress;	/* PCI MMIO Base Address, all access will use */
@@ -47,11 +45,10 @@ typedef struct _INF_RBUS_CONFIG_ {
 	unsigned int irq;
 } INF_RBUS_CONFIG;
 
-
 typedef union _RTMP_INF_CONFIG_ {
 	struct _INF_PCI_CONFIG_ pciConfig;
 	struct _INF_USB_CONFIG_ usbConfig;
 	struct _INF_RBUS_CONFIG_ rbusConfig;
 } RTMP_INF_CONFIG;
 
-#endif /* __RTMP_IFACE_H__ */
+#endif				/* __RTMP_IFACE_H__ */

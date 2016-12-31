@@ -211,4 +211,4 @@ typedef struct _CIPHER_KEY {
 	UCHAR Type;		/* Indicate Pairwise/Group when reporting MIC error */
 } CIPHER_KEY, *PCIPHER_KEY;
 
-#endif /* WPA_CMM_H */
+#endif				/* WPA_CMM_H */

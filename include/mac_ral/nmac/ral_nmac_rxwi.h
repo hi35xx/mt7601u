@@ -35,7 +35,7 @@
 	RXWI wireless information format.
 */
 #ifdef RT_BIG_ENDIAN
-typedef	struct GNU_PACKED _RXWI_NMAC{
+typedef struct GNU_PACKED _RXWI_NMAC {
 	/* Word 0 */
 	UINT32 eof:1;
 	UINT32 rsv:1;
@@ -61,9 +61,9 @@ typedef	struct GNU_PACKED _RXWI_NMAC{
 
 	/* Word 3~6 */
 	UINT8 bbp_rxinfo[16];
-}	RXWI_NMAC;
+} RXWI_NMAC;
 #else
-typedef	struct GNU_PACKED _RXWI_NMAC {
+typedef struct GNU_PACKED _RXWI_NMAC {
 	/* Word 0 */
 	UINT32 wcid:8;
 	UINT32 key_idx:2;
@@ -89,9 +89,8 @@ typedef	struct GNU_PACKED _RXWI_NMAC {
 
 	/* Word 3~6 */
 	UINT8 bbp_rxinfo[16];
-}	RXWI_NMAC;
-#endif /* RT_BIG_ENDIAN */
-
+} RXWI_NMAC;
+#endif				/* RT_BIG_ENDIAN */
 
 #define RxWIMPDUByteCnt	RXWI_N.MPDUtotalByteCnt
 #define RxWIWirelessCliID	RXWI_N.wcid
@@ -111,7 +110,4 @@ typedef	struct GNU_PACKED _RXWI_NMAC {
 #define RxWISNR2			RXWI_N.bbp_rxinfo[2]
 #define RxWIFOFFSET			RXWI_N.bbp_rxinfo[3]
 
-
-
-#endif /* __RAL_NMAC_RXWI_H__ */
-
+#endif				/* __RAL_NMAC_RXWI_H__ */

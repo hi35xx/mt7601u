@@ -38,10 +38,9 @@
 
     ==========================================================================
  */
-VOID AuthRspStateMachineInit(
-	IN PRTMP_ADAPTER pAd,
-	IN PSTATE_MACHINE Sm,
-	IN STATE_MACHINE_FUNC Trans[])
+VOID AuthRspStateMachineInit(IN PRTMP_ADAPTER pAd,
+			     IN PSTATE_MACHINE Sm,
+			     IN STATE_MACHINE_FUNC Trans[])
 {
 	StateMachineInit(Sm, Trans, MAX_AUTH_RSP_STATE, MAX_AUTH_RSP_MSG,
 			 (STATE_MACHINE_FUNC) Drop, AUTH_RSP_IDLE,
@@ -65,13 +64,11 @@ VOID AuthRspStateMachineInit(
 
     ==========================================================================
 */
-VOID PeerAuthSimpleRspGenAndSend(
-	IN PRTMP_ADAPTER pAd,
-	IN PHEADER_802_11 pHdr80211,
-	IN USHORT Alg,
-	IN USHORT Seq,
-	IN USHORT Reason,
-	IN USHORT Status)
+VOID PeerAuthSimpleRspGenAndSend(IN PRTMP_ADAPTER pAd,
+				 IN PHEADER_802_11 pHdr80211,
+				 IN USHORT Alg,
+				 IN USHORT Seq,
+				 IN USHORT Reason, IN USHORT Status)
 {
 	HEADER_802_11 AuthHdr;
 	ULONG FrameLen = 0;
@@ -91,10 +88,10 @@ VOID PeerAuthSimpleRspGenAndSend(
 	DBGPRINT(RT_DEBUG_TRACE, ("Send AUTH response (seq#2)...\n"));
 	MgtMacHeaderInit(pAd, &AuthHdr, SUBTYPE_AUTH, 0, pHdr80211->Addr2,
 #ifdef P2P_SUPPORT
-						pAd->CurrentAddress,
-#endif /* P2P_SUPPORT */
-						pAd->MlmeAux.Bssid);
-	MakeOutgoingFrame(pOutBuffer, &FrameLen, sizeof (HEADER_802_11),
+			 pAd->CurrentAddress,
+#endif				/* P2P_SUPPORT */
+			 pAd->MlmeAux.Bssid);
+	MakeOutgoingFrame(pOutBuffer, &FrameLen, sizeof(HEADER_802_11),
 			  &AuthHdr, 2, &Alg, 2, &Seq, 2, &Reason, END_OF_ARGS);
 	MiniportMMRequest(pAd, 0, pOutBuffer, FrameLen);
 	MlmeFreeMemory(pAd, pOutBuffer);
@@ -108,9 +105,7 @@ VOID PeerAuthSimpleRspGenAndSend(
 
     ==========================================================================
 */
-VOID PeerDeauthAction(
-	IN PRTMP_ADAPTER pAd,
-	IN PMLME_QUEUE_ELEM Elem)
+VOID PeerDeauthAction(IN PRTMP_ADAPTER pAd, IN PMLME_QUEUE_ELEM Elem)
 {
 	UCHAR Addr1[MAC_ADDR_LEN];
 	UCHAR Addr2[MAC_ADDR_LEN];
@@ -145,19 +140,17 @@ VOID PeerDeauthAction(
 					       pAd->StaCfg.AuthMode,
 					       BSS0,
 					       Addr2, WAI_MLME_DISCONNECT);
-#endif /* WAPI_SUPPORT */
+#endif				/* WAPI_SUPPORT */
 
 #ifdef NATIVE_WPA_SUPPLICANT_SUPPORT
 			RtmpOSWrielessEventSend(pAd->net_dev,
 						RT_WLAN_EVENT_CGIWAP, -1, NULL,
 						NULL, 0);
-#endif /* NATIVE_WPA_SUPPLICANT_SUPPORT */
+#endif				/* NATIVE_WPA_SUPPLICANT_SUPPORT */
 
 			/* send wireless event - for deauthentication */
 			RTMPSendWirelessEvent(pAd, IW_DEAUTH_EVENT_FLAG, NULL,
 					      BSS0, 0);
-
-
 
 #ifdef WPA_SUPPLICANT_SUPPORT
 			if ((pAd->StaCfg.WpaSupplicantUP !=
@@ -166,7 +159,7 @@ VOID PeerDeauthAction(
 			    && (pAd->StaCfg.PortSecured ==
 				WPA_802_1X_PORT_SECURED))
 				pAd->StaCfg.bLostAp = TRUE;
-#endif /* WPA_SUPPLICANT_SUPPORT */
+#endif				/* WPA_SUPPLICANT_SUPPORT */
 
 			/*
 			   Some customer would set AP1 & AP2 same SSID, AuthMode & EncrypType but different WPAPSK,
@@ -181,7 +174,7 @@ VOID PeerDeauthAction(
 #ifdef WSC_STA_SUPPORT
 			    && (pAd->StaCfg.WscControl.WscState <
 				WSC_STATE_LINK_UP)
-#endif /* WSC_STA_SUPPORT */
+#endif				/* WSC_STA_SUPPORT */
 			    )
 				bDoIterate = TRUE;
 
@@ -208,7 +201,7 @@ VOID PeerDeauthAction(
 				 ("AUTH_RSP - receive DE-AUTH from %02x:%02x:%02x:%02x:%02x:%02x \n",
 				  PRINT_MAC(Addr2)));
 		}
-#endif /* ADHOC_WPA2PSK_SUPPORT */
+#endif				/* ADHOC_WPA2PSK_SUPPORT */
 	} else {
 		DBGPRINT(RT_DEBUG_TRACE,
 			 ("AUTH_RSP - PeerDeauthAction() sanity check fail\n"));

@@ -53,7 +53,6 @@ struct _RTMP_ADAPTER;
 	__WlanFunCtrl.field.WLAN_CLK_EN = 0;\
 }
 
-
 #if 0
 #define RF_PA_MODE0_DECODE		0
 #define RF_PA_MODE1_DECODE		20480	// 2.5 * 8192
@@ -112,31 +111,31 @@ struct _RTMP_ADAPTER;
 #define	BW40_MCS_POWER_HT_MCS7			(((pAd->Tx40MPwrCfgGBand[2] & 0xFF00) >> 8) < 0x20)?(pAd->Tx40MPwrCfgGBand[2] & 0xFF00):(CHAR)((pAd->Tx40MPwrCfgGBand[2] & 0xFF00)-0x40)
 
 #define	RF_PA_MODE_CCK_1M				(pAd->chipCap.PAModeCCK[0])
-#define	RF_PA_MODE_CCK_2M				(pAd->chipCap.PAModeCCK[1]) 
-#define	RF_PA_MODE_CCK_5M				(pAd->chipCap.PAModeCCK[2]) 
-#define	RF_PA_MODE_CCK_11M				(pAd->chipCap.PAModeCCK[3]) 
+#define	RF_PA_MODE_CCK_2M				(pAd->chipCap.PAModeCCK[1])
+#define	RF_PA_MODE_CCK_5M				(pAd->chipCap.PAModeCCK[2])
+#define	RF_PA_MODE_CCK_11M				(pAd->chipCap.PAModeCCK[3])
 
 #define	RF_PA_MODE_OFDM_6M				(pAd->chipCap.PAModeOFDM[0])
 #define	RF_PA_MODE_OFDM_9M				(pAd->chipCap.PAModeOFDM[1])
-#define	RF_PA_MODE_OFDM_12M				(pAd->chipCap.PAModeOFDM[2]) 
-#define	RF_PA_MODE_OFDM_18M				(pAd->chipCap.PAModeOFDM[3]) 
+#define	RF_PA_MODE_OFDM_12M				(pAd->chipCap.PAModeOFDM[2])
+#define	RF_PA_MODE_OFDM_18M				(pAd->chipCap.PAModeOFDM[3])
 #define	RF_PA_MODE_OFDM_24M				(pAd->chipCap.PAModeOFDM[4])
 #define	RF_PA_MODE_OFDM_36M				(pAd->chipCap.PAModeOFDM[5])
 #define	RF_PA_MODE_OFDM_48M				(pAd->chipCap.PAModeOFDM[6])
 #define	RF_PA_MODE_OFDM_54M				(pAd->chipCap.PAModeOFDM[7])
 
 #define	RF_PA_MODE_HT_MCS0				(pAd->chipCap.PAModeHT[0])
-#define	RF_PA_MODE_HT_MCS1				(pAd->chipCap.PAModeHT[1]) 
-#define	RF_PA_MODE_HT_MCS2				(pAd->chipCap.PAModeHT[2]) 
-#define	RF_PA_MODE_HT_MCS3				(pAd->chipCap.PAModeHT[3]) 
+#define	RF_PA_MODE_HT_MCS1				(pAd->chipCap.PAModeHT[1])
+#define	RF_PA_MODE_HT_MCS2				(pAd->chipCap.PAModeHT[2])
+#define	RF_PA_MODE_HT_MCS3				(pAd->chipCap.PAModeHT[3])
 #define	RF_PA_MODE_HT_MCS4				(pAd->chipCap.PAModeHT[4])
 #define	RF_PA_MODE_HT_MCS5				(pAd->chipCap.PAModeHT[5])
 #define	RF_PA_MODE_HT_MCS6				(pAd->chipCap.PAModeHT[6])
 #define	RF_PA_MODE_HT_MCS7				(pAd->chipCap.PAModeHT[7])
 #define	RF_PA_MODE_HT_MCS8				(pAd->chipCap.PAModeHT[8])
-#define	RF_PA_MODE_HT_MCS9				(pAd->chipCap.PAModeHT[9]) 
-#define	RF_PA_MODE_HT_MCS10				(pAd->chipCap.PAModeHT[10]) 
-#define	RF_PA_MODE_HT_MCS11				(pAd->chipCap.PAModeHT[11]) 
+#define	RF_PA_MODE_HT_MCS9				(pAd->chipCap.PAModeHT[9])
+#define	RF_PA_MODE_HT_MCS10				(pAd->chipCap.PAModeHT[10])
+#define	RF_PA_MODE_HT_MCS11				(pAd->chipCap.PAModeHT[11])
 #define	RF_PA_MODE_HT_MCS12				(pAd->chipCap.PAModeHT[12])
 #define	RF_PA_MODE_HT_MCS13				(pAd->chipCap.PAModeHT[13])
 #define	RF_PA_MODE_HT_MCS14				(pAd->chipCap.PAModeHT[14])
@@ -155,20 +154,20 @@ enum TEMPERATURE_MODE {
 VOID MT7601_TssiDcGainCalibration(struct _RTMP_ADAPTER *pAd);
 
 typedef struct _MT7601_TX_ALC_DATA {
-	INT32	PowerDiffPre;
-	INT32	MT7601_TSSI_T0_Delta_Offset;
-	INT16	TSSI_DBOFFSET_HVGA;
-	INT16	TSSI0_DB;
-	UCHAR	TssiSlope;
-	CHAR	TssiDC0;
-	CHAR	TssiDC0_HVGA;
-	UINT32	InitTxAlcCfg1;
-	BOOLEAN	TSSI_USE_HVGA;
+	INT32 PowerDiffPre;
+	INT32 MT7601_TSSI_T0_Delta_Offset;
+	INT16 TSSI_DBOFFSET_HVGA;
+	INT16 TSSI0_DB;
+	UCHAR TssiSlope;
+	CHAR TssiDC0;
+	CHAR TssiDC0_HVGA;
+	UINT32 InitTxAlcCfg1;
+	BOOLEAN TSSI_USE_HVGA;
 	BOOLEAN TssiTriggered;
-	CHAR	MT7601_TSSI_OFFSET[3];
+	CHAR MT7601_TSSI_OFFSET[3];
 } MT7601_TX_ALC_DATA, *PMT7601_TX_ALC_DATA;
 
-#endif /* RTMP_INTERNAL_TX_ALC */
+#endif				/* RTMP_INTERNAL_TX_ALC */
 
 /*
 	rsv: Reserved
@@ -178,22 +177,22 @@ typedef struct _MT7601_TX_ALC_DATA {
 	mss: Max Segment size (in unit of byte)
 */
 #ifdef RT_BIG_ENDIAN
-typedef struct _TSO_INFO_{
+typedef struct _TSO_INFO_ {
 	UINT32 mss:16;
 	UINT32 ips:8;
-	UINT32 tups:6;	
-	UINT32 tcp:1;	
+	UINT32 tups:6;
+	UINT32 tcp:1;
 	UINT32 rsv:1;
-}TSO_INFO;
+} TSO_INFO;
 #else
-typedef struct _TSO_INFO_{
+typedef struct _TSO_INFO_ {
 	UINT32 rsv:1;
 	UINT32 tcp:1;
 	UINT32 tups:6;
 	UINT32 ips:8;
 	UINT32 mss:16;
-}TSO_INFO;
-#endif /* RT_BIG_ENDIAN */
+} TSO_INFO;
+#endif				/* RT_BIG_ENDIAN */
 
 /* 
  * Frequency plan item  for MT7601
@@ -219,7 +218,7 @@ typedef struct _MT7601_FREQ_ITEM {
 typedef struct _RT6590_RF_SWITCH_ITEM {
 	UCHAR Bank;
 	UCHAR Register;
-	UCHAR Band; /* G_Band, A_Band_LB, A_Band_MB, A_Band_HB */
+	UCHAR Band;		/* G_Band, A_Band_LB, A_Band_MB, A_Band_HB */
 	UCHAR BW;
 	UCHAR Value;
 } RT6590_RF_SWITCH_ITEM, *PRT6590_RF_SWITCH_ITEM;
@@ -228,7 +227,7 @@ VOID MT7601_Init(struct _RTMP_ADAPTER *pAd);
 
 #ifdef ED_MONITOR
 INT MT7601_set_ed_cca(IN struct _RTMP_ADAPTER *pAd, BOOLEAN enable);
-#endif /* ED_MONITOR */
+#endif				/* ED_MONITOR */
 
 VOID MT7601_RXDC_CAL(struct _RTMP_ADAPTER *pAd);
 INT MT7601_ReadChannelPwr(struct _RTMP_ADAPTER *pAd);
@@ -236,55 +235,45 @@ VOID MT7601_ReadTxPwrPerRate(struct _RTMP_ADAPTER *pAd);
 VOID MT7601_INIT_CAL(struct _RTMP_ADAPTER *pAd);
 NTSTATUS MT7601DisableTxRx(struct _RTMP_ADAPTER *pAd, UCHAR Level);
 VOID dump_bw_info(struct _RTMP_ADAPTER *pAd);
-VOID MT7601AsicTemperatureCompensation(IN struct _RTMP_ADAPTER *pAd, IN BOOLEAN bPowerOn);
+VOID MT7601AsicTemperatureCompensation(IN struct _RTMP_ADAPTER *pAd,
+				       IN BOOLEAN bPowerOn);
 #ifdef RTMP_INTERNAL_TX_ALC
 INT16 lin2dBd(UINT16 linearValue);
 VOID MT7601_EnableTSSI(struct _RTMP_ADAPTER *pAd);
-#endif /* RTMP_INTERNAL_TX_ALC */
+#endif				/* RTMP_INTERNAL_TX_ALC */
 
 #if defined(RTMP_INTERNAL_TX_ALC) || defined(SINGLE_SKU_V2)
 VOID MT7601_InitPAModeTable(struct _RTMP_ADAPTER *pAd);
-#endif /* defined(RTMP_INTERNAL_TX_ALC) || defined(SINGLE_SKU_V2) */
+#endif				/* defined(RTMP_INTERNAL_TX_ALC) || defined(SINGLE_SKU_V2) */
 
 #ifdef MICROWAVE_OVEN_SUPPORT
-VOID MT7601_AsicMitigateMicrowave(
-	IN struct _RTMP_ADAPTER *pAd);
+VOID MT7601_AsicMitigateMicrowave(IN struct _RTMP_ADAPTER *pAd);
 
-VOID MT7601_AsicMeasureFalseCCA(
-	IN struct _RTMP_ADAPTER *pAd);
-#endif /* MICROWAVE_OVEN_SUPPORT */
+VOID MT7601_AsicMeasureFalseCCA(IN struct _RTMP_ADAPTER *pAd);
+#endif				/* MICROWAVE_OVEN_SUPPORT */
 
-INT MT7601_Read_Temperature(
-	struct _RTMP_ADAPTER *pAd, 
-	OUT	CHAR*			Temperature);
+INT MT7601_Read_Temperature(struct _RTMP_ADAPTER *pAd, OUT CHAR * Temperature);
 
-INT MT7601_Bootup_Read_Temperature(
-	struct _RTMP_ADAPTER *pAd, 
-	OUT	CHAR*			Temperature);
+INT MT7601_Bootup_Read_Temperature(struct _RTMP_ADAPTER *pAd,
+				   OUT CHAR * Temperature);
 
 #ifdef ED_MONITOR
 INT MT7601_set_ed_cca(struct _RTMP_ADAPTER *pAd, BOOLEAN enable);
-#endif /* ED_MONITOR */
+#endif				/* ED_MONITOR */
 
 #ifdef DYNAMIC_PD_SUPPORT
-CHAR MT7601_get_rssi(
-  IN struct _RTMP_ADAPTER *pAd);
+CHAR MT7601_get_rssi(IN struct _RTMP_ADAPTER *pAd);
 
-VOID MT7601_dynamic_vga_tuning(
-	IN struct _RTMP_ADAPTER *pAd);
+VOID MT7601_dynamic_vga_tuning(IN struct _RTMP_ADAPTER *pAd);
 
 VOID MT7601_Dynacmic_PD_By_FalseCCA(IN struct _RTMP_ADAPTER *pAd);
 
 VOID MT7601_dynamic_vga_reset_default(IN struct _RTMP_ADAPTER *pAd);
 
-VOID MT7601_anti_noise_vga_tuning(
-	IN struct _RTMP_ADAPTER *pAd);
+VOID MT7601_anti_noise_vga_tuning(IN struct _RTMP_ADAPTER *pAd);
 
-VOID MT7601_Periodic_Monitor_FalseCCA(
-	IN struct _RTMP_ADAPTER 	*pAd,
-	IN CHAR	  					      Rssi,
-  UINT32                *main_vga,
-  UINT32                *aux_vga);
-#endif /* DYNAMIC_PD_SUPPORT */
-#endif /* __MT7601_H__ */
-
+VOID MT7601_Periodic_Monitor_FalseCCA(IN struct _RTMP_ADAPTER *pAd,
+				      IN CHAR Rssi,
+				      UINT32 * main_vga, UINT32 * aux_vga);
+#endif				/* DYNAMIC_PD_SUPPORT */
+#endif				/* __MT7601_H__ */

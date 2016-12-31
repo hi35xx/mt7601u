@@ -29,12 +29,9 @@
 #ifndef __RAL_NMAC_PBF_H__
 #define __RAL_NMAC_PBF_H__
 
-
-
 /* ================================================================================= */
 /* Register format  for PBF                                                                                                                                                     */
 /* ================================================================================= */
-
 
 /* Most are for debug. Driver doesn't touch PBF register. */
 #define PBF_SYS_CTRL 	 0x0400
@@ -42,43 +39,42 @@
 #ifdef RT_BIG_ENDIAN
 typedef union _PBF_SYS_CTRL_STRUC {
 	struct {
-		UINT32 rsv5:7; /* Reserved */
+		UINT32 rsv5:7;	/* Reserved */
 		UINT32 CSR_TEST_EN:1;
-		UINT32 MAC_CLKSEL:2; /* MAC clock selection */
+		UINT32 MAC_CLKSEL:2;	/* MAC clock selection */
 		UINT32 PWRSV_EN:2;
-		UINT32 SHRM_SEL:1; /* Shared memory access selection */
-		UINT32 PBF_MSEL:2; /* Packet buffer memory access selection */
+		UINT32 SHRM_SEL:1;	/* Shared memory access selection */
+		UINT32 PBF_MSEL:2;	/* Packet buffer memory access selection */
 		UINT32 rsv4:5;
-		UINT32 PBF_CLK_EN:1; /* PBF clock enable */
-		UINT32 MAC_CLK_EN:1; /* MAC clock enable */
+		UINT32 PBF_CLK_EN:1;	/* PBF clock enable */
+		UINT32 MAC_CLK_EN:1;	/* MAC clock enable */
 		UINT32 rsv3:6;
-		UINT32 PBF_RESET:1; /* PBF hardware reset */
-		UINT32 MAC_RESET:1; /* MAC hardware reset */
+		UINT32 PBF_RESET:1;	/* PBF hardware reset */
+		UINT32 MAC_RESET:1;	/* MAC hardware reset */
 		UINT32 rsv:2;
 	} field;
 	UINT32 word;
 } PBF_SYS_CTRL_STRUC;
 #else
-typedef union _PBF_SYS_CTRL_STRUC{
+typedef union _PBF_SYS_CTRL_STRUC {
 	struct {
-                UINT32 rsv5:7; /* Reserved */
-                UINT32 CSR_TEST_EN:1;
-                UINT32 MAC_CLKSEL:2; /* MAC clock selection */
-                UINT32 PWRSV_EN:2;
-                UINT32 SHRM_SEL:1; /* Shared memory access selection */
-                UINT32 PBF_MSEL:2; /* Packet buffer memory access selection */
-                UINT32 rsv4:5;
-                UINT32 PBF_CLK_EN:1; /* PBF clock enable */
-                UINT32 MAC_CLK_EN:1; /* MAC clock enable */
-                UINT32 rsv3:6;
-                UINT32 PBF_RESET:1; /* PBF hardware reset */
-                UINT32 MAC_RESET:1; /* MAC hardware reset */
-                UINT32 rsv:2;
-	}field;
+		UINT32 rsv5:7;	/* Reserved */
+		UINT32 CSR_TEST_EN:1;
+		UINT32 MAC_CLKSEL:2;	/* MAC clock selection */
+		UINT32 PWRSV_EN:2;
+		UINT32 SHRM_SEL:1;	/* Shared memory access selection */
+		UINT32 PBF_MSEL:2;	/* Packet buffer memory access selection */
+		UINT32 rsv4:5;
+		UINT32 PBF_CLK_EN:1;	/* PBF clock enable */
+		UINT32 MAC_CLK_EN:1;	/* MAC clock enable */
+		UINT32 rsv3:6;
+		UINT32 PBF_RESET:1;	/* PBF hardware reset */
+		UINT32 MAC_RESET:1;	/* MAC hardware reset */
+		UINT32 rsv:2;
+	} field;
 	UINT32 word;
 } PBF_SYS_CTRL_STRUC;
 #endif
-
 
 #define PBF_CFG			0x0404
 #define TX_MAX_PCNT	0x0408
@@ -92,7 +88,6 @@ typedef union _PBF_SYS_CTRL_STRUC{
 #define BCN_OFFSET2		0x0424
 #define BCN_OFFSET3		0x0428
 
-
 #define FCE_CTRL			0x0800
 #define FCE_PARAM		0x0804
 #define CHECKSUM_OFFLOAD	0x0808
@@ -100,40 +95,39 @@ typedef union _PBF_SYS_CTRL_STRUC{
 #ifdef RT_BIG_ENDIAN
 typedef union _CSO_CTRL_STRUC {
 	struct {
-                UINT32 rsv:21;
-                UINT32 stamp_seq_num_en:1;
-                UINT32 cso_bigendian:1;
-                UINT32 cso_en:1;
-                UINT32 tx_ipv6_en:1;
-                UINT32 tx_ipv4_cs_gen:1;
-                UINT32 tx_tcp_cs_gen:1;
-                UINT32 tx_udp_cs_gen:1;
-                UINT32 rx_ipv6_en:1;
-                UINT32 rx_ipv4_cs_en:1;
-                UINT32 rx_tcp_cs_en:1;
-                UINT32 rx_udp_cs_en:1;
+		UINT32 rsv:21;
+		UINT32 stamp_seq_num_en:1;
+		UINT32 cso_bigendian:1;
+		UINT32 cso_en:1;
+		UINT32 tx_ipv6_en:1;
+		UINT32 tx_ipv4_cs_gen:1;
+		UINT32 tx_tcp_cs_gen:1;
+		UINT32 tx_udp_cs_gen:1;
+		UINT32 rx_ipv6_en:1;
+		UINT32 rx_ipv4_cs_en:1;
+		UINT32 rx_tcp_cs_en:1;
+		UINT32 rx_udp_cs_en:1;
 	} field;
 	UINT32 word;
 } CSO_CTRL_STRUC;
 #else
-typedef union _CSO_CTRL_STRUC{
+typedef union _CSO_CTRL_STRUC {
 	struct {
-                UINT32 rx_udp_cs_en:1;
-                UINT32 rx_tcp_cs_en:1;
-                UINT32 rx_ipv4_cs_en:1;
-                UINT32 rx_ipv6_en:1;
-                UINT32 tx_udp_cs_gen:1;
-                UINT32 tx_tcp_cs_gen:1;
-                UINT32 tx_ipv4_cs_gen:1;
-                UINT32 tx_ipv6_en:1;
-                UINT32 cso_en:1;
-                UINT32 cso_bigendian:1;
-                UINT32 stamp_seq_num_en:1;
-                UINT32 rsv:21;
-	}field;
+		UINT32 rx_udp_cs_en:1;
+		UINT32 rx_tcp_cs_en:1;
+		UINT32 rx_ipv4_cs_en:1;
+		UINT32 rx_ipv6_en:1;
+		UINT32 tx_udp_cs_gen:1;
+		UINT32 tx_tcp_cs_gen:1;
+		UINT32 tx_ipv4_cs_gen:1;
+		UINT32 tx_ipv6_en:1;
+		UINT32 cso_en:1;
+		UINT32 cso_bigendian:1;
+		UINT32 stamp_seq_num_en:1;
+		UINT32 rsv:21;
+	} field;
 	UINT32 word;
 } CSO_CTRL_STRUC;
 #endif
 
-#endif /* __RAL_NMAC_PBF_H__ */
-
+#endif				/* __RAL_NMAC_PBF_H__ */

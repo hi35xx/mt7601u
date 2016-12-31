@@ -42,8 +42,8 @@
 #define IPV6_NEXT_HEADER_DESTINATION	0x3c	/* 60 */
 #define IPV6_NEXT_HEADER_ROUTING		0x2b	/* 43 */
 #define IPV6_NEXT_HEADER_FRAGMENT		0x2c	/* 44 */
-#define IPV6_NEXT_HEADER_AUTHENTICATION	0x33  	/* 51 */
-#define IPV6_NEXT_HEADER_ENCAPSULATION	0x32  	/* 50, RFC-2406 */
+#define IPV6_NEXT_HEADER_AUTHENTICATION	0x33	/* 51 */
+#define IPV6_NEXT_HEADER_ENCAPSULATION	0x32	/* 50, RFC-2406 */
 #define IPV6_NEXT_HEADER_NONE			0x3b	/* 59 */
 
 #define IPV6_NEXT_HEADER_TCP			0x06
@@ -52,36 +52,33 @@
 #define IPV6_NEXT_HEADER_PIM			0x67
 
 /* ICMPv6 msg type definition */
-#define ICMPV6_MSG_TYPE_ROUTER_SOLICITATION			0x85 /* 133 */
+#define ICMPV6_MSG_TYPE_ROUTER_SOLICITATION			0x85	/* 133 */
 #define ROUTER_SOLICITATION_FIXED_LEN				8
 
-#define ICMPV6_MSG_TYPE_ROUTER_ADVERTISEMENT		0x86 /* 134 */
+#define ICMPV6_MSG_TYPE_ROUTER_ADVERTISEMENT		0x86	/* 134 */
 #define ROUTER_ADVERTISEMENT_FIXED_LEN				16
 
-#define ICMPV6_MSG_TYPE_NEIGHBOR_SOLICITATION		0x87 /* 135 */
+#define ICMPV6_MSG_TYPE_NEIGHBOR_SOLICITATION		0x87	/* 135 */
 #define NEIGHBOR_SOLICITATION_FIXED_LEN				24
 
-#define ICMPV6_MSG_TYPE_NEIGHBOR_ADVERTISEMENT		0x88 /* 136 */
+#define ICMPV6_MSG_TYPE_NEIGHBOR_ADVERTISEMENT		0x88	/* 136 */
 #define NEIGHBOR_ADVERTISEMENT_FIXED_LEN			24
 
-#define ICMPV6_MSG_TYPE_REDIRECT					0x89 /* 137 */
+#define ICMPV6_MSG_TYPE_REDIRECT					0x89	/* 137 */
 #define REDIRECT_FIXED_LEN							40
 
 /* IPv6 Address related structures */
-typedef struct rt_ipv6_addr_
-{
-	union
-	{
-		UCHAR	ipv6Addr8[16];
-		USHORT	ipv6Addr16[8];
-		UINT32	ipv6Addr32[4];
-	}addr;
+typedef struct rt_ipv6_addr_ {
+	union {
+		UCHAR ipv6Addr8[16];
+		USHORT ipv6Addr16[8];
+		UINT32 ipv6Addr32[4];
+	} addr;
 #define ipv6_addr			addr.ipv6Addr8
 #define ipv6_addr16			addr.ipv6Addr16
 #define ipv6_addr32			addr.ipv6Addr32
-}RT_IPV6_ADDR, *PRT_IPV6_ADDR;
+} RT_IPV6_ADDR, *PRT_IPV6_ADDR;
 
-	
 #define PRINT_IPV6_ADDR(ipv6Addr)	\
 	OS_NTOHS((ipv6Addr).ipv6_addr16[0]), \
 	OS_NTOHS((ipv6Addr).ipv6_addr16[1]), \
@@ -92,114 +89,99 @@ typedef struct rt_ipv6_addr_
 	OS_NTOHS((ipv6Addr).ipv6_addr16[6]), \
 	OS_NTOHS((ipv6Addr).ipv6_addr16[7])
 
-
 /*IPv6 Header related structures */
-typedef struct GNU_PACKED _rt_ipv6_hdr_
-{
-	UINT32 			ver:4,
-					trafficClass:8,
-        		   	flowLabel:20;
-	USHORT 			payload_len;
-	UCHAR  			nextHdr;
-	UCHAR  			hopLimit;
-	RT_IPV6_ADDR  	srcAddr;
-	RT_IPV6_ADDR	dstAddr;
-}RT_IPV6_HDR, *PRT_IPV6_HDR;
+typedef struct GNU_PACKED _rt_ipv6_hdr_ {
+	UINT32 ver:4, trafficClass:8, flowLabel:20;
+	USHORT payload_len;
+	UCHAR nextHdr;
+	UCHAR hopLimit;
+	RT_IPV6_ADDR srcAddr;
+	RT_IPV6_ADDR dstAddr;
+} RT_IPV6_HDR, *PRT_IPV6_HDR;
 
-
-typedef struct GNU_PACKED _rt_ipv6_ext_hdr_
-{
-	UCHAR	nextProto; /* Indicate the protocol type of next extension header. */
-	UCHAR	extHdrLen; /* optional field for msg length of this extension header which didn't include the first "nextProto" field. */
-	UCHAR	octets[1]; /* hook to extend header message body. */
-}RT_IPV6_EXT_HDR, *PRT_IPV6_EXT_HDR;
-
+typedef struct GNU_PACKED _rt_ipv6_ext_hdr_ {
+	UCHAR nextProto;	/* Indicate the protocol type of next extension header. */
+	UCHAR extHdrLen;	/* optional field for msg length of this extension header which didn't include the first "nextProto" field. */
+	UCHAR octets[1];	/* hook to extend header message body. */
+} RT_IPV6_EXT_HDR, *PRT_IPV6_EXT_HDR;
 
 /* ICMPv6 related structures */
-typedef struct GNU_PACKED _rt_ipv6_icmpv6_hdr_
-{
-	UCHAR	type;
-	UCHAR	code;
-	USHORT	chksum;
-	UCHAR	octets[1]; /*hook to extend header message body. */
-}RT_ICMPV6_HDR, *PRT_ICMPV6_HDR;
+typedef struct GNU_PACKED _rt_ipv6_icmpv6_hdr_ {
+	UCHAR type;
+	UCHAR code;
+	USHORT chksum;
+	UCHAR octets[1];	/*hook to extend header message body. */
+} RT_ICMPV6_HDR, *PRT_ICMPV6_HDR;
 
-
-typedef struct GNU_PACKED _rt_icmp6_option_hdr_
-{
+typedef struct GNU_PACKED _rt_icmp6_option_hdr_ {
 	UCHAR type;
 	UCHAR len;
 	UCHAR octet[1];
-}RT_ICMPV6_OPTION_HDR, *PRT_ICMPV6_OPTION_HDR;
+} RT_ICMPV6_OPTION_HDR, *PRT_ICMPV6_OPTION_HDR;
 
-typedef enum{
+typedef enum {
 /* Defined ICMPv6 Option Types. */
-	TYPE_SRC_LL_ADDR 	= 1,
-	TYPE_TGT_LL_ADDR 	= 2,
-	TYPE_PREFIX_INFO 			= 3,
-	TYPE_REDIRECTED_HDR			= 4,
-	TYPE_MTU					= 5,
-}ICMPV6_OPTIONS_TYPE_DEF;
+	TYPE_SRC_LL_ADDR = 1,
+	TYPE_TGT_LL_ADDR = 2,
+	TYPE_PREFIX_INFO = 3,
+	TYPE_REDIRECTED_HDR = 4,
+	TYPE_MTU = 5,
+} ICMPV6_OPTIONS_TYPE_DEF;
 
-
-static inline BOOLEAN IPv6ExtHdrHandle(
-	RT_IPV6_EXT_HDR 	*pExtHdr,
-	UCHAR 				*pProto,
-	UINT32 				*pOffset)
+static inline BOOLEAN IPv6ExtHdrHandle(RT_IPV6_EXT_HDR * pExtHdr,
+				       UCHAR * pProto, UINT32 * pOffset)
 {
 	UCHAR nextProto = 0xff;
 	UINT32 extLen = 0;
 	BOOLEAN status = TRUE;
 
 	/*printk("%s(): parsing the Extension Header with Protocol(0x%x):\n", __FUNCTION__, *pProto); */
-	switch (*pProto)
-	{
-		case IPV6_NEXT_HEADER_HOP_BY_HOP:
-			/* IPv6ExtHopByHopHandle(); */
-			nextProto = pExtHdr->nextProto;
-			extLen = (pExtHdr->extHdrLen + 1) * 8;
-			break;
-			
-		case IPV6_NEXT_HEADER_DESTINATION:
-			/* IPv6ExtDestHandle(); */
-			nextProto = pExtHdr->nextProto;
-			extLen = (pExtHdr->extHdrLen + 1) * 8;
-			break;
-			
-		case IPV6_NEXT_HEADER_ROUTING:
-			/* IPv6ExtRoutingHandle(); */
-			nextProto = pExtHdr->nextProto;
-			extLen = (pExtHdr->extHdrLen + 1) * 8;
-			break;
-			
-		case IPV6_NEXT_HEADER_FRAGMENT:
-			/* IPv6ExtFragmentHandle(); */
-			nextProto = pExtHdr->nextProto;
-			extLen = 8; /* The Fragment header length is fixed to 8 bytes. */
-			break;
-			
-		case IPV6_NEXT_HEADER_AUTHENTICATION:
-		/*   IPV6_NEXT_HEADER_ENCAPSULATION: */
-			/*
-				TODO: Not support. For encryption issue.
-			*/
-			nextProto = 0xFF;
-			status = FALSE;
-			break;
+	switch (*pProto) {
+	case IPV6_NEXT_HEADER_HOP_BY_HOP:
+		/* IPv6ExtHopByHopHandle(); */
+		nextProto = pExtHdr->nextProto;
+		extLen = (pExtHdr->extHdrLen + 1) * 8;
+		break;
 
-		default:
-			nextProto = 0xFF;
-			status = FALSE;			
-			break;
+	case IPV6_NEXT_HEADER_DESTINATION:
+		/* IPv6ExtDestHandle(); */
+		nextProto = pExtHdr->nextProto;
+		extLen = (pExtHdr->extHdrLen + 1) * 8;
+		break;
+
+	case IPV6_NEXT_HEADER_ROUTING:
+		/* IPv6ExtRoutingHandle(); */
+		nextProto = pExtHdr->nextProto;
+		extLen = (pExtHdr->extHdrLen + 1) * 8;
+		break;
+
+	case IPV6_NEXT_HEADER_FRAGMENT:
+		/* IPv6ExtFragmentHandle(); */
+		nextProto = pExtHdr->nextProto;
+		extLen = 8;	/* The Fragment header length is fixed to 8 bytes. */
+		break;
+
+	case IPV6_NEXT_HEADER_AUTHENTICATION:
+		/*   IPV6_NEXT_HEADER_ENCAPSULATION: */
+		/*
+		   TODO: Not support. For encryption issue.
+		 */
+		nextProto = 0xFF;
+		status = FALSE;
+		break;
+
+	default:
+		nextProto = 0xFF;
+		status = FALSE;
+		break;
 	}
 
 	*pProto = nextProto;
 	*pOffset += extLen;
 	/*printk("%s(): nextProto = 0x%x!, offset=0x%x!\n", __FUNCTION__, nextProto, offset); */
-	
+
 	return status;
-	
+
 }
 
-#endif /* __IPV6_HDR_H_ */
-
+#endif				/* __IPV6_HDR_H_ */

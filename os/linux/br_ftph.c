@@ -30,7 +30,7 @@
 
 #ifdef BG_FT_SUPPORT
 #if defined(CONFIG_BRIDGE) || defined(CONFIG_BRIDGE_MODULE)
-#include <linux/netfilter_bridge.h> 
+#include <linux/netfilter_bridge.h>
 #include "../net/bridge/br_private.h"
 
 /* extern export symbol in other drivers */
@@ -51,22 +51,18 @@
 		if (HandRst != 0)
 		{
 			/* pass the packet to upper layer */
-			skb->protocol = eth_type_trans(skb, skb->dev);
-			netif_rx(skb);
-		}
-	}
-*/
-UINT32 BG_FTPH_PacketFromApHandle(
-	IN		PNDIS_PACKET	pPacket);
+skb->protocol = eth_type_trans(skb, skb->dev);
+netif_rx(skb);
+}
+}
+
+*/UINT32 BG_FTPH_PacketFromApHandle(IN PNDIS_PACKET pPacket);
 
 #ifdef BG_FT_OPEN_SUPPORT
-extern UINT32 (*RALINK_FP_Handle)(PNDIS_PACKET pPacket);
+extern UINT32(*RALINK_FP_Handle) (PNDIS_PACKET pPacket);
 #else
-UINT32 (*RALINK_FP_Handle)(PNDIS_PACKET pPacket);
-#endif /* BG_FT_OPEN_SUPPORT */
-
-
-
+UINT32(*RALINK_FP_Handle) (PNDIS_PACKET pPacket);
+#endif				/* BG_FT_OPEN_SUPPORT */
 
 /* --------------------------------- Public -------------------------------- */
 
@@ -90,7 +86,6 @@ VOID BG_FTPH_Init(VOID)
 	RALINK_FP_Handle = BG_FTPH_PacketFromApHandle;
 }
 
-
 /*
 ========================================================================
 Routine Description:
@@ -109,10 +104,7 @@ Note:
 VOID BG_FTPH_Remove(VOID)
 {
 	RALINK_FP_Handle = NULL;
-} /* End of BG_FTPH_Init */
-
-
-
+}				/* End of BG_FTPH_Init */
 
 /*
 ========================================================================
@@ -128,13 +120,11 @@ Return Value:
 Note:
 ========================================================================
 */
-UINT32 BG_FTPH_PacketFromApHandle(
-	IN		PNDIS_PACKET	pPacket)
+UINT32 BG_FTPH_PacketFromApHandle(IN PNDIS_PACKET pPacket)
 {
-	struct net_device	*pNetDev;
-	struct sk_buff		*pRxPkt;
+	struct net_device *pNetDev;
+	struct sk_buff *pRxPkt;
 	struct net_bridge_fdb_entry *pSrcFdbEntry, *pDstFdbEntry;
-
 
 	/* init */
 	pRxPkt = RTPKT_TO_OSPKT(pPacket);
@@ -143,53 +133,56 @@ UINT32 BG_FTPH_PacketFromApHandle(
 	/* if pNetDev is promisc mode ??? */
 	DBGPRINT(RT_DEBUG_INFO, ("ft bg> BG_FTPH_PacketFromApHandle\n"));
 
-	if (pNetDev != NULL)
-	{
-		if (pNetDev->br_port != NULL)
-		{
+	if (pNetDev != NULL) {
+		if (pNetDev->br_port != NULL) {
 #if LINUX_VERSION_CODE >= KERNEL_VERSION(2,6,12)
-			pDstFdbEntry = br_fdb_get_hook(pNetDev->br_port->br, pRxPkt->data);
-			pSrcFdbEntry = br_fdb_get_hook(pNetDev->br_port->br, pRxPkt->data + 6);
+			pDstFdbEntry =
+			    br_fdb_get_hook(pNetDev->br_port->br, pRxPkt->data);
+			pSrcFdbEntry =
+			    br_fdb_get_hook(pNetDev->br_port->br,
+					    pRxPkt->data + 6);
 #else
 			/* br_fdb_get is not exported symbol, need exported in net/bridge/br.c */
-			pDstFdbEntry = br_fdb_get(pNetDev->br_port->br, pRxPkt->data);
-			pSrcFdbEntry = br_fdb_get(pNetDev->br_port->br, pRxPkt->data + 6);
+			pDstFdbEntry =
+			    br_fdb_get(pNetDev->br_port->br, pRxPkt->data);
+			pSrcFdbEntry =
+			    br_fdb_get(pNetDev->br_port->br, pRxPkt->data + 6);
 #endif
 
 			/* check destination address in bridge forwarding table */
 			if ((pSrcFdbEntry == NULL) ||
-				(pDstFdbEntry == NULL) ||
-				(pDstFdbEntry->is_local) ||
-				(pDstFdbEntry->dst == NULL) ||
-				(pDstFdbEntry->dst->dev == NULL) ||
-				(pDstFdbEntry->dst->dev == pNetDev) ||
-				(pNetDev->br_port->state != BR_STATE_FORWARDING) ||
-				((pSrcFdbEntry->dst != NULL) &&
-					(pSrcFdbEntry->dst->dev != NULL) &&
-					(pSrcFdbEntry->dst->dev != pNetDev)))
-			{
+			    (pDstFdbEntry == NULL) ||
+			    (pDstFdbEntry->is_local) ||
+			    (pDstFdbEntry->dst == NULL) ||
+			    (pDstFdbEntry->dst->dev == NULL) ||
+			    (pDstFdbEntry->dst->dev == pNetDev) ||
+			    (pNetDev->br_port->state != BR_STATE_FORWARDING) ||
+			    ((pSrcFdbEntry->dst != NULL) &&
+			     (pSrcFdbEntry->dst->dev != NULL) &&
+			     (pSrcFdbEntry->dst->dev != pNetDev))) {
 
 				goto LabelPassToUpperLayer;
-			} /* End of if */
-
+			}
+			/* End of if */
 			if ((!pDstFdbEntry->is_local) &&
-				(pDstFdbEntry->dst != NULL) &&
-				(pDstFdbEntry->dst->dev != NULL))
-			{
+			    (pDstFdbEntry->dst != NULL) &&
+			    (pDstFdbEntry->dst->dev != NULL)) {
 				pRxPkt->dev = pDstFdbEntry->dst->dev;
-				pDstFdbEntry->dst->dev->hard_start_xmit(pRxPkt, pDstFdbEntry->dst->dev);
+				pDstFdbEntry->dst->dev->hard_start_xmit(pRxPkt,
+									pDstFdbEntry->
+									dst->
+									dev);
 				return 0;
-			} /* End of if */
-		} /* End of if */
-	} /* End of if */
-
-LabelPassToUpperLayer:
+			}	/* End of if */
+		}		/* End of if */
+	}
+	/* End of if */
+ LabelPassToUpperLayer:
 	DBGPRINT(RT_DEBUG_TRACE, ("ft bg> Pass packet to bridge module.\n"));
 	return 1;
-} /* End of BG_FTPH_PacketFromApHandle */
+}				/* End of BG_FTPH_PacketFromApHandle */
 
-
-#endif /* CONFIG_BRIDGE || CONFIG_BRIDGE_MODULE */
-#endif /* BG_FT_SUPPORT */
+#endif				/* CONFIG_BRIDGE || CONFIG_BRIDGE_MODULE */
+#endif				/* BG_FT_SUPPORT */
 
 /* End of bg_ftph.c */

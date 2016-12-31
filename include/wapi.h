@@ -57,57 +57,38 @@
  	function prototype in wapi_crypt.c
  =====================================	
 */
-int wpi_cbc_mac_engine(
-		unsigned char * maciv_in,
-		unsigned char * in_data1,
-		unsigned int 	in_data1_len,
-		unsigned char * in_data2,
-		unsigned int 	in_data2_len,
-		unsigned char * pkey,
-		unsigned char * mac_out);
+int wpi_cbc_mac_engine(unsigned char *maciv_in,
+		       unsigned char *in_data1,
+		       unsigned int in_data1_len,
+		       unsigned char *in_data2,
+		       unsigned int in_data2_len,
+		       unsigned char *pkey, unsigned char *mac_out);
 
-int wpi_sms4_ofb_engine(
-	unsigned char * pofbiv_in,
-	unsigned char * pbw_in,
-	unsigned int 	plbw_in,
-	unsigned char * pkey,
-	unsigned char * pcw_out);
+int wpi_sms4_ofb_engine(unsigned char *pofbiv_in,
+			unsigned char *pbw_in,
+			unsigned int plbw_in,
+			unsigned char *pkey, unsigned char *pcw_out);
 
-VOID RTMPInsertWapiIe(
-	IN	UINT			AuthMode,
-	IN	UINT			WepStatus,
-	OUT	PUCHAR			pWIe,
-	OUT	UCHAR			*w_len);
+VOID RTMPInsertWapiIe(IN UINT AuthMode,
+		      IN UINT WepStatus, OUT PUCHAR pWIe, OUT UCHAR * w_len);
 
-BOOLEAN RTMPCheckWAIframe(
-    IN PUCHAR           pData,
-    IN ULONG            DataByteCount);
+BOOLEAN RTMPCheckWAIframe(IN PUCHAR pData, IN ULONG DataByteCount);
 
-VOID RTMPConstructWPIIVHdr(
-	IN	UCHAR			key_id,
-	IN	UCHAR			*tx_iv, 
-	OUT UCHAR 			*iv_hdr);
+VOID RTMPConstructWPIIVHdr(IN UCHAR key_id,
+			   IN UCHAR * tx_iv, OUT UCHAR * iv_hdr);
 
-extern INT	RTMPSoftEncryptSMS4(
-		IN	PUCHAR			pHeader,
-		IN  PUCHAR			pData,
-		IN	UINT32			data_len,				
-		IN	UCHAR			key_id,
-		IN	PUCHAR 			pKey,
-		IN	PUCHAR			pIv);
-extern INT	RTMPSoftDecryptSMS4(
-		IN		PUCHAR			pHdr,
-		IN		BOOLEAN			bSanityIV,
-		IN 		PCIPHER_KEY		pKey,
-		INOUT 	PUCHAR			pData,
-		INOUT 	UINT16			*DataByteCnt);
+extern INT RTMPSoftEncryptSMS4(IN PUCHAR pHeader,
+			       IN PUCHAR pData,
+			       IN UINT32 data_len,
+			       IN UCHAR key_id, IN PUCHAR pKey, IN PUCHAR pIv);
+extern INT RTMPSoftDecryptSMS4(IN PUCHAR pHdr,
+			       IN BOOLEAN bSanityIV,
+			       IN PCIPHER_KEY pKey,
+			       INOUT PUCHAR pData, INOUT UINT16 * DataByteCnt);
 
-VOID RTMPDeriveWapiGTK(
-	IN	PUCHAR			nmk,
-	OUT	PUCHAR			gtk_ptr);
+VOID RTMPDeriveWapiGTK(IN PUCHAR nmk, OUT PUCHAR gtk_ptr);
 
-VOID RT_SMS4_TEST(
-	IN UINT8			test);
+VOID RT_SMS4_TEST(IN UINT8 test);
 
 INT SMS4_TEST(void);
 
@@ -117,67 +98,45 @@ INT SMS4_TEST(void);
  =====================================	
 */
 
-BOOLEAN RTMPIsWapiCipher(
-    IN PRTMP_ADAPTER    pAd,
-    IN UCHAR           	apidx);
+BOOLEAN RTMPIsWapiCipher(IN PRTMP_ADAPTER pAd, IN UCHAR apidx);
 
-VOID RTMPIoctlQueryWapiConf(
-	IN PRTMP_ADAPTER pAd, 
-	IN RTMP_IOCTL_INPUT_STRUCT *wrq);
+VOID RTMPIoctlQueryWapiConf(IN PRTMP_ADAPTER pAd,
+			    IN RTMP_IOCTL_INPUT_STRUCT * wrq);
 
-void rtmp_read_wapi_parms_from_file(
-		IN  PRTMP_ADAPTER pAd, 
-		char *tmpbuf, 
-		char *buffer);
+void rtmp_read_wapi_parms_from_file(IN PRTMP_ADAPTER pAd,
+				    char *tmpbuf, char *buffer);
 
-VOID RTMPWapiUskRekeyPeriodicExec(
-    IN PVOID SystemSpecific1, 
-    IN PVOID FunctionContext, 
-    IN PVOID SystemSpecific2, 
-    IN PVOID SystemSpecific3);
+VOID RTMPWapiUskRekeyPeriodicExec(IN PVOID SystemSpecific1,
+				  IN PVOID FunctionContext,
+				  IN PVOID SystemSpecific2,
+				  IN PVOID SystemSpecific3);
 
-VOID RTMPWapiMskRekeyPeriodicExec(
-    IN PVOID SystemSpecific1, 
-    IN PVOID FunctionContext, 
-    IN PVOID SystemSpecific2, 
-    IN PVOID SystemSpecific3);
+VOID RTMPWapiMskRekeyPeriodicExec(IN PVOID SystemSpecific1,
+				  IN PVOID FunctionContext,
+				  IN PVOID SystemSpecific2,
+				  IN PVOID SystemSpecific3);
 
-VOID RTMPInitWapiRekeyTimerAction(
-	IN PRTMP_ADAPTER 	pAd,
-	IN PMAC_TABLE_ENTRY	pEntry);
+VOID RTMPInitWapiRekeyTimerAction(IN PRTMP_ADAPTER pAd,
+				  IN PMAC_TABLE_ENTRY pEntry);
 
-VOID RTMPStartWapiRekeyTimerAction(
-	IN PRTMP_ADAPTER 	pAd,
-	IN PMAC_TABLE_ENTRY pEntry);
+VOID RTMPStartWapiRekeyTimerAction(IN PRTMP_ADAPTER pAd,
+				   IN PMAC_TABLE_ENTRY pEntry);
 
-VOID RTMPCancelWapiRekeyTimerAction(
-	IN PRTMP_ADAPTER 	pAd,
-	IN PMAC_TABLE_ENTRY pEntry);
+VOID RTMPCancelWapiRekeyTimerAction(IN PRTMP_ADAPTER pAd,
+				    IN PMAC_TABLE_ENTRY pEntry);
 
-VOID RTMPGetWapiTxTscFromAsic(
-	IN  PRTMP_ADAPTER   pAd,
-	IN	UINT			Wcid,
-	OUT	UCHAR			*tx_tsc);
+VOID RTMPGetWapiTxTscFromAsic(IN PRTMP_ADAPTER pAd,
+			      IN UINT Wcid, OUT UCHAR * tx_tsc);
 
-VOID WAPIInstallPairwiseKey(
-	PRTMP_ADAPTER		pAd,
-	PMAC_TABLE_ENTRY	pEntry,
-	BOOLEAN				bAE);
+VOID WAPIInstallPairwiseKey(PRTMP_ADAPTER pAd,
+			    PMAC_TABLE_ENTRY pEntry, BOOLEAN bAE);
 
-VOID WAPIInstallSharedKey(
-	PRTMP_ADAPTER		pAd,
-	UINT8				GroupCipher,
-	UINT8				BssIdx,
-	UINT8				KeyIdx,
-	UINT8				Wcid,
-	PUINT8				pGtk);
+VOID WAPIInstallSharedKey(PRTMP_ADAPTER pAd,
+			  UINT8 GroupCipher,
+			  UINT8 BssIdx, UINT8 KeyIdx, UINT8 Wcid, PUINT8 pGtk);
 
-BOOLEAN WAPI_InternalCmdAction(
-		IN  PRTMP_ADAPTER		pAd,
-		IN	UCHAR				AuthMode,
-		IN	UCHAR				apidx,
-		IN	PUCHAR				pAddr,
-		IN	UCHAR				flag);
+BOOLEAN WAPI_InternalCmdAction(IN PRTMP_ADAPTER pAd,
+			       IN UCHAR AuthMode,
+			       IN UCHAR apidx, IN PUCHAR pAddr, IN UCHAR flag);
 
-#endif /* __WAPI_H__ */
-
+#endif				/* __WAPI_H__ */

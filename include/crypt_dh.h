@@ -30,27 +30,22 @@
 
 #include "rt_config.h"
 
-
 /* DH operations */
-void DH_PublicKey_Generate (
-    IN UINT8 GValue[],
-    IN UINT GValueLength,
-    IN UINT8 PValue[],
-    IN UINT PValueLength,
-    IN UINT8 PrivateKey[],
-    IN UINT PrivateKeyLength,
-    OUT UINT8 PublicKey[],
-    INOUT UINT *PublicKeyLength);
+void DH_PublicKey_Generate(IN UINT8 GValue[],
+			   IN UINT GValueLength,
+			   IN UINT8 PValue[],
+			   IN UINT PValueLength,
+			   IN UINT8 PrivateKey[],
+			   IN UINT PrivateKeyLength,
+			   OUT UINT8 PublicKey[], INOUT UINT * PublicKeyLength);
 
-void DH_SecretKey_Generate (
-    IN UINT8 PublicKey[],
-    IN UINT PublicKeyLength,
-    IN UINT8 PValue[],
-    IN UINT PValueLength,
-    IN UINT8 PrivateKey[],
-    IN UINT PrivateKeyLength,
-    OUT UINT8 SecretKey[],
-    INOUT UINT *SecretKeyLength);
+void DH_SecretKey_Generate(IN UINT8 PublicKey[],
+			   IN UINT PublicKeyLength,
+			   IN UINT8 PValue[],
+			   IN UINT PValueLength,
+			   IN UINT8 PrivateKey[],
+			   IN UINT PrivateKeyLength,
+			   OUT UINT8 SecretKey[], INOUT UINT * SecretKeyLength);
 
 #define RT_DH_PublicKey_Generate(GK, GKL, PV, PVL, PriK, PriKL, PubK, PubKL) \
     DH_PublicKey_Generate((GK), (GKL), (PV), (PVL), (PriK), (PriKL), (UINT8 *) (PubK), (UINT *) (PubKL))
@@ -60,6 +55,4 @@ void DH_SecretKey_Generate (
 
 #define RT_DH_FREE_ALL()
 
-    
-#endif /* __CRYPT_DH_H__ */
-
+#endif				/* __CRYPT_DH_H__ */

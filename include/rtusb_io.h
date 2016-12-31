@@ -47,7 +47,7 @@
 #define CMDTHREAD_FORCE_WAKE_UP						0x0D730108
 #define CMDTHREAD_FORCE_SLEEP_AUTO_WAKEUP			0x0D730109
 #define CMDTHREAD_QKERIODIC_EXECUT					0x0D73010A
-#endif /* CONFIG_STA_SUPPORT */
+#endif				/* CONFIG_STA_SUPPORT */
 
 #ifdef CONFIG_AP_SUPPORT
 #define CMDTHREAD_AP_UPDATE_CAPABILITY_AND_ERPIE	0x0D73010B
@@ -56,14 +56,14 @@
 #define CMDTHREAD_AP_ADJUST_EXP_ACK_TIME			0x0D73010E
 #define CMDTHREAD_AP_RECOVER_EXP_ACK_TIME			0x0D73010F
 #define CMDTHREAD_CHAN_RESCAN						0x0D730110
-#endif /* CONFIG_AP_SUPPORT */
+#endif				/* CONFIG_AP_SUPPORT */
 
 #define CMDTHREAD_SET_LED_STATUS				0x0D730111	/* Set WPS LED status (LED_WPS_XXX). */
 #ifdef WSC_INCLUDED
 #ifdef WSC_LED_SUPPORT
 #define CMDTHREAD_LED_WPS_MODE10					0x0D730112
-#endif /* WSC_LED_SUPPORT */
-#endif /* WSC_INCLUDED */
+#endif				/* WSC_LED_SUPPORT */
+#endif				/* WSC_INCLUDED */
 
 /* Security related */
 #define CMDTHREAD_SET_WCID_SEC_INFO					0x0D730113
@@ -74,11 +74,11 @@
 #define CMDTHREAD_REMOVE_PAIRWISE_KEY				0x0D730118
 #ifdef CONFIG_STA_SUPPORT
 #define CMDTHREAD_SET_PORT_SECURED					0x0D730119
-#endif /* CONFIG_STA_SUPPORT */
+#endif				/* CONFIG_STA_SUPPORT */
 
 #ifdef CONFIG_AP_SUPPORT
 #define CMDTHREAD_802_11_COUNTER_MEASURE			0x0D73011A
-#endif /* CONFIG_AP_SUPPORT */
+#endif				/* CONFIG_AP_SUPPORT */
 
 /* add by johnli, fix "in_interrupt" error when call "MacTableDeleteEntry" in Rx tasklet */
 #define CMDTHREAD_UPDATE_PROTECT					0x0D73011B
@@ -90,24 +90,20 @@
 #define CMDTHREAD_REG_HINT_11D						0x0D73011D
 #define CMDTHREAD_SCAN_END							0x0D73011E
 #define CMDTHREAD_CONNECT_RESULT_INFORM				0x0D73011F
-#endif /* RT_CFG80211_SUPPORT */
-#endif /* LINUX */
+#endif				/* RT_CFG80211_SUPPORT */
+#endif				/* LINUX */
 
 #ifdef P2P_SUPPORT
 #define CMDTHREAD_SET_P2P_LINK_DOWN				0x0D730120
-#endif /* P2P_SUPPORT */
-
-
+#endif				/* P2P_SUPPORT */
 
 #define CMDTHREAD_RESPONSE_EVENT_CALLBACK			0x0D730123
-
 
 typedef struct _CMDHandler_TLV {
 	USHORT Offset;
 	USHORT Length;
 	UCHAR DataFirst;
 } CMDHandler_TLV, *PCMDHandler_TLV;
-
 
 typedef struct _RT_SET_ASIC_WCID {
 	ULONG WCID;		/* mechanism for rekeying: 0:disable, 1: time-based, 2: packet-based */
@@ -151,9 +147,9 @@ typedef struct _RT_ASIC_SHARED_KEY {
 
 typedef struct _RT_ASIC_PROTECT_INFO {
 	USHORT OperationMode;
-	UCHAR SetMask;	
+	UCHAR SetMask;
 	BOOLEAN bDisableBGProtect;
-	BOOLEAN bNonGFExist;	
+	BOOLEAN bNonGFExist;
 } RT_ASIC_PROTECT_INFO, *PRT_ASIC_PROTECT_INFO;
 
 /******************************************************************************
@@ -172,7 +168,7 @@ typedef struct _RT_ASIC_PROTECT_INFO {
 #ifdef CONFIG_AP_SUPPORT
 #define RTMP_AP_UPDATE_CAPABILITY_AND_ERPIE(pAd)	\
  	RTEnqueueInternalCmd(pAd, CMDTHREAD_AP_UPDATE_CAPABILITY_AND_ERPIE, NULL, 0);
-#endif /* CONFIG_AP_SUPPORT */
+#endif				/* CONFIG_AP_SUPPORT */
 
 /* Insert the BA bitmap to ASIC for the Wcid entry */
 #define RTMP_ADD_BA_SESSION_TO_ASIC(_pAd, _Aid, _TID)					\
@@ -204,4 +200,4 @@ typedef struct _RT_ASIC_PROTECT_INFO {
 			RTEnqueueInternalCmd((_pAd), CMDTHREAD_UPDATE_PROTECT, &AsicProtectInfo, sizeof(RT_ASIC_PROTECT_INFO));\
 		} while(0)
 
-#endif /* __RTUSB_IO_H__ */
+#endif				/* __RTUSB_IO_H__ */

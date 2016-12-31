@@ -28,23 +28,15 @@
 */
 #include "rt_config.h"
 
+static VOID P2PDiscScanAction(IN PRTMP_ADAPTER pAd, IN MLME_QUEUE_ELEM * Elem);
 
-static VOID P2PDiscScanAction(
-	IN PRTMP_ADAPTER pAd,
-	IN MLME_QUEUE_ELEM *Elem);
+static VOID P2PDiscListenAction(IN PRTMP_ADAPTER pAd,
+				IN MLME_QUEUE_ELEM * Elem);
 
-static VOID P2PDiscListenAction(
-	IN PRTMP_ADAPTER pAd,
-	IN MLME_QUEUE_ELEM *Elem);
+static VOID P2PDiscSearchAction(IN PRTMP_ADAPTER pAd,
+				IN MLME_QUEUE_ELEM * Elem);
 
-static VOID P2PDiscSearchAction(
-	IN PRTMP_ADAPTER pAd,
-	IN MLME_QUEUE_ELEM *Elem);
-
-static VOID P2PDiscCanlAction(
-	IN PRTMP_ADAPTER pAd,
-	IN MLME_QUEUE_ELEM *Elem);
-
+static VOID P2PDiscCanlAction(IN PRTMP_ADAPTER pAd, IN MLME_QUEUE_ELEM * Elem);
 
 /*
 	==========================================================================
@@ -56,8 +48,8 @@ static VOID P2PDiscCanlAction(
 		the state machine looks like the following
 	==========================================================================
  */
-	
- #ifdef RELEAE_EXCLUDE
+
+#ifdef RELEAE_EXCLUDE
 /*
 							Scan command			P2P Periodic				P2P Scan							CntlOidScanProc 			MlmeCntlMachinePerformAction						  P2P Periodic
 	P2P_ENABLE_LISTEN_ONLY ---------------> P2P_IDLE -----------> P2P_SEARCH ---------> P2P_SEARCH_COMMAND ---------------> P2P_SEARCH ---------------------------> P2P_SEARCH_COMPLETE -----------> P2P_IDLE
@@ -78,7 +70,7 @@ static VOID P2PDiscCanlAction(
 		. Init ScanNextRound
 		. change in P2P_IDLE
 */
-	
+
 /*
 
 	P2P_CTRL_IDLE : do not scan / search / listen.
@@ -93,36 +85,51 @@ static VOID P2PDiscCanlAction(
 					After AsicKey write done, can change to IDLE state.
 
 */
-#endif /* RELEASE_EXCLUDE */
-VOID P2PDiscoveryStateMachineInit(
-	IN PRTMP_ADAPTER pAd,
-	IN STATE_MACHINE *Sm,
-	OUT STATE_MACHINE_FUNC Trans[])
+#endif				/* RELEASE_EXCLUDE */
+VOID P2PDiscoveryStateMachineInit(IN PRTMP_ADAPTER pAd,
+				  IN STATE_MACHINE * Sm,
+				  OUT STATE_MACHINE_FUNC Trans[])
 {
-	StateMachineInit(Sm, (STATE_MACHINE_FUNC*)Trans, (ULONG)P2P_DISC_MAX_STATES,
-		(ULONG)P2P_DISC_MAX_EVENTS, (STATE_MACHINE_FUNC)Drop, P2P_DISC_IDLE, P2P_DISC_IDLE);
+	StateMachineInit(Sm, (STATE_MACHINE_FUNC *) Trans,
+			 (ULONG) P2P_DISC_MAX_STATES,
+			 (ULONG) P2P_DISC_MAX_EVENTS, (STATE_MACHINE_FUNC) Drop,
+			 P2P_DISC_IDLE, P2P_DISC_IDLE);
 
 	/* P2P_DISC_IDLE state */
-	StateMachineSetAction(Sm, P2P_DISC_IDLE, P2P_DISC_SCAN_CMD_EVT, (STATE_MACHINE_FUNC)P2PDiscScanAction);
-	StateMachineSetAction(Sm, P2P_DISC_IDLE, P2P_DISC_LISTEN_CMD_EVT, (STATE_MACHINE_FUNC)P2PDiscListenAction);
-	StateMachineSetAction(Sm, P2P_DISC_IDLE, P2P_DISC_PEER_PROB_REQ, (STATE_MACHINE_FUNC)PeerP2pProbeReq);
-	StateMachineSetAction(Sm, P2P_DISC_IDLE, P2P_DISC_PEER_PROB_RSP, (STATE_MACHINE_FUNC)PeerP2pBeaconProbeRspAtScan);
+	StateMachineSetAction(Sm, P2P_DISC_IDLE, P2P_DISC_SCAN_CMD_EVT,
+			      (STATE_MACHINE_FUNC) P2PDiscScanAction);
+	StateMachineSetAction(Sm, P2P_DISC_IDLE, P2P_DISC_LISTEN_CMD_EVT,
+			      (STATE_MACHINE_FUNC) P2PDiscListenAction);
+	StateMachineSetAction(Sm, P2P_DISC_IDLE, P2P_DISC_PEER_PROB_REQ,
+			      (STATE_MACHINE_FUNC) PeerP2pProbeReq);
+	StateMachineSetAction(Sm, P2P_DISC_IDLE, P2P_DISC_PEER_PROB_RSP,
+			      (STATE_MACHINE_FUNC) PeerP2pBeaconProbeRspAtScan);
 
 	/* P2P_DISC_SCAN state */
-	StateMachineSetAction(Sm, P2P_DISC_SCAN, P2P_DISC_LISTEN_CMD_EVT, (STATE_MACHINE_FUNC)P2PDiscListenAction);
-	StateMachineSetAction(Sm, P2P_DISC_SCAN, P2P_DISC_CANL_CMD_EVT, (STATE_MACHINE_FUNC)P2PDiscCanlAction);
-	StateMachineSetAction(Sm, P2P_DISC_SCAN, P2P_DISC_PEER_PROB_RSP, (STATE_MACHINE_FUNC)PeerP2pBeaconProbeRspAtScan);
+	StateMachineSetAction(Sm, P2P_DISC_SCAN, P2P_DISC_LISTEN_CMD_EVT,
+			      (STATE_MACHINE_FUNC) P2PDiscListenAction);
+	StateMachineSetAction(Sm, P2P_DISC_SCAN, P2P_DISC_CANL_CMD_EVT,
+			      (STATE_MACHINE_FUNC) P2PDiscCanlAction);
+	StateMachineSetAction(Sm, P2P_DISC_SCAN, P2P_DISC_PEER_PROB_RSP,
+			      (STATE_MACHINE_FUNC) PeerP2pBeaconProbeRspAtScan);
 
 	/* P2P_DISC_LISTEN state */
-	StateMachineSetAction(Sm, P2P_DISC_LISTEN, P2P_DISC_SEARCH_CMD_EVT, (STATE_MACHINE_FUNC)P2PDiscSearchAction);
-	StateMachineSetAction(Sm, P2P_DISC_LISTEN, P2P_DISC_CANL_CMD_EVT, (STATE_MACHINE_FUNC)P2PDiscCanlAction);
-	StateMachineSetAction(Sm, P2P_DISC_LISTEN, P2P_DISC_PEER_PROB_REQ, (STATE_MACHINE_FUNC)PeerP2pProbeReq);
-	StateMachineSetAction(Sm, P2P_DISC_LISTEN, P2P_DISC_SCAN_CMD_EVT, (STATE_MACHINE_FUNC)P2PDiscScanAction);
+	StateMachineSetAction(Sm, P2P_DISC_LISTEN, P2P_DISC_SEARCH_CMD_EVT,
+			      (STATE_MACHINE_FUNC) P2PDiscSearchAction);
+	StateMachineSetAction(Sm, P2P_DISC_LISTEN, P2P_DISC_CANL_CMD_EVT,
+			      (STATE_MACHINE_FUNC) P2PDiscCanlAction);
+	StateMachineSetAction(Sm, P2P_DISC_LISTEN, P2P_DISC_PEER_PROB_REQ,
+			      (STATE_MACHINE_FUNC) PeerP2pProbeReq);
+	StateMachineSetAction(Sm, P2P_DISC_LISTEN, P2P_DISC_SCAN_CMD_EVT,
+			      (STATE_MACHINE_FUNC) P2PDiscScanAction);
 
 	/* P2P_DISC_SEARCH state */
-	StateMachineSetAction(Sm, P2P_DISC_SEARCH, P2P_DISC_LISTEN_CMD_EVT, (STATE_MACHINE_FUNC)P2PDiscListenAction);
-	StateMachineSetAction(Sm, P2P_DISC_SEARCH, P2P_DISC_CANL_CMD_EVT, (STATE_MACHINE_FUNC)P2PDiscCanlAction);
-	StateMachineSetAction(Sm, P2P_DISC_SEARCH, P2P_DISC_PEER_PROB_RSP, (STATE_MACHINE_FUNC)PeerP2pBeaconProbeRspAtScan);
+	StateMachineSetAction(Sm, P2P_DISC_SEARCH, P2P_DISC_LISTEN_CMD_EVT,
+			      (STATE_MACHINE_FUNC) P2PDiscListenAction);
+	StateMachineSetAction(Sm, P2P_DISC_SEARCH, P2P_DISC_CANL_CMD_EVT,
+			      (STATE_MACHINE_FUNC) P2PDiscCanlAction);
+	StateMachineSetAction(Sm, P2P_DISC_SEARCH, P2P_DISC_PEER_PROB_RSP,
+			      (STATE_MACHINE_FUNC) PeerP2pBeaconProbeRspAtScan);
 
 	/* init Device Discovery Timer */
 	P2PInitDevDiscTimer(pAd, 0);
@@ -136,9 +143,7 @@ VOID P2PDiscoveryStateMachineInit(
 }
 
 /* Device Discovery Action */
-static VOID P2PDiscScanAction(
-	IN PRTMP_ADAPTER pAd,
-	IN MLME_QUEUE_ELEM *Elem)
+static VOID P2PDiscScanAction(IN PRTMP_ADAPTER pAd, IN MLME_QUEUE_ELEM * Elem)
 {
 	P2P_DISC_STATE *pCurrState = &(pAd->P2pCfg.DiscCurrentState);
 	PRT_P2P_CONFIG pP2PCtrl = &pAd->P2pCfg;
@@ -147,34 +152,30 @@ static VOID P2PDiscScanAction(
 
 	DBGPRINT(RT_DEBUG_TRACE, ("%s::\n", __FUNCTION__));
 	/* If I just finish group formation as GO. don't do scan . If I am auto GO, I should support P2P scan too. So check GoIntentIdx != 16. */
-	if ((pP2PCtrl->P2PConnectState == P2P_ANY_IN_FORMATION_AS_GO) && (pP2PCtrl->GoIntentIdx <= 15))
-	{
+	if ((pP2PCtrl->P2PConnectState == P2P_ANY_IN_FORMATION_AS_GO)
+	    && (pP2PCtrl->GoIntentIdx <= 15)) {
 		pP2PCtrl->P2pCounter.Counter100ms = 0;
 	}
 
 	/* Stop Scan and resume */
-	if (RTMP_TEST_FLAG(pAd, fRTMP_ADAPTER_BSS_SCAN_IN_PROGRESS))
-	{
-		/*pAd->StaCfg.bSkipAutoScanConn = TRUE;*/
+	if (RTMP_TEST_FLAG(pAd, fRTMP_ADAPTER_BSS_SCAN_IN_PROGRESS)) {
+		/*pAd->StaCfg.bSkipAutoScanConn = TRUE; */
 		RTMPCancelTimer(&pAd->MlmeAux.ScanTimer, &Cancelled);
 		pAd->MlmeAux.Channel = 0;
-		ScanNextChannel(pAd, OPMODE_STA);		
+		ScanNextChannel(pAd, OPMODE_STA);
 	}
-
 
 	/* Scan Type is SCAN_P2P for SYNC State Machine */
 	ScanParmFill(pAd, &ScanReq, "", 0, BSS_ANY, SCAN_P2P);
-	MlmeEnqueue(pAd, SYNC_STATE_MACHINE, MT2_MLME_SCAN_REQ, 
-		sizeof(MLME_SCAN_REQ_STRUCT), &ScanReq, 0);
+	MlmeEnqueue(pAd, SYNC_STATE_MACHINE, MT2_MLME_SCAN_REQ,
+		    sizeof(MLME_SCAN_REQ_STRUCT), &ScanReq, 0);
 	pAd->Mlme.CntlMachine.CurrState = CNTL_WAIT_OID_LIST_SCAN;
 	*pCurrState = P2P_DISC_SCAN;
 /*	pAd->StaCfg.bSkipAutoScanConn = FALSE;*/
-}	
+}
 
-static VOID P2PDiscCanlAction(
-	IN PRTMP_ADAPTER pAd,
-	IN MLME_QUEUE_ELEM *Elem)
-{	
+static VOID P2PDiscCanlAction(IN PRTMP_ADAPTER pAd, IN MLME_QUEUE_ELEM * Elem)
+{
 	P2P_DISC_STATE *pCurrState = &(pAd->P2pCfg.DiscCurrentState);
 	PRT_P2P_CONFIG pP2PCtrl = &pAd->P2pCfg;
 	UCHAR channel = pP2PCtrl->ListenChannel;
@@ -182,120 +183,121 @@ static VOID P2PDiscCanlAction(
 	BOOLEAN bGoBack = TRUE;
 
 	/*
-		Go back to working channel
-	*/
-	if (INFRA_ON(pAd) || (pAd->flg_p2p_OpStatusFlags != P2P_DISABLE))
-	{
-		if ((pAd->CommonCfg.Channel != pAd->CommonCfg.CentralChannel) && (pAd->CommonCfg.BBPCurrentBW == BW_40))
+	   Go back to working channel
+	 */
+	if (INFRA_ON(pAd) || (pAd->flg_p2p_OpStatusFlags != P2P_DISABLE)) {
+		if ((pAd->CommonCfg.Channel != pAd->CommonCfg.CentralChannel)
+		    && (pAd->CommonCfg.BBPCurrentBW == BW_40))
 			channel = pAd->CommonCfg.CentralChannel;
 		else
 			channel = pAd->CommonCfg.Channel;
 	}
 
 	p2pindex = P2pGroupTabSearch(pAd, pAd->P2pCfg.ConnectingMAC);
-	if (p2pindex != P2P_NOT_FOUND)
-	{
-		if (pAd->P2pTable.Client[p2pindex].P2pClientState > P2PSTATE_DISCOVERY_UNKNOWN)
+	if (p2pindex != P2P_NOT_FOUND) {
+		if (pAd->P2pTable.Client[p2pindex].P2pClientState >
+		    P2PSTATE_DISCOVERY_UNKNOWN)
 			bGoBack = FALSE;
 	}
 
-	if (bGoBack && (channel != pAd->LatchRfRegs.Channel))
-	{
+	if (bGoBack && (channel != pAd->LatchRfRegs.Channel)) {
 		if (pAd->CommonCfg.BBPCurrentBW == BW_40)
 			rtmp_bbp_set_bw(pAd, BW_40);
 
 		AsicSwitchChannel(pAd, channel, FALSE);
-		AsicLockChannel(pAd, channel);		
+		AsicLockChannel(pAd, channel);
 
-		DBGPRINT(RT_DEBUG_TRACE, ("P2PDiscCanlAction - Restore to channel %d\n",channel));
+		DBGPRINT(RT_DEBUG_TRACE,
+			 ("P2PDiscCanlAction - Restore to channel %d\n",
+			  channel));
 	}
-		
+
 	*pCurrState = P2P_DISC_IDLE;
-}	
+}
 
 #if 0
-static VOID P2PDiscScanCanlAction(
-	IN PRTMP_ADAPTER pAd,
-	IN MLME_QUEUE_ELEM *Elem)
+static VOID P2PDiscScanCanlAction(IN PRTMP_ADAPTER pAd,
+				  IN MLME_QUEUE_ELEM * Elem)
 {
 	P2P_DISC_STATE *pCurrState = &(pAd->P2pCfg.DiscCurrentState);
-	/*PRT_P2P_CONFIG pP2PCtrl = &pAd->P2pCfg;*/
+	/*PRT_P2P_CONFIG pP2PCtrl = &pAd->P2pCfg; */
 
-	DBGPRINT(RT_DEBUG_ERROR, ("%s:: The Device Discovery time has expired, stop!!\n", __FUNCTION__));
+	DBGPRINT(RT_DEBUG_ERROR,
+		 ("%s:: The Device Discovery time has expired, stop!!\n",
+		  __FUNCTION__));
 	*pCurrState = P2P_DISC_LISTEN;
 }
 #endif
 
-static VOID P2PDiscListenAction(
-	IN PRTMP_ADAPTER pAd,
-	IN MLME_QUEUE_ELEM *Elem)
+static VOID P2PDiscListenAction(IN PRTMP_ADAPTER pAd, IN MLME_QUEUE_ELEM * Elem)
 {
 	P2P_DISC_STATE *pCurrState = &(pAd->P2pCfg.DiscCurrentState);
 	PRT_P2P_CONFIG pP2PCtrl = &pAd->P2pCfg;
 
 	if (pP2PCtrl->P2pCounter.bStartScan == TRUE)
-		pP2PCtrl->P2pCounter.ListenInterval = (RandomByte(pAd) % 3) + pP2PCtrl->P2pCounter.ListenIntervalBias; /* 1~3 */
+		pP2PCtrl->P2pCounter.ListenInterval = (RandomByte(pAd) % 3) + pP2PCtrl->P2pCounter.ListenIntervalBias;	/* 1~3 */
 	else
 		pP2PCtrl->P2pCounter.ListenInterval = 5;
 
 	/* ExtListenInterval is in ms. So /100 */
 	if (IS_P2P_SUPPORT_EXT_LISTEN(pAd))
-		pP2PCtrl->P2pCounter.ListenInterval = pP2PCtrl->ExtListenPeriod/100;
+		pP2PCtrl->P2pCounter.ListenInterval =
+		    pP2PCtrl->ExtListenPeriod / 100;
 
-	if (pAd->LatchRfRegs.Channel != pP2PCtrl->ListenChannel)
-	{
+	if (pAd->LatchRfRegs.Channel != pP2PCtrl->ListenChannel) {
 		/* Let BBP register at 20MHz */
 		rtmp_bbp_set_bw(pAd, BW_20);
 
 		AsicSwitchChannel(pAd, pP2PCtrl->ListenChannel, FALSE);
 		AsicLockChannel(pAd, pP2PCtrl->ListenChannel);
 	}
-	
-	DBGPRINT(RT_DEBUG_TRACE, ("%s:: Listen interval - %d\n", __FUNCTION__, pP2PCtrl->P2pCounter.ListenInterval));
+
+	DBGPRINT(RT_DEBUG_TRACE,
+		 ("%s:: Listen interval - %d\n", __FUNCTION__,
+		  pP2PCtrl->P2pCounter.ListenInterval));
 
 	pP2PCtrl->P2pCounter.bListen = TRUE;
 	*pCurrState = P2P_DISC_LISTEN;
 }
 
 #if 0
-static VOID P2PDiscListenCanlAction(
-	IN PRTMP_ADAPTER pAd,
-	IN MLME_QUEUE_ELEM *Elem)
+static VOID P2PDiscListenCanlAction(IN PRTMP_ADAPTER pAd,
+				    IN MLME_QUEUE_ELEM * Elem)
 {
 	P2P_DISC_STATE *pCurrState = &(pAd->P2pCfg.DiscCurrentState);
-	/*PRT_P2P_CONFIG pP2PCtrl = &pAd->P2pCfg;*/
+	/*PRT_P2P_CONFIG pP2PCtrl = &pAd->P2pCfg; */
 
-	DBGPRINT(RT_DEBUG_ERROR, ("%s:: The Device Discovery time has expired, stop!!\n", __FUNCTION__));
+	DBGPRINT(RT_DEBUG_ERROR,
+		 ("%s:: The Device Discovery time has expired, stop!!\n",
+		  __FUNCTION__));
 	*pCurrState = P2P_DISC_LISTEN;
 }
 #endif
-static VOID P2PDiscSearchAction(
-	IN PRTMP_ADAPTER pAd,
-	IN MLME_QUEUE_ELEM *Elem)
+static VOID P2PDiscSearchAction(IN PRTMP_ADAPTER pAd, IN MLME_QUEUE_ELEM * Elem)
 {
 	P2P_DISC_STATE *pCurrState = &(pAd->P2pCfg.DiscCurrentState);
 	PRT_P2P_CONFIG pP2PCtrl = &pAd->P2pCfg;
 	MLME_SCAN_REQ_STRUCT ScanReq;
 
-	if (pP2PCtrl->P2pCounter.bStartScan)
-	{
-	DBGPRINT(RT_DEBUG_INFO, ("%s::\n", __FUNCTION__));
-	ScanParmFill(pAd, &ScanReq, "", 0, BSS_ANY, SCAN_P2P_SEARCH);
-	MlmeEnqueue(pAd, SYNC_STATE_MACHINE, MT2_MLME_SCAN_REQ, 
-		sizeof(MLME_SCAN_REQ_STRUCT), &ScanReq, 0);
-	pAd->Mlme.CntlMachine.CurrState = CNTL_WAIT_OID_LIST_SCAN;
-	*pCurrState = P2P_DISC_SEARCH;
-}	
-}	
+	if (pP2PCtrl->P2pCounter.bStartScan) {
+		DBGPRINT(RT_DEBUG_INFO, ("%s::\n", __FUNCTION__));
+		ScanParmFill(pAd, &ScanReq, "", 0, BSS_ANY, SCAN_P2P_SEARCH);
+		MlmeEnqueue(pAd, SYNC_STATE_MACHINE, MT2_MLME_SCAN_REQ,
+			    sizeof(MLME_SCAN_REQ_STRUCT), &ScanReq, 0);
+		pAd->Mlme.CntlMachine.CurrState = CNTL_WAIT_OID_LIST_SCAN;
+		*pCurrState = P2P_DISC_SEARCH;
+	}
+}
 
 #if 0
-static VOID P2PDiscSearchCanlAction(
-	IN PRTMP_ADAPTER pAd,
-	IN MLME_QUEUE_ELEM *Elem)
+static VOID P2PDiscSearchCanlAction(IN PRTMP_ADAPTER pAd,
+				    IN MLME_QUEUE_ELEM * Elem)
 {
 	P2P_DISC_STATE *pCurrState = &(pAd->P2pCfg.DiscCurrentState);
 
-	DBGPRINT(RT_DEBUG_ERROR, ("%s:: The Device Discovery time has expired, stop!!\n", __FUNCTION__));
+	DBGPRINT(RT_DEBUG_ERROR,
+		 ("%s:: The Device Discovery time has expired, stop!!\n",
+		  __FUNCTION__));
 	*pCurrState = P2P_DISC_LISTEN;
 }
 #endif

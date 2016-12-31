@@ -39,7 +39,6 @@ enum PWR_OP {
 	RADIO_ON_ADVANCE,
 };
 
-
 /*
  * Calibration ID
  */
@@ -53,7 +52,7 @@ enum CALIBRATION_ID {
  */
 enum FUN_ID {
 	Q_SELECT = 1,
-	ATOMIC_TSSI_SETTING  = 5,
+	ATOMIC_TSSI_SETTING = 5,
 	PBF_MONITOR = 6,
 
 };
@@ -112,27 +111,33 @@ enum EVENT_TYPE {
 #define ANDES_CALIBRATION_TXDCOC		9
 
 INT AsicSendCommandToAndes(PRTMP_ADAPTER pAd, struct CMD_UNIT CmdUnit);
-NDIS_STATUS USBLoadFirmwareToAndes(RTMP_ADAPTER *pAd);
-NDIS_STATUS PCILoadFirmwareToAndes(RTMP_ADAPTER *pAd);
+NDIS_STATUS USBLoadFirmwareToAndes(RTMP_ADAPTER * pAd);
+NDIS_STATUS PCILoadFirmwareToAndes(RTMP_ADAPTER * pAd);
 INT AsicSendCmdToAndes(PRTMP_ADAPTER pAd, struct CMD_UNIT *CmdUnit);
-INT AndesBurstWrite(PRTMP_ADAPTER pAd, UINT32 Offset, UINT32 *Data, UINT32 Count);
-INT AndesBurstRead(PRTMP_ADAPTER pAd, UINT32 Offset, UINT32 Cnt, UINT32 *Data);
-INT AndesRandomRead(PRTMP_ADAPTER pAd, RTMP_REG_PAIR *RegPair, UINT32 Num);
-INT AndesRFRandomRead(PRTMP_ADAPTER pAd, BANK_RF_REG_PAIR *RegPair, UINT32 Num);
-INT AndesReadModifyWrite(PRTMP_ADAPTER pAd, R_M_W_REG *RegPair, UINT32 Num);
-INT AndesRFReadModifyWrite(PRTMP_ADAPTER pAd, RF_R_M_W_REG *RegPair, UINT32 Num);
-INT AndesRandomWritePair(PRTMP_ADAPTER pAd, RTMP_REG_PAIR *RegPair, UINT32 Num);
-INT AndesRFRandomWritePair(PRTMP_ADAPTER pAd, BANK_RF_REG_PAIR *RegPair, UINT32 Num);
+INT AndesBurstWrite(PRTMP_ADAPTER pAd, UINT32 Offset, UINT32 * Data,
+		    UINT32 Count);
+INT AndesBurstRead(PRTMP_ADAPTER pAd, UINT32 Offset, UINT32 Cnt, UINT32 * Data);
+INT AndesRandomRead(PRTMP_ADAPTER pAd, RTMP_REG_PAIR * RegPair, UINT32 Num);
+INT AndesRFRandomRead(PRTMP_ADAPTER pAd, BANK_RF_REG_PAIR * RegPair,
+		      UINT32 Num);
+INT AndesReadModifyWrite(PRTMP_ADAPTER pAd, R_M_W_REG * RegPair, UINT32 Num);
+INT AndesRFReadModifyWrite(PRTMP_ADAPTER pAd, RF_R_M_W_REG * RegPair,
+			   UINT32 Num);
+INT AndesRandomWritePair(PRTMP_ADAPTER pAd, RTMP_REG_PAIR * RegPair,
+			 UINT32 Num);
+INT AndesRFRandomWritePair(PRTMP_ADAPTER pAd, BANK_RF_REG_PAIR * RegPair,
+			   UINT32 Num);
 INT AndesRandomWrite(PRTMP_ADAPTER pAd, UINT32 Num, ...);
 INT AndesRFRandomWrite(PRTMP_ADAPTER pAd, UINT32 Num, ...);
 #ifdef MT7601
-INT AndesBBPRandomWritePair(PRTMP_ADAPTER pAd, RTMP_REG_PAIR *RegPair, UINT32 Num);
+INT AndesBBPRandomWritePair(PRTMP_ADAPTER pAd, RTMP_REG_PAIR * RegPair,
+			    UINT32 Num);
 INT AndesBBPRandomWrite(PRTMP_ADAPTER pAd, UINT32 Num, ...);
-#endif /* MT7601 */
+#endif				/* MT7601 */
 INT AndesFunSetOP(PRTMP_ADAPTER pAd, UINT32 FunID, UINT32 Param);
-INT AndesPwrSavingOP(PRTMP_ADAPTER pAd, UINT32 PwrOP, UINT32 PwrLevel, 
-					UINT32 ListenInterval, UINT32 PreTBTTLeadTime,
-					UINT8 TIMByteOffset, UINT8 TIMBytePattern);
+INT AndesPwrSavingOP(PRTMP_ADAPTER pAd, UINT32 PwrOP, UINT32 PwrLevel,
+		     UINT32 ListenInterval, UINT32 PreTBTTLeadTime,
+		     UINT8 TIMByteOffset, UINT8 TIMBytePattern);
 INT AndesCalibrationOP(PRTMP_ADAPTER, UINT32 CalibrationID, UINT32 Param);
 BOOLEAN IsInBandCmdProcessing(PRTMP_ADAPTER pAd);
 UCHAR GetCmdRspNum(PRTMP_ADAPTER pAd);

@@ -34,9 +34,8 @@
 	flush_dcache_range((ULONG)(__AddrStart),							\
 						(ULONG)(((UCHAR *)(__AddrStart)) + __Size - 1))
 
-#endif /* PLATFORM_UBM_IPX8 */
+#endif				/* PLATFORM_UBM_IPX8 */
 
-#endif /* __VR_UBICOM_H__ */
+#endif				/* __VR_UBICOM_H__ */
 
 /* End of vrut_ubm.h */
-

@@ -84,7 +84,7 @@
 		force DMA transmit frame from current selected endpoint
 */
 #ifdef RT_BIG_ENDIAN
-typedef	struct _TXINFO_OMAC {
+typedef struct _TXINFO_OMAC {
 	UINT32 USBDMATxburst:1;
 	UINT32 USBDMANextVLD:1;
 	UINT32 cso:1;
@@ -93,15 +93,15 @@ typedef	struct _TXINFO_OMAC {
 	UINT32 bFragLasAlignmentsectiontRound:1;
 #else
 	UINT32 SwUseLastRound:1;
-#endif /* USB_BULK_BUF_ALIGMENT */
+#endif				/* USB_BULK_BUF_ALIGMENT */
 	UINT32 QSEL:2;
 	UINT32 WIV:1;
 	UINT32 TCPOffset:5;
 	UINT32 IPOffset:4;
 	UINT32 USBDMATxPktLen:15;
-}TXINFO_OMAC;
+} TXINFO_OMAC;
 #else
-typedef	struct _TXINFO_OMAC {
+typedef struct _TXINFO_OMAC {
 	UINT32 USBDMATxPktLen:15;
 	UINT32 IPOffset:4;
 	UINT32 TCPOffset:5;
@@ -111,14 +111,13 @@ typedef	struct _TXINFO_OMAC {
 	UINT32 bFragLasAlignmentsectiontRound:1;
 #else
 	UINT32 SwUseLastRound:1;
-#endif /* USB_BULK_BUF_ALIGMENT */
+#endif				/* USB_BULK_BUF_ALIGMENT */
 	UINT32 uso:1;
 	UINT32 cso:1;
 	UINT32 USBDMANextVLD:1;
 	UINT32 USBDMATxburst:1;
-}TXINFO_OMAC;
-#endif /* RT_BIG_ENDIAN */
-
+} TXINFO_OMAC;
+#endif				/* RT_BIG_ENDIAN */
 
 #define TxInfoWIV			txinfo_omac.WIV
 #define TxInfoQSEL			txinfo_omac.QSEL
@@ -131,9 +130,6 @@ typedef	struct _TXINFO_OMAC {
 #define TxInfoCSO			txinfo_omac.cso
 #define TxInfoUSO			txinfo_omac.uso
 
-
-
-
 /* ================================================================================= */
 /* Register format */
 /* ================================================================================= */
@@ -141,19 +137,18 @@ typedef	struct _TXINFO_OMAC {
 #define GPIO_CTRL_CFG	0x0228
 #define MCU_CMD_CFG	0x022c
 
-
-#define PAIRWISE_KEY_TABLE_BASE     0x4000      /* 32-byte * 256-entry =  -byte */
+#define PAIRWISE_KEY_TABLE_BASE     0x4000	/* 32-byte * 256-entry =  -byte */
 #define HW_KEY_ENTRY_SIZE           0x20
 
-#define PAIRWISE_IVEIV_TABLE_BASE     0x6000      /* 8-byte * 256-entry =  -byte */
-#define MAC_IVEIV_TABLE_BASE     0x6000      /* 8-byte * 256-entry =  -byte */
+#define PAIRWISE_IVEIV_TABLE_BASE     0x6000	/* 8-byte * 256-entry =  -byte */
+#define MAC_IVEIV_TABLE_BASE     0x6000	/* 8-byte * 256-entry =  -byte */
 #define HW_IVEIV_ENTRY_SIZE   8
 
-#define MAC_WCID_ATTRIBUTE_BASE     0x6800      /* 4-byte * 256-entry =  -byte */
+#define MAC_WCID_ATTRIBUTE_BASE     0x6800	/* 4-byte * 256-entry =  -byte */
 #define HW_WCID_ATTRI_SIZE   4
 
-#define SHARED_KEY_TABLE_BASE       0x6c00      /* 32-byte * 16-entry = 512-byte */
-#define SHARED_KEY_MODE_BASE       0x7000      /* 32-byte * 16-entry = 512-byte */
+#define SHARED_KEY_TABLE_BASE       0x6c00	/* 32-byte * 16-entry = 512-byte */
+#define SHARED_KEY_MODE_BASE       0x7000	/* 32-byte * 16-entry = 512-byte */
 
 #define HW_SHARED_KEY_MODE_SIZE   4
 #define SHAREDKEYTABLE			0
@@ -161,8 +156,7 @@ typedef	struct _TXINFO_OMAC {
 
 /* This resgiser is ONLY be supported for RT3883 or later.
    It conflicted with BCN#0 offset of previous chipset. */
-#define WAPI_PN_TABLE_BASE		0x7800		
+#define WAPI_PN_TABLE_BASE		0x7800
 #define WAPI_PN_ENTRY_SIZE   		8
 
-#endif /* __RAL_OMAC_H__ */
-
+#endif				/* __RAL_OMAC_H__ */

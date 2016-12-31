@@ -35,8 +35,6 @@ typedef struct _CmdQ {
 /* OS_RTCMDUp is only used in UTIL/NETIF module */
 #define OS_RTCMDUp						RtmpOsCmdUp
 
-
-
 /* RALINK command status code */
 #define RTMP_IO_EINVAL							30000
 #define RTMP_IO_EOPNOTSUPP						30001
@@ -52,7 +50,7 @@ enum {
 	SHOW_IPV4_MAT_INFO = 1,
 	SHOW_IPV6_MAT_INFO = 2,
 	SHOW_ETH_CLONE_MAC = 3,
-#endif /* MAT_SUPPORT */
+#endif				/* MAT_SUPPORT */
 	SHOW_CONN_STATUS = 4,
 	SHOW_DRVIER_VERION = 5,
 	SHOW_BA_INFO = 6,
@@ -60,17 +58,17 @@ enum {
 #ifdef RTMP_MAC_USB
 	SHOW_RXBULK_INFO = 8,
 	SHOW_TXBULK_INFO = 9,
-#endif /* RTMP_MAC_USB */
+#endif				/* RTMP_MAC_USB */
 	RAIO_OFF = 10,
 	RAIO_ON = 11,
 #ifdef QOS_DLS_SUPPORT
 	SHOW_DLS_ENTRY_INFO = 20,
-#endif /* QOS_DLS_SUPPORT */
+#endif				/* QOS_DLS_SUPPORT */
 	SHOW_CFG_VALUE = 21,
 	SHOW_ADHOC_ENTRY_INFO = 22,
 #ifdef DOT11Z_TDLS_SUPPORT
 	SHOW_TDLS_ENTRY_INFO = 25,
-#endif /* DOT11Z_TDLS_SUPPORT */
+#endif				/* DOT11Z_TDLS_SUPPORT */
 	SHOW_DEV_INFO = 26,
 	SHOW_STA_INFO = 27,
 };
@@ -97,7 +95,7 @@ enum {
 	WSC_AP_BAND = 17,
 	WSC_SET_BSSID = 18,
 };
-#endif /* WSC_STA_SUPPORT */
+#endif				/* WSC_STA_SUPPORT */
 
 #ifdef WPA_SUPPLICANT_SUPPORT
 #ifndef NATIVE_WPA_SUPPLICANT_SUPPORT
@@ -109,9 +107,9 @@ enum {
 #define RT_PMKIDCAND_FLAG                           0x0106
 #define RT_INTERFACE_DOWN                           0x0107
 #define RT_INTERFACE_UP                             0x0108
-#endif /* NATIVE_WPA_SUPPLICANT_SUPPORT */
-#endif /* WPA_SUPPLICANT_SUPPORT */
-#endif /* CONFIG_STA_SUPPORT */
+#endif				/* NATIVE_WPA_SUPPLICANT_SUPPORT */
+#endif				/* WPA_SUPPLICANT_SUPPORT */
+#endif				/* CONFIG_STA_SUPPORT */
 
 /* RALINK command handle ID */
 /* ap commands */
@@ -184,7 +182,7 @@ typedef enum _CMD_RTPRIV_IOCTL_COMMON {
 	CMD_RTPRIV_IOCTL_MCU_SLEEP_CLEAR,
 #ifdef CONFIG_APSTA_MIXED_SUPPORT
 	CMD_RTPRIV_IOCTL_MAX_IN_BIT,
-#endif /* CONFIG_APSTA_MIXED_SUPPORT */
+#endif				/* CONFIG_APSTA_MIXED_SUPPORT */
 #ifdef CONFIG_STA_SUPPORT
 //#ifdef CONFIG_PM
 //#ifdef USB_SUPPORT_SELECTIVE_SUSPEND
@@ -197,20 +195,19 @@ typedef enum _CMD_RTPRIV_IOCTL_COMMON {
 	CMD_RTPRIV_IOCTL_ADAPTER_RT28XX_WOW_STATUS,
 	CMD_RTPRIV_IOCTL_ADAPTER_RT28XX_WOW_ENABLE,
 	CMD_RTPRIV_IOCTL_ADAPTER_RT28XX_WOW_DISABLE,
-#endif /* (defined(WOW_SUPPORT) && defined(RTMP_MAC_USB)) || defined(NEW_WOW_SUPPORT) */
+#endif				/* (defined(WOW_SUPPORT) && defined(RTMP_MAC_USB)) || defined(NEW_WOW_SUPPORT) */
 //#endif /* CONFIG_PM */
 	CMD_RTPRIV_IOCTL_AP_BSSID_GET,
-#endif /* CONFIG_STA_SUPPORT */
+#endif				/* CONFIG_STA_SUPPORT */
 	CMD_RTPRIV_IOCTL_ADAPTER_SUSPEND_SET,
 	CMD_RTPRIV_IOCTL_ADAPTER_SUSPEND_CLEAR,
 	CMD_RTPRIV_IOCTL_ADAPTER_RT28XX_USB_ASICRADIO_OFF,
 	CMD_RTPRIV_IOCTL_ADAPTER_RT28XX_USB_ASICRADIO_ON,
 	CMD_RTPRIV_IOCTL_SANITY_CHECK,
-	CMD_RTPRIV_IOCTL_SANITY_CHECK_ON_SET_CMD,	
+	CMD_RTPRIV_IOCTL_SANITY_CHECK_ON_SET_CMD,
 #ifdef EXT_BUILD_CHANNEL_LIST
 	CMD_RTPRIV_SET_PRECONFIG_VALUE,
-#endif /* EXT_BUILD_CHANNEL_LIST */
-
+#endif				/* EXT_BUILD_CHANNEL_LIST */
 
 	/* mesh */
 	CMD_RTPRIV_IOCTL_MESH_INIT,
@@ -286,7 +283,7 @@ typedef enum _CMD_RTPRIV_IOCTL_COMMON {
 	CMD_RTPRIV_IOCTL_80211_CHAN_SET,
 	CMD_RTPRIV_IOCTL_80211_VIF_CHG,
 	CMD_RTPRIV_IOCTL_80211_SCAN,
-#if 1 //patch : cfg80211_scan_done() crash issue!
+#if 1				//patch : cfg80211_scan_done() crash issue!
 	CMD_RTPRIV_IOCTL_80211_SCAN_STATUS_LOCK_INIT,
 #endif
 	CMD_RTPRIV_IOCTL_80211_IBSS_JOIN,
@@ -314,7 +311,7 @@ typedef enum _CMD_RTPRIV_IOCTL_COMMON {
 	CMD_RTPRIV_IOCTL_80211_BEACON_DEL,
 	CMD_RTPRIV_IOCTL_80211_AP_KEY_ADD,
 	CMD_RTPRIV_IOCTL_80211_RTS_THRESHOLD_ADD,
-	CMD_RTPRIV_IOCTL_80211_FRAG_THRESHOLD_ADD,	
+	CMD_RTPRIV_IOCTL_80211_FRAG_THRESHOLD_ADD,
 	CMD_RTPRIV_IOCTL_80211_CHANGE_BSS_PARM,
 	CMD_RTPRIV_IOCTL_80211_AP_KEY_DEL,
 	CMD_RTPRIV_IOCTL_80211_AP_PROBE_RSP,
@@ -333,9 +330,9 @@ typedef enum _CMD_RTPRIV_IOCTL_COMMON {
 
 #ifdef RT_P2P_SPECIFIC_WIRELESS_EVENT
 	CMD_RTPRIV_IOCTL_80211_SEND_WIRELESS_EVENT,
-#endif /* RT_P2P_SPECIFIC_WIRELESS_EVENT */
+#endif				/* RT_P2P_SPECIFIC_WIRELESS_EVENT */
 	CMD_RTPRIV_IOCTL_80211_END,
-#endif /* RT_CFG80211_SUPPORT */
+#endif				/* RT_CFG80211_SUPPORT */
 
 	CMD_RTPRIV_IOCTL_ADAPTER_CSO_SUPPORT_TEST,
 	CMD_RTPRIV_IOCTL_ADAPTER_TSO_SUPPORT_TEST,
@@ -356,29 +353,29 @@ typedef enum _CMD_RTPRIV_IOCTL_COMMON {
 
 #ifdef RT_CFG80211_SUPPORT
 typedef struct __CMD_RTPRIV_IOCTL_80211_VIF_SET {
-	INT  vifType;
+	INT vifType;
 	char vifName[IFNAMSIZ];
-	INT  vifNameLen;
+	INT vifNameLen;
 } CMD_RTPRIV_IOCTL_80211_VIF_SET;
 
 typedef struct __CMD_RTPRIV_IOCTL_80211_BSS_PARM {
-	INT   use_cts_prot;
-	INT   use_short_preamble;
-	INT   use_short_slot_time;
+	INT use_cts_prot;
+	INT use_short_preamble;
+	INT use_short_slot_time;
 	UINT8 *basic_rates;
 	UINT8 basic_rates_len;
-	INT   ap_isolate;
-	INT   ht_opmode;	
+	INT ap_isolate;
+	INT ht_opmode;
 
 } CMD_RTPRIV_IOCTL_80211_BSS_PARM;
 
 typedef struct __CMD_RTPRIV_IOCTL_80211_BEACON {
-        INT32 interval;
-        INT32 dtim_period;
-        UCHAR *beacon_head;
-		UCHAR *beacon_tail;
-        UINT32 beacon_head_len; /* Before TIM IE */
-		UINT32 beacon_tail_len; /* After TIM IE */
+	INT32 interval;
+	INT32 dtim_period;
+	UCHAR *beacon_head;
+	UCHAR *beacon_tail;
+	UINT32 beacon_head_len;	/* Before TIM IE */
+	UINT32 beacon_tail_len;	/* After TIM IE */
 
 #if (LINUX_VERSION_CODE >= KERNEL_VERSION(3,4,0))
 	UCHAR *beacon_ies;
@@ -420,10 +417,10 @@ typedef struct __CMD_RTPRIV_IOCTL_80211_CHAN {
 	UINT8 ChanType;
 
 	UINT32 MonFilterFlag;
-	
+
 	UINT64 cookie;
 	PVOID chan;
-	
+
 } CMD_RTPRIV_IOCTL_80211_CHAN;
 
 #define RT_CMD_80211_FILTER_FCSFAIL		0x01
@@ -446,16 +443,16 @@ typedef struct __CMD_RTPRIV_IOCTL_80211_STA {
 #define RT_CMD_80211_TXRATE_BW_40		0x02
 #define RT_CMD_80211_TXRATE_SHORT_GI	0x04
 	UINT32 TxRateFlags;
-	
+
 	UINT32 TxRateMCS;
 	INT32 Signal;
 	UINT32 TxPacketCnt;
 	UINT32 InactiveTime;
-	
+
 	UINT32 rx_packets;
 	UINT32 tx_packets;
 	UINT32 tx_retries;
-	UINT32 tx_failed;	
+	UINT32 tx_failed;
 } CMD_RTPRIV_IOCTL_80211_STA;
 
 typedef struct __CMD_RTPRIV_IOCTL_80211_KEY {
@@ -492,9 +489,9 @@ typedef struct __CMD_RTPRIV_IOCTL_80211_CONNECT {
 
 	UINT8 *pSsid;
 	UINT32 SsidLen;
-	
-	UINT8 *pBssid;  
-	
+
+	UINT8 *pBssid;
+
 	BOOLEAN bWpsConnection;
 } CMD_RTPRIV_IOCTL_80211_CONNECT;
 
@@ -507,12 +504,12 @@ typedef struct __CMD_RTPRIV_IOCTL_80211_REG_NOTIFY {
 typedef struct __CMD_RTPRIV_IOCTL_80211_SURVEY {
 
 	VOID *pCfg80211;
-/*	UINT64 ChannelTime; */ /* idle + busy, not support */
+	/*	UINT64 ChannelTime; *//* idle + busy, not support */
 	UINT64 ChannelTimeBusy;
 	UINT64 ChannelTimeExtBusy;
 } CMD_RTPRIV_IOCTL_80211_SURVEY;
 
-#endif /* RT_CFG80211_SUPPORT */
+#endif				/* RT_CFG80211_SUPPORT */
 
 /* station commands */
 #ifdef CONFIG_STA_SUPPORT
@@ -569,7 +566,7 @@ typedef enum _CMD_RTPRIV_IOCTL_STATION {
 #define RT_CMD_MODE_ADHOC								0x01
 #define RT_CMD_MODE_INFRA								0x02
 #define RT_CMD_MODE_MONITOR								0x03
-#endif /* CONFIG_STA_SUPPORT */
+#endif				/* CONFIG_STA_SUPPORT */
 
 /* when adding any new type, please also add codes in LINUX_WEVENT_TRANSLATE */
 #define RT_WLAN_EVENT_CUSTOM							0x01
@@ -616,11 +613,8 @@ typedef struct __RT_CMD_USB_DEV_CONFIG {
 
 typedef struct __RT_CMD_CFG80211_CONFIG {
 	IN VOID *pCfgDev;
-	IN VOID(
-	*CFG80211_Register) (
-	IN VOID * pAd,
-	IN VOID * pDev,
-	IN VOID * pNetDev);
+	IN VOID(*CFG80211_Register) (IN VOID * pAd,
+				     IN VOID * pDev, IN VOID * pNetDev);
 } RT_CMD_CFG80211_CONFIG;
 
 typedef struct __RT_CMD_WAIT_QUEUE_LIST {
@@ -632,8 +626,8 @@ typedef struct __RT_CMD_WAIT_QUEUE_LIST {
 
 typedef struct __RT_CMD_INF_UP_DOWN {
 
-	IN	int (*rt28xx_open)(VOID *net_dev);
-	IN	int (*rt28xx_close)(VOID *net_dev);
+	IN int (*rt28xx_open) (VOID * net_dev);
+	IN int (*rt28xx_close) (VOID * net_dev);
 } RT_CMD_INF_UP_DOWN;
 
 typedef struct __RT_CMD_STATS {
@@ -884,4 +878,4 @@ typedef struct __RT_CMD_STA_IOCTL_PMA_SA {
 	IN UCHAR *pPmkid;
 } RT_CMD_STA_IOCTL_PMA_SA;
 
-#endif /* __RTMP_CMD_H__ */
+#endif				/* __RTMP_CMD_H__ */

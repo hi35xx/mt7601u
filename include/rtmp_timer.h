@@ -46,13 +46,11 @@
 /*  submit to ctrl pipe). So we need a wrapper function to take care it. */
 
 #ifdef RTMP_TIMER_TASK_SUPPORT
-typedef VOID(
-	*RTMP_TIMER_TASK_HANDLE) (
-	IN PVOID SystemSpecific1,
-	IN PVOID FunctionContext,
-	IN PVOID SystemSpecific2,
-	IN PVOID SystemSpecific3);
-#endif /* RTMP_TIMER_TASK_SUPPORT */
+typedef VOID(*RTMP_TIMER_TASK_HANDLE) (IN PVOID SystemSpecific1,
+				       IN PVOID FunctionContext,
+				       IN PVOID SystemSpecific2,
+				       IN PVOID SystemSpecific3);
+#endif				/* RTMP_TIMER_TASK_SUPPORT */
 
 typedef struct _RALINK_TIMER_STRUCT {
 	RTMP_OS_TIMER TimerObj;	/* Ndis Timer object */
@@ -67,7 +65,6 @@ typedef struct _RALINK_TIMER_STRUCT {
 	RTMP_TIMER_TASK_HANDLE handle;
 #endif				/* RTMP_TIMER_TASK_SUPPORT */
 } RALINK_TIMER_STRUCT, *PRALINK_TIMER_STRUCT;
-
 
 #ifdef RTMP_TIMER_TASK_SUPPORT
 typedef struct _RTMP_TIMER_TASK_ENTRY_ {
@@ -97,7 +94,7 @@ void rtmp_timer_##_func(unsigned long data)										\
 	if ((_pQNode == NULL) && (_pAd->TimerQ.status & RTMP_TASK_CAN_DO_INSERT))	\
 		RTMP_OS_Add_Timer(&_pTimer->TimerObj, OS_HZ);               					\
 }
-#else /* !RTMP_TIMER_TASK_SUPPORT */
+#else				/* !RTMP_TIMER_TASK_SUPPORT */
 #define BUILD_TIMER_FUNCTION(_func)										\
 void rtmp_timer_##_func(unsigned long data)										\
 {																			\
@@ -107,7 +104,7 @@ void rtmp_timer_##_func(unsigned long data)										\
 	if (pTimer->Repeat)														\
 		RTMP_OS_Add_Timer(&pTimer->TimerObj, pTimer->TimerValue);			\
 }
-#endif /* RTMP_TIMER_TASK_SUPPORT */
+#endif				/* RTMP_TIMER_TASK_SUPPORT */
 
 DECLARE_TIMER_FUNCTION(MlmePeriodicExec);
 DECLARE_TIMER_FUNCTION(MlmeRssiReportExec);
@@ -117,34 +114,33 @@ DECLARE_TIMER_FUNCTION(EnqueueStartForPSKExec);
 #ifdef CONFIG_STA_SUPPORT
 #ifdef ADHOC_WPA2PSK_SUPPORT
 DECLARE_TIMER_FUNCTION(Adhoc_WpaRetryExec);
-#endif /* ADHOC_WPA2PSK_SUPPORT */
-#endif /* CONFIG_STA_SUPPORT */
-
+#endif				/* ADHOC_WPA2PSK_SUPPORT */
+#endif				/* CONFIG_STA_SUPPORT */
 
 #ifdef RTMP_MAC_USB
 DECLARE_TIMER_FUNCTION(BeaconUpdateExec);
-#endif /* RTMP_MAC_USB */
+#endif				/* RTMP_MAC_USB */
 
 #ifdef CONFIG_AP_SUPPORT
 DECLARE_TIMER_FUNCTION(APDetectOverlappingExec);
 
 #ifdef DOT11N_DRAFT3
 DECLARE_TIMER_FUNCTION(Bss2040CoexistTimeOut);
-#endif /* DOT11N_DRAFT3 */
+#endif				/* DOT11N_DRAFT3 */
 
 DECLARE_TIMER_FUNCTION(GREKEYPeriodicExec);
 DECLARE_TIMER_FUNCTION(CMTimerExec);
 DECLARE_TIMER_FUNCTION(WPARetryExec);
 #ifdef AP_SCAN_SUPPORT
 DECLARE_TIMER_FUNCTION(APScanTimeout);
-#endif /* AP_SCAN_SUPPORT */
+#endif				/* AP_SCAN_SUPPORT */
 DECLARE_TIMER_FUNCTION(APQuickResponeForRateUpExec);
 
 #ifdef IDS_SUPPORT
 DECLARE_TIMER_FUNCTION(RTMPIdsPeriodicExec);
-#endif /* IDS_SUPPORT */
+#endif				/* IDS_SUPPORT */
 
-#endif /* CONFIG_AP_SUPPORT */
+#endif				/* CONFIG_AP_SUPPORT */
 
 #ifdef CONFIG_STA_SUPPORT
 DECLARE_TIMER_FUNCTION(BeaconTimeout);
@@ -159,22 +155,21 @@ DECLARE_TIMER_FUNCTION(WpaDisassocApAndBlockAssoc);
 
 #ifdef QOS_DLS_SUPPORT
 DECLARE_TIMER_FUNCTION(DlsTimeoutAction);
-#endif /* QOS_DLS_SUPPORT */
+#endif				/* QOS_DLS_SUPPORT */
 
 #ifdef DOT11Z_TDLS_SUPPORT
 DECLARE_TIMER_FUNCTION(TDLS_TimeoutAction);
-#endif /* DOT11Z_TDLS_SUPPORT */
-
+#endif				/* DOT11Z_TDLS_SUPPORT */
 
 #ifdef RTMP_MAC_USB
 DECLARE_TIMER_FUNCTION(RtmpUsbStaAsicForceWakeupTimeout);
-#endif /* RTMP_MAC_USB */
+#endif				/* RTMP_MAC_USB */
 
-#endif /* CONFIG_STA_SUPPORT */
+#endif				/* CONFIG_STA_SUPPORT */
 
 #ifdef TXBF_SUPPORT
 DECLARE_TIMER_FUNCTION(eTxBfProbeTimerExec);
-#endif // TXBF_SUPPORT //
+#endif				// TXBF_SUPPORT //
 
 #ifdef WSC_INCLUDED
 DECLARE_TIMER_FUNCTION(WscEAPOLTimeOutAction);
@@ -187,22 +182,20 @@ DECLARE_TIMER_FUNCTION(WscProfileRetryTimeout);
 #ifdef WSC_LED_SUPPORT
 DECLARE_TIMER_FUNCTION(WscLEDTimer);
 DECLARE_TIMER_FUNCTION(WscSkipTurnOffLEDTimer);
-#endif /* WSC_LED_SUPPORT */
+#endif				/* WSC_LED_SUPPORT */
 #ifdef CONFIG_AP_SUPPORT
 DECLARE_TIMER_FUNCTION(WscUpdatePortCfgTimeout);
 #ifdef WSC_V2_SUPPORT
 DECLARE_TIMER_FUNCTION(WscSetupLockTimeout);
-#endif /* WSC_V2_SUPPORT */
-#endif /* CONFIG_AP_SUPPORT */
+#endif				/* WSC_V2_SUPPORT */
+#endif				/* CONFIG_AP_SUPPORT */
 #ifdef IWSC_SUPPORT
 DECLARE_TIMER_FUNCTION(IWSC_T1TimerAction);
 DECLARE_TIMER_FUNCTION(IWSC_T2TimerAction);
 DECLARE_TIMER_FUNCTION(IWSC_EntryTimerAction);
 DECLARE_TIMER_FUNCTION(IWSC_DevQueryAction);
-#endif /* IWSC_SUPPORT */
-#endif /* WSC_INCLUDED */
-
-
+#endif				/* IWSC_SUPPORT */
+#endif				/* WSC_INCLUDED */
 
 #ifdef P2P_SUPPORT
 DECLARE_TIMER_FUNCTION(P2PCTWindowTimer);
@@ -211,10 +204,10 @@ DECLARE_TIMER_FUNCTION(P2pPreAbsenTimeOut);
 DECLARE_TIMER_FUNCTION(P2pWscTimeOut);
 DECLARE_TIMER_FUNCTION(P2pReSendTimeOut);
 DECLARE_TIMER_FUNCTION(P2pCliReConnectTimeOut);
-#endif /* P2P_SUPPORT */
+#endif				/* P2P_SUPPORT */
 
 #ifdef RALINK_ATE
 DECLARE_TIMER_FUNCTION(ATEPeriodicExec);
-#endif /* RALINK_ATE */
+#endif				/* RALINK_ATE */
 
-#endif /* __RTMP_TIMER_H__ */
+#endif				/* __RTMP_TIMER_H__ */

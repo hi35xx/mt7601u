@@ -25,62 +25,58 @@
     
  */
 
-
 #ifndef __WFA_P2P_H
 #define __WFA_P2P_H
 
 #include "rtmp_type.h"
 
-
 #ifdef P2P_SUPPORT
 
-typedef	struct	_P2P_PUBLIC_FRAME	{
-	HEADER_802_11   p80211Header;
-	UCHAR          Category;
-	UCHAR           Action;
-	UCHAR           OUI[3];
-	UCHAR		OUIType;
-	UCHAR		Subtype;
-	UCHAR		Token;
-	UCHAR            ElementID;
-	UCHAR            Length;
-	UCHAR            OUI2[3];
-	UCHAR            OUIType2;
-	UCHAR            Octet[1];
-}
-	P2P_PUBLIC_FRAME, *PP2P_PUBLIC_FRAME;
+typedef struct _P2P_PUBLIC_FRAME {
+	HEADER_802_11 p80211Header;
+	UCHAR Category;
+	UCHAR Action;
+	UCHAR OUI[3];
+	UCHAR OUIType;
+	UCHAR Subtype;
+	UCHAR Token;
+	UCHAR ElementID;
+	UCHAR Length;
+	UCHAR OUI2[3];
+	UCHAR OUIType2;
+	UCHAR Octet[1];
+} P2P_PUBLIC_FRAME, *PP2P_PUBLIC_FRAME;
 
-typedef	struct	_P2P_ACTION_FRAME	{
-	HEADER_802_11			p80211Header;
-	UCHAR					Category;
-	UCHAR					OUI[3];
-	UCHAR					OUIType;
-	UCHAR					Subtype;
-	UCHAR					Token;
-	UCHAR					Octet[1];
-}	P2P_ACTION_FRAME, *PP2P_ACTION_FRAME;
+typedef struct _P2P_ACTION_FRAME {
+	HEADER_802_11 p80211Header;
+	UCHAR Category;
+	UCHAR OUI[3];
+	UCHAR OUIType;
+	UCHAR Subtype;
+	UCHAR Token;
+	UCHAR Octet[1];
+} P2P_ACTION_FRAME, *PP2P_ACTION_FRAME;
 
 typedef struct _FRAME_P2P_ACTION {
-	HEADER_802_11			Hdr;
-	UCHAR					Category;
-	UCHAR					OUI[3];
-	UCHAR					OUIType;	/* 1 */
-	UCHAR					OUISubType;	/* 1 */
-	UCHAR					Token;	/* 1 */
-}   FRAME_P2P_ACTION, *PFRAME_P2P_ACTION;
+	HEADER_802_11 Hdr;
+	UCHAR Category;
+	UCHAR OUI[3];
+	UCHAR OUIType;		/* 1 */
+	UCHAR OUISubType;	/* 1 */
+	UCHAR Token;		/* 1 */
+} FRAME_P2P_ACTION, *PFRAME_P2P_ACTION;
 
 typedef struct _MLME_P2P_ACTION_STRUCT {
-	UCHAR					TabIndex;	/* sometimes it's Mactable index, sometime it's P2P table index. depend on the command. */
-	UCHAR					Addr[MAC_ADDR_LEN];
+	UCHAR TabIndex;		/* sometimes it's Mactable index, sometime it's P2P table index. depend on the command. */
+	UCHAR Addr[MAC_ADDR_LEN];
 } MLME_P2P_ACTION_STRUCT, *PMLME_P2P_ACTION_STRUCT;
 
-typedef	struct	_P2P_NOA_DESC	{
-	UCHAR					Count;
-	UCHAR					Duration[4];
-	UCHAR					Interval[4];
-	UCHAR					StartTime[4];
-}	P2P_NOA_DESC, *PP2P_NOA_DESC;
-
+typedef struct _P2P_NOA_DESC {
+	UCHAR Count;
+	UCHAR Duration[4];
+	UCHAR Interval[4];
+	UCHAR StartTime[4];
+} P2P_NOA_DESC, *PP2P_NOA_DESC;
 
 /* General format of P2P attribut(4.1.1) */
 #define SUBID_P2P_STATUS				0
@@ -135,7 +131,6 @@ typedef	struct	_P2P_NOA_DESC	{
 #define GRPCAP_PERSISTENT_RECONNECT	0x20
 #define GRPCAP_GROUP_FORMING		0x40
 
-
 /* P2P public action frame typ(4.2.8) */
 #define GO_NEGOCIATION_REQ			0
 #define GO_NEGOCIATION_RSP			1
@@ -161,7 +156,6 @@ typedef	struct	_P2P_NOA_DESC	{
 #define SERVICE_PROTOCOL_TYPE_WFD				4
 #define SERVICE_PROTOCOL_TYPE_VENDOR_SPECIFIC	255
 
-#endif /* P2P_SUPPORT */
+#endif				/* P2P_SUPPORT */
 
-#endif /* __WFA_P2P_H */
-
+#endif				/* __WFA_P2P_H */

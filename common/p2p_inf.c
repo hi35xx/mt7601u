@@ -35,7 +35,6 @@
 #include "rt_os_util.h"
 #include "rt_os_net.h"
 
-
 /*
 ========================================================================
 Routine Description:
@@ -53,30 +52,27 @@ Note:
 	2. No main network interface here.
 ========================================================================
 */
-VOID RTMP_P2P_Init(
-	IN VOID 		*pAd,
-	IN PNET_DEV		main_dev_p)
+VOID RTMP_P2P_Init(IN VOID * pAd, IN PNET_DEV main_dev_p)
 {
 	/*PNET_DEV pDevNew; */
-	/*INT status;*/
-	RTMP_OS_NETDEV_OP_HOOK	netDevHook;
-	/*APCLI_STRUCT	*pApCliEntry; */
-				
+	/*INT status; */
+	RTMP_OS_NETDEV_OP_HOOK netDevHook;
+	/*APCLI_STRUCT  *pApCliEntry; */
 
 	DBGPRINT(RT_DEBUG_TRACE, ("%s --->\n", __FUNCTION__));
 
-		/* init operation functions and flags */
-		NdisZeroMemory(&netDevHook, sizeof(netDevHook));
-		netDevHook.open = P2P_VirtualIF_Open;	/* device opem hook point */
-		netDevHook.stop = P2P_VirtualIF_Close;	/* device close hook point */
-		netDevHook.xmit = P2P_VirtualIF_PacketSend;	/* hard transmit hook point */
-		netDevHook.ioctl = P2P_VirtualIF_Ioctl;	/* ioctl hook point */
+	/* init operation functions and flags */
+	NdisZeroMemory(&netDevHook, sizeof(netDevHook));
+	netDevHook.open = P2P_VirtualIF_Open;	/* device opem hook point */
+	netDevHook.stop = P2P_VirtualIF_Close;	/* device close hook point */
+	netDevHook.xmit = P2P_VirtualIF_PacketSend;	/* hard transmit hook point */
+	netDevHook.ioctl = P2P_VirtualIF_Ioctl;	/* ioctl hook point */
 
 #if WIRELESS_EXT >= 12
-		netDevHook.iw_handler = (void *)&rt28xx_ap_iw_handler_def;
-#endif /* WIRELESS_EXT >= 12 */
-		RTMP_COM_IoctlHandle(pAd, NULL, CMD_RTPRIV_IOCTL_P2P_INIT,
-							0, &netDevHook, 0);
+	netDevHook.iw_handler = (void *)&rt28xx_ap_iw_handler_def;
+#endif				/* WIRELESS_EXT >= 12 */
+	RTMP_COM_IoctlHandle(pAd, NULL, CMD_RTPRIV_IOCTL_P2P_INIT,
+			     0, &netDevHook, 0);
 
 	DBGPRINT(RT_DEBUG_TRACE, ("%s <---\n", __FUNCTION__));
 
@@ -97,19 +93,20 @@ Return Value:
 Note:
 ========================================================================
 */
-INT P2P_VirtualIF_Open(
-	IN PNET_DEV		dev_p)
+INT P2P_VirtualIF_Open(IN PNET_DEV dev_p)
 {
 	VOID *pAd;
-	/*PMULTISSID_STRUCT	pMbss; */
+	/*PMULTISSID_STRUCT     pMbss; */
 
 	pAd = RTMP_OS_NETDEV_GET_PRIV(dev_p);
 	ASSERT(pAd);
 
-	DBGPRINT(RT_DEBUG_TRACE, ("%s: ===> %s\n", __FUNCTION__, RTMP_OS_NETDEV_GET_DEVNAME(dev_p)));
+	DBGPRINT(RT_DEBUG_TRACE,
+		 ("%s: ===> %s\n", __FUNCTION__,
+		  RTMP_OS_NETDEV_GET_DEVNAME(dev_p)));
 
 	if (RTMP_COM_IoctlHandle(pAd, NULL, CMD_RTPRIV_IOCTL_P2P_OPEN_PRE, 0,
-							dev_p, 0) != NDIS_STATUS_SUCCESS)
+				 dev_p, 0) != NDIS_STATUS_SUCCESS)
 		return -1;
 
 	if (VIRTUAL_IF_UP(pAd) != 0)
@@ -121,14 +118,15 @@ INT P2P_VirtualIF_Open(
 	RTMP_OS_NETDEV_START_QUEUE(dev_p);
 
 	if (RTMP_COM_IoctlHandle(pAd, NULL, CMD_RTPRIV_IOCTL_P2P_OPEN_POST, 0,
-							dev_p, 0) != NDIS_STATUS_SUCCESS)
+				 dev_p, 0) != NDIS_STATUS_SUCCESS)
 		return -1;
 
-	DBGPRINT(RT_DEBUG_TRACE, ("%s: <=== %s\n", __FUNCTION__, RTMP_OS_NETDEV_GET_DEVNAME(dev_p)));
+	DBGPRINT(RT_DEBUG_TRACE,
+		 ("%s: <=== %s\n", __FUNCTION__,
+		  RTMP_OS_NETDEV_GET_DEVNAME(dev_p)));
 
 	return 0;
 }
-
 
 /*
 ========================================================================
@@ -145,28 +143,29 @@ Return Value:
 Note:
 ========================================================================
 */
-INT P2P_VirtualIF_Close(
-	IN	PNET_DEV	dev_p)
+INT P2P_VirtualIF_Close(IN PNET_DEV dev_p)
 {
 	VOID *pAd;
 
 	pAd = RTMP_OS_NETDEV_GET_PRIV(dev_p);
 	ASSERT(pAd);
 
-	DBGPRINT(RT_DEBUG_TRACE, ("%s: ===> %s\n", __FUNCTION__, RTMP_OS_NETDEV_GET_DEVNAME(dev_p)));
+	DBGPRINT(RT_DEBUG_TRACE,
+		 ("%s: ===> %s\n", __FUNCTION__,
+		  RTMP_OS_NETDEV_GET_DEVNAME(dev_p)));
 
 	/* stop p2p. */
 	RTMP_OS_NETDEV_STOP_QUEUE(dev_p);
 
-	RTMP_COM_IoctlHandle(pAd, NULL, CMD_RTPRIV_IOCTL_P2P_CLOSE, 0, dev_p, 0);
+	RTMP_COM_IoctlHandle(pAd, NULL, CMD_RTPRIV_IOCTL_P2P_CLOSE, 0, dev_p,
+			     0);
 
 	VIRTUAL_IF_DOWN(pAd);
 
 	RT_MOD_DEC_USE_COUNT();
 
 	return 0;
-} 
-
+}
 
 /*
 ========================================================================
@@ -184,18 +183,14 @@ Return Value:
 Note:
 ========================================================================
 */
-INT P2P_VirtualIF_PacketSend(
-	IN PNDIS_PACKET 	skb_p, 
-	IN PNET_DEV			dev_p)
+INT P2P_VirtualIF_PacketSend(IN PNDIS_PACKET skb_p, IN PNET_DEV dev_p)
 {
 	/*PRTMP_ADAPTER pAd; */
 	/*PAPCLI_STRUCT pApCli; */
 
-	
 	MEM_DBG_PKT_ALLOC_INC(skb_p);
 
-	if(!(RTMP_OS_NETDEV_STATE_RUNNING(dev_p)))
-	{
+	if (!(RTMP_OS_NETDEV_STATE_RUNNING(dev_p))) {
 		/* the interface is down */
 		RELEASE_NDIS_PACKET(NULL, skb_p, NDIS_STATUS_FAILURE);
 		return 0;
@@ -205,14 +200,12 @@ INT P2P_VirtualIF_PacketSend(
 
 }
 
-
-VOID RTMP_P2P_Remove(
-	IN VOID 	*pAd)
+VOID RTMP_P2P_Remove(IN VOID * pAd)
 {
 
-	RTMP_COM_IoctlHandle(pAd, NULL, CMD_RTPRIV_IOCTL_P2P_REMOVE, 0, NULL, 0);
+	RTMP_COM_IoctlHandle(pAd, NULL, CMD_RTPRIV_IOCTL_P2P_REMOVE, 0, NULL,
+			     0);
 
-		
 }
 
 /*
@@ -234,10 +227,7 @@ Note:
                             report link failure activity.
 ========================================================================
 */
-INT P2P_VirtualIF_Ioctl(
-	IN PNET_DEV				dev_p, 
-	IN OUT VOID 	*rq_p, 
-	IN INT 					cmd)
+INT P2P_VirtualIF_Ioctl(IN PNET_DEV dev_p, IN OUT VOID * rq_p, IN INT cmd)
 {
 /*
 	RTMP_ADAPTER *pAd;
@@ -248,10 +238,8 @@ INT P2P_VirtualIF_Ioctl(
 	if (!RTMP_TEST_FLAG(pAd, fRTMP_ADAPTER_INTERRUPT_IN_USE))
 		return -ENETDOWN;
 */
-		return rt28xx_ioctl(dev_p, rq_p, cmd);
+	return rt28xx_ioctl(dev_p, rq_p, cmd);
 
 }
 
-
-#endif /* P2P_SUPPORT */
-
+#endif				/* P2P_SUPPORT */

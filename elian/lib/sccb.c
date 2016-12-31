@@ -3,7 +3,7 @@
 #include "plat.h"
 #include "../os/linux/osal.h"
 
-#define MSC_ENABLE_RX_BIT  ((unsigned int)0x1<<31) //BIT(31)
+#define MSC_ENABLE_RX_BIT  ((unsigned int)0x1<<31)	//BIT(31)
 
 #define sccb_rx_enabled()		(ctrl_data.flag&(MSC_ENABLE_RX_BIT))
 
@@ -16,7 +16,7 @@ struct sccb_ctrl_data {
 int sccb_enable_input()
 {
 	ctrl_data.flag |= MSC_ENABLE_RX_BIT;
-	return 0;	
+	return 0;
 }
 
 int sccb_disable_input()
@@ -58,7 +58,7 @@ int sccb_leave_monitor_mode(void *priv)
 
 int sccb_rx(char *data, unsigned int data_len)
 {
-	char *p= NULL;
+	char *p = NULL;
 	int len;
 
 	if (!sccb_rx_enabled()) {
@@ -80,7 +80,6 @@ int sccb_rx(char *data, unsigned int data_len)
 
 	if (ctrl_data.input_func != NULL) {
 		return ctrl_data.input_func(p, len);
-	}	
+	}
 	return -4;
 }
-
