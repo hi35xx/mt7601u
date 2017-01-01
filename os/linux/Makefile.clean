@@ -35,7 +35,7 @@ clean:
 ifeq ($(HAS_CONFIG_ELIAN_SUPPORT),y)
 	rm -f ../../elian/lib/*.o
 	rm -f ../../elian/lib/.*.cmd .*.flags .*.d
-	rm -f ../../elian/msc/*.o
+	rm -f ../../elian/msc/msc.o
 	rm -f ../../elian/msc/.*.cmd .*.flags .*.d
 	rm -f ../../elian/os/linux/*.o
 	rm -f ../../elian/os/linux/.*.cmd .*.flags .*.d
