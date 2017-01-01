@@ -2569,12 +2569,14 @@ const struct ieee80211_rate Cfg80211_SupRate[12] = {
 	 },
 };
 
+#if 0
 static const UINT32 CipherSuites[] = {
 	WLAN_CIPHER_SUITE_WEP40,
 	WLAN_CIPHER_SUITE_WEP104,
 	WLAN_CIPHER_SUITE_TKIP,
 	WLAN_CIPHER_SUITE_CCMP,
 };
+#endif
 
 /*
 ========================================================================
@@ -3423,7 +3425,7 @@ BOOLEAN CFG80211OS_RxMgmt(IN PNET_DEV pNetDev, IN INT32 freq, IN PUCHAR frame,
 VOID CFG80211OS_TxStatus(IN PNET_DEV pNetDev, IN INT32 cookie, IN PUCHAR frame,
 			 IN UINT32 len, IN BOOLEAN ack)
 {
-#if (LINUX_VERSION_CODE >= KERNEL_VERSION(3,4,0))
+#if (LINUX_VERSION_CODE >= KERNEL_VERSION(3,6,0))
 	return cfg80211_mgmt_tx_status(pNetDev->ieee80211_ptr, cookie, frame,
 				       len, ack, GFP_ATOMIC);
 #else

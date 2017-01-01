@@ -3028,7 +3028,7 @@ BOOLEAN CFG80211DRV_P2pClientConnect(VOID * pAdOrg, VOID * pData)
 
 	/* Set authentication mode */
 	if (pConnInfo->WpaVer == 2) {
-		if (!pConnInfo->FlgIs8021x == TRUE) {
+		if ((!pConnInfo->FlgIs8021x) == TRUE) {
 			DBGPRINT(RT_DEBUG_TRACE, ("APCLI WPA2PSK\n"));
 			Set_ApCli_AuthMode_Proc(pAd, "WPA2PSK");
 		}

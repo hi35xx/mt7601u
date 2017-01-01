@@ -142,6 +142,7 @@ const struct ieee80211_rate Cfg80211_SupRate[12] = {
 };
 #endif				/* OS_ABL_FUNC_SUPPORT */
 
+#if 0
 /* all available channels */
 static const UCHAR Cfg80211_Chan[] = {
 	1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14,
@@ -158,6 +159,7 @@ static const UCHAR Cfg80211_Chan[] = {
 	/* Japan */
 	184, 188, 192, 196, 208, 212, 216,
 };
+#endif
 
 static const UINT32 CipherSuites[] = {
 	WLAN_CIPHER_SUITE_WEP40,
