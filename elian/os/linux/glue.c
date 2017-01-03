@@ -40,7 +40,7 @@ void evt_cb(unsigned int eid, struct msc_result *result)
 
 int msc_proc_create(void *priv)
 {
-	printk("MSC msc_proc_create: %p\n", priv);
+	printk(KERN_DEBUG "MSC msc_proc_create: %p\n", priv);
 	if (entry == NULL) {
 #if LINUX_VERSION_CODE >= KERNEL_VERSION(2, 6, 36)
 		entry =

@@ -666,7 +666,7 @@ static int rt2870_resume(struct usb_interface *intf)
 /* Init driver module */
 INT __init rtusb_init(void)
 {
-	printk("rtusb init %s --->\n", RTMP_DRV_NAME);
+	printk(KERN_DEBUG "rtusb init %s --->\n", RTMP_DRV_NAME);
 #ifdef ALLWINNER
 	int ret;
 	script_item_value_type_e type;

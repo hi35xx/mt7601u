@@ -51,9 +51,11 @@ INT Set_P2P_Print_Cfg(IN PRTMP_ADAPTER pAd, IN PSTRING arg)
 				  pAd->ApCfg.ApCliTab[0].WscControl.
 				  WscEnrolleePinCode));
 		else if (pP2PCtrl->ConfigMethod == WSC_CONFMET_KEYPAD) {
+#ifdef DBG
 			UINT PinCode = simple_strtol(pP2PCtrl->PinCode, 0, 10);
 			DBGPRINT(RT_DEBUG_ERROR,
 				 ("Peer PIN Code = %08u\n", PinCode));
+#endif
 		}
 
 		DBGPRINT(RT_DEBUG_ERROR,
@@ -846,7 +848,9 @@ INT Set_P2P_Provision_Dev_Addr_Proc(IN PRTMP_ADAPTER pAd, IN PSTRING arg)
 INT Set_P2P_State_Proc(IN PRTMP_ADAPTER pAd, IN PSTRING arg)
 {
 	POS_COOKIE pObj;
+#ifdef DBG
 	PRT_P2P_CONFIG pP2PCtrl = &pAd->P2pCfg;
+#endif
 
 	pObj = (POS_COOKIE) pAd->OS_Cookie;
 	if (pObj->ioctl_if_type != INT_P2P)

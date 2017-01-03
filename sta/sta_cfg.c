@@ -10795,6 +10795,7 @@ INT RTMP_STA_IoctlHandle(IN VOID * pAdSrc,
 		RTMPIoctlGetSiteSurvey(pAd, pRequest);
 		break;
 
+#ifdef DBG
 	case CMD_RTPRIV_IOCTL_MAC:
 		RTMPIoctlMAC(pAd, pRequest);
 		break;
@@ -10806,6 +10807,7 @@ INT RTMP_STA_IoctlHandle(IN VOID * pAdSrc,
 	case CMD_RTPRIV_IOCTL_RF:
 		RTMPIoctlRF(pAd, pRequest);
 		break;
+#endif
 
 	case CMD_RTPRIV_IOCTL_BBP:
 		RTMPIoctlBbp(pAd, pRequest, pData, Data);

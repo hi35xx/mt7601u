@@ -715,7 +715,9 @@ BOOLEAN CFG80211DRV_PrintFrameType(IN VOID * pAdOrg,
 				   IN PUCHAR preStr,
 				   IN PUCHAR pData, IN UINT Length)
 {
+#ifdef DBG
 	PRTMP_ADAPTER pAd = (PRTMP_ADAPTER) pAdOrg;
+#endif
 	BOOLEAN isP2pFrame = FALSE;
 	struct ieee80211_mgmt *mgmt;
 	mgmt = (struct ieee80211_mgmt *)pData;

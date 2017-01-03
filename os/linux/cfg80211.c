@@ -2373,6 +2373,7 @@ static int CFG80211_OpsStartAp(struct wiphy *pWiphy,
 	MAC80211_PAD_GET(pAd, pWiphy);
 	CFG80211DBG(RT_DEBUG_TRACE, ("80211> %s ==>\n", __FUNCTION__));
 
+#ifdef DBG
 	if (RTDebugLevel > RT_DEBUG_TRACE) {
 		hex_dump("Beacon head", (UCHAR *) (settings->beacon.head),
 			 settings->beacon.head_len);
@@ -2395,6 +2396,7 @@ static int CFG80211_OpsStartAp(struct wiphy *pWiphy,
 			    ("80211>interval = %d\n",
 			     settings->beacon_interval));
 	}
+#endif
 
 	if (settings->beacon.head_len > 0) {
 		os_alloc_mem(NULL, &beacon_head_buf, settings->beacon.head_len);
@@ -2536,6 +2538,7 @@ static int CFG80211_OpsChangeBeacon(struct wiphy *pWiphy,
 	CFG80211DBG(RT_DEBUG_TRACE, ("80211> %s ==>\n", __func__));
 	MAC80211_PAD_GET(pAd, pWiphy);
 
+#ifdef DBG
 	if (RTDebugLevel > RT_DEBUG_TRACE) {
 		hex_dump("Beacon head", (UCHAR *) (info->head), info->head_len);
 		hex_dump("Beacon tail", (UCHAR *) (info->tail), info->tail_len);
@@ -2548,6 +2551,7 @@ static int CFG80211_OpsChangeBeacon(struct wiphy *pWiphy,
 		hex_dump("probe_resp", (UCHAR *) (info->probe_resp),
 			 info->probe_resp_len);
 	}
+#endif
 
 	if (info->head_len > 0) {
 		os_alloc_mem(NULL, &beacon_head_buf, info->head_len);

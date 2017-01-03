@@ -84,7 +84,7 @@ int msc_get_current_channel_info(void)
 	int cur_chl = 0;
 	PRTMP_ADAPTER pAd = (PRTMP_ADAPTER) (msc_ctx.priv);
 	cur_chl = pAd->CommonCfg.Channel;
-	MSC_INFO("[MSC] current channel = %d\n", cur_chl);
+	MSC_INFO(KERN_DEBUG "[MSC] current channel = %d\n", cur_chl);
 	return cur_chl;
 }
 
@@ -100,7 +100,7 @@ static void msc_core_evt_cbk(enum eevent_id eid)
 			   may be called from intr context. */
 			msc_ctx.cur_chl = msc_get_current_channel_info();
 			msc_ctx.chl_thread_running = 0;
-			MSC_INFO("[MSC]stop chl_switch thread.\n");
+			MSC_INFO(KERN_DEBUG "[MSC]stop chl_switch thread.\n");
 			//osal_thread_stop(&msc_ctx.chl_thread);
 #else
 			osal_timer_stop(&msc_ctx.timer);
@@ -113,7 +113,7 @@ static void msc_core_evt_cbk(enum eevent_id eid)
 			msc_ctx.evt_cb(eid);
 		break;
 	case EVT_ID_TIMEOUT:
-		MSC_INFO("[MSC]receive pkt timeout.\n");
+		MSC_INFO(KERN_WARNING "[MSC]receive pkt timeout.\n");
 		break;
 	default:
 		break;
@@ -162,7 +162,7 @@ static int chl_switch_thread(void *data)
 		}
 		chl_info.flags = 0x0;
 		sccb_set_monitor_chan(&chl_info, msc_ctx.priv);
-		MSC_INFO("[MSC] chl_info.chan_id = %d\n", chl_info.chan_id);
+		MSC_INFO(KERN_DEBUG "[MSC] chl_info.chan_id = %d\n", chl_info.chan_id);
 	}
 
 	return 0;
@@ -205,7 +205,7 @@ static int msc_init(struct msc_param *param, void *priv)
 	osal_lock_init(&msc_ctx.lock);
 	msc_ctx.evt_cb = param->evt_cb;
 
-	MSC_INFO("[MSC] Driver v 1.0.0\n");
+	MSC_INFO(KERN_INFO "[MSC] Driver v 1.0.0\n");
 	if (param->chl_num == 0) {
 		msc_ctx.channel = msc_listen_chls;
 		msc_ctx.chl_num = sizeof(msc_listen_chls);
@@ -216,7 +216,7 @@ static int msc_init(struct msc_param *param, void *priv)
 
 	ret = elian_init(sc_plt_get_la(priv), &f_tbl, param->key);
 	if (ret) {
-		MSC_WARN("[MSC] Get sc fsm init failed.\n");
+		MSC_WARN(KERN_ERR "[MSC] Get sc fsm init failed.\n");
 		//Add error handler.
 	}
 #if MSC_CHANNEL_SWITCH_USE_THREAD
@@ -384,7 +384,7 @@ int msc_cmd_handler(char *cmd, int len, char *result_str, void *priv)
 	if (cmd == NULL || result_str == NULL || priv == NULL)
 		return -1;
 
-	MSC_INFO("[MSC] msc_cmd_handler %s %d\n", cmd, len);
+	MSC_INFO(KERN_DEBUG "[MSC] msc_cmd_handler %s %d\n", cmd, len);
 	if (osal_strncmp(p, "start", 5) == 0) {
 		if (len > 6) {	//+1 for "enter"
 			p = osal_strstr(p, "ch=");
@@ -395,7 +395,7 @@ int msc_cmd_handler(char *cmd, int len, char *result_str, void *priv)
 			}
 			chl = (int)osal_strtol(p + 3, NULL, 10);
 			para.chls = (char *)&chl;
-			MSC_INFO("[MSC] msc_cmd_handler %s %d\n", p, chl);
+			MSC_INFO(KERN_DEBUG "[MSC] msc_cmd_handler %s %d\n", p, chl);
 			para.chl_num = 1;
 		} else {
 			para.chls = NULL;
@@ -412,7 +412,7 @@ int msc_cmd_handler(char *cmd, int len, char *result_str, void *priv)
 	} else if (osal_strcmp(p, "result") == 0) {
 		msc_get_result(&result);
 		MSC_INFO
-		    ("[MSC] AM=%d, ssid=%s, pwd=%s, user=%s, cust_data_len=%d, cust_data=%s,\n",
+		    (KERN_DEBUG "[MSC] AM=%d, ssid=%s, pwd=%s, user=%s, cust_data_len=%d, cust_data=%s,\n",
 		     result.auth_mode, result.ssid, result.pwd, result.user,
 		     result.cust_data_len, result.cust_data);
 		sprintf(result_str_temp,

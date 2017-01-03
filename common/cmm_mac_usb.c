@@ -637,7 +637,7 @@ NDIS_STATUS RTMPAllocTxRxRingMemory(IN PRTMP_ADAPTER pAd)
 			/*Allocate URB and bulk buffer */
 			for (ringidx = 0; ringidx < BUF_ALIGMENT_RINGSIZE;
 			     ringidx++) {
-				printk("allocate tx ringidx %d \n", ringidx);
+				printk(KERN_DEBUG "allocate tx ringidx %d \n", ringidx);
 				Status = RTMPAllocUsbBulkBufStruct(pAd,
 								   &pHTTXContext->
 								   pUrb
@@ -847,7 +847,7 @@ NDIS_STATUS RTMPAllocTxRxRingMemory(IN PRTMP_ADAPTER pAd)
 	} while (FALSE);
 
 	DBGPRINT_S(Status,
-		   ("<-- RTMPAllocTxRxRingMemory, Status=%x\n", Status));
+		   (KERN_DEBUG "<-- RTMPAllocTxRxRingMemory, Status=%x\n", Status));
 	return Status;
 
  err:
@@ -1058,7 +1058,7 @@ NDIS_STATUS NICInitTransmit(IN PRTMP_ADAPTER pAd)
 								   [ringidx],
 								   "HTTxContext");
 				if (Status != NDIS_STATUS_SUCCESS) {
-//                                      printk("iversontest2  RTMPAllocUsbBulkBufStruct fail   !!!!!!!!!!!\n");
+//                                      printk(KERN_ERR "iversontest2  RTMPAllocUsbBulkBufStruct fail   !!!!!!!!!!!\n");
 					goto err;
 				}
 				NdisZeroMemory(pHTTXContext->
@@ -1088,7 +1088,7 @@ NDIS_STATUS NICInitTransmit(IN PRTMP_ADAPTER pAd)
 				goto err;
 
 			printk
-			    ("[%d] pHTTXContext TransferBuffer=0x%x,DMA=0x%x\n",
+			    (KERN_DEBUG "[%d] pHTTXContext TransferBuffer=0x%x,DMA=0x%x\n",
 			     acidx, pHTTXContext->TransferBuffer,
 			     pHTTXContext->data_dma);
 #endif
@@ -1382,7 +1382,7 @@ NDIS_STATUS RTMPAllocTxRxRingMemory(IN PRTMP_ADAPTER pAd)
 	} while (FALSE);
 
 	DBGPRINT_S(Status,
-		   ("<-- RTMPAllocTxRxRingMemory, Status=%x\n", Status));
+		   (KERN_DEBUG "<-- RTMPAllocTxRxRingMemory, Status=%x\n", Status));
 	return Status;
 }
 

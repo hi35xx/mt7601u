@@ -838,6 +838,7 @@ VOID P2pParseNoASubElmt(IN PRTMP_ADAPTER pAd,
 				switch (pP2pEid->Eid) {
 				case SUBID_P2P_NOA:
 					{
+#ifdef DBG
 						PUCHAR pData = &pEid->Octet[0];
 						DBGPRINT(RT_DEBUG_INFO,
 							 ("Get NoA Attr: %x %x %x %x %x %x %x %x %x \n",
@@ -850,6 +851,7 @@ VOID P2pParseNoASubElmt(IN PRTMP_ADAPTER pAd,
 							  *(pData + 6),
 							  *(pData + 7),
 							  *(pData + 8)));
+#endif
 						bNoAAttriExist = TRUE;
 						brc =
 						    P2pHandleNoAAttri(pAd,
@@ -4204,7 +4206,9 @@ BOOLEAN PeerP2pProbeReqSanity(IN PRTMP_ADAPTER pAd,
 			      OUT PUCHAR pP2pSubelement,
 			      OUT ULONG * WpsIELen, OUT PUCHAR pWpsIE)
 {
+#ifdef DBG
 	PRT_P2P_CONFIG pP2PCtrl = &pAd->P2pCfg;
+#endif
 	PFRAME_802_11 pFrame;
 	PEID_STRUCT pEid;
 	ULONG Length = 0;

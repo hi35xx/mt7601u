@@ -8408,12 +8408,14 @@ INT Set_AP_WscMode_Proc(IN PRTMP_ADAPTER pAd, IN PSTRING arg)
 
 INT Set_WscStatus_Proc(IN PRTMP_ADAPTER pAd, IN PSTRING arg)
 {
+#ifdef DBG
 	POS_COOKIE pObj = (POS_COOKIE) pAd->OS_Cookie;
 	UCHAR apidx = pObj->ioctl_if;
 
 	DBGPRINT(RT_DEBUG_TRACE,
 		 ("IF(ra%d) Set_WscStatus_Proc::(WscStatus=%d)\n", apidx,
 		  pAd->ApCfg.MBSSID[apidx].WscControl.WscStatus));
+#endif
 	return TRUE;
 }
 

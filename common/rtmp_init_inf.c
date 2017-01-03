@@ -133,11 +133,11 @@ int rt28xx_init(VOID * pAdSrc, PSTRING pDefaultMac, PSTRING pHostName)
 		LDO_CTRL0_STRUC ldo_ctr0;
 
 		RTMP_IO_READ32(pAd, LDO_CTRL0, &ldo_ctr0.word);
-		printk("1. LDO_CTR0(%x) = %x, PMU_OCLEVEL %x\n", LDO_CTRL0,
+		printk(KERN_DEBUG "1. LDO_CTR0(%x) = %x, PMU_OCLEVEL %x\n", LDO_CTRL0,
 		       ldo_ctr0.word, ldo_ctr0.field.PMU_OCLEVEL);
 		ldo_ctr0.field.PMU_OCLEVEL = 0x6;
 		RTMP_IO_WRITE32(pAd, LDO_CTRL0, ldo_ctr0.word);
-		printk("2. LDO_CTR0(%x) = %x, PMU_OCLEVEL %x\n", LDO_CTRL0,
+		printk(KERN_DEBUG "2. LDO_CTR0(%x) = %x, PMU_OCLEVEL %x\n", LDO_CTRL0,
 		       ldo_ctr0.word, ldo_ctr0.field.PMU_OCLEVEL);
 	}
 #endif				/* MT7601U */
@@ -727,7 +727,7 @@ int rt28xx_init(VOID * pAdSrc, PSTRING pDefaultMac, PSTRING pHostName)
 #endif				/* RT3290 */
 
 	DBGPRINT_S(Status,
-		   ("<==== %s : rt28xx_init, Status=%x\n", DRIVER_ROLE,
+		   (KERN_DEBUG "<==== %s : rt28xx_init, Status=%x\n", DRIVER_ROLE,
 		    Status));
 
 	return TRUE;
@@ -812,7 +812,7 @@ VOID RTMPDrvOpen(IN VOID * pAdSrc)
 	{
 		UINT32 reg = 0;
 		RTMP_IO_READ32(pAd, 0x1300, &reg);	/* clear garbage interrupts */
-		printk("0x1300 = %08x\n", reg);
+		printk(KERN_DEBUG "0x1300 = %08x\n", reg);
 	}
 
 	{

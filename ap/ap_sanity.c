@@ -60,7 +60,9 @@ BOOLEAN PeerAssocReqCmmSanity(RTMP_ADAPTER * pAd,
 	UCHAR WPA2_OUI[3] = { 0x00, 0x0F, 0xAC };
 	MAC_TABLE_ENTRY *pEntry = (MAC_TABLE_ENTRY *) NULL;
 #ifdef P2P_SUPPORT
+#ifdef DBG
 	PRT_P2P_CONFIG pP2PCtrl = &pAd->P2pCfg;
+#endif
 	UCHAR P2POUIBYTE[4] = { 0x50, 0x6f, 0x9a, 0x9 };
 #endif				/* P2P_SUPPORT */
 #ifdef P2P_SUPPORT

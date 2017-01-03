@@ -2693,7 +2693,7 @@ BOOLEAN CFG80211_SupBandInit(IN VOID * pCB,
 	else
 		NumOfChan = CFG80211_NUM_OF_CHAN_2GHZ;
 
-	printk("NumOfChan ===> %d\n", NumOfChan);
+	printk(KERN_DEBUG "NumOfChan ===> %d\n", NumOfChan);
 
 	if (pBandInfo->FlgIsBMode == TRUE)
 		NumOfRate = 4;
@@ -3216,7 +3216,7 @@ VOID CFG80211OS_Scaning(IN VOID * pCB,
 	}
 
 	if (IdChan >= pBand->n_channels) {
-		printk("80211> Can not find any chan info! ==> %d[%d],[%d] \n",
+		printk(KERN_ERR "80211> Can not find any chan info! ==> %d[%d],[%d] \n",
 		       ChanId, CenFreq, pBand->n_channels);
 		return;
 	}

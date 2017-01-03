@@ -337,7 +337,7 @@ NDIS_STATUS RTMPAllocAdapterBlock(IN PVOID handle, OUT VOID ** ppAdapter)
 	}
 
 	pAd->ext_flags = 0;
-	DBGPRINT_S(Status, ("<-- RTMPAllocAdapterBlock, Status=%x\n", Status));
+	DBGPRINT_S(Status, (KERN_DEBUG "<-- RTMPAllocAdapterBlock, Status=%x\n", Status));
 	return Status;
 }
 

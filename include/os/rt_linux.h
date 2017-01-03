@@ -708,29 +708,28 @@ void RTUnregisterEarlySuspend(POS_COOKIE pOs_cookie);
 extern ULONG RTDebugLevel;
 extern ULONG RTDebugFunc;
 
-#define DBGPRINT_RAW(Level, Fmt)    \
-do{                                   \
-	ULONG __gLevel = (Level) & 0xff;\
+#define DBGPRINT_RAW(Level, Fmt)		\
+do {						\
+	ULONG __gLevel = (Level) & 0xff;	\
 	ULONG __fLevel = ((Level)>>8) & 0xffffff;\
-    if (__gLevel <= RTDebugLevel)      \
-    {                               \
-    	if ((RTDebugFunc == 0) || \
-		((RTDebugFunc != 0) && (((__fLevel & RTDebugFunc)!= 0) || (__gLevel <= RT_DEBUG_ERROR))))\
-        printk Fmt;               \
-    }                               \
-}while(0)
+	if (__gLevel <= RTDebugLevel)		\
+	{					\
+		if ((RTDebugFunc != 0) && (((__fLevel & RTDebugFunc)!= 0) || (__gLevel <= RT_DEBUG_ERROR)))\
+		printk Fmt;			\
+	}					\
+} while(0)
 
 #define DBGPRINT(Level, Fmt)    DBGPRINT_RAW(Level, Fmt)
 
-#define DBGPRINT_ERR(Fmt)           \
-{                                   \
-    printk("ERROR!!! ");          \
-    printk Fmt;                  \
+#define DBGPRINT_ERR(Fmt)			\
+{						\
+	printk("ERROR!!! ");			\
+	printk Fmt;				\
 }
 
-#define DBGPRINT_S(Status, Fmt)		\
-{									\
-	printk Fmt;					\
+#define DBGPRINT_S(Status, Fmt)			\
+{						\
+	printk Fmt;				\
 }
 #else
 #define DBGPRINT(Level, Fmt)
@@ -741,12 +740,14 @@ do{                                   \
 
 #undef  ASSERT
 #ifdef DBG
-#define ASSERT(x)                                                               \
-{                                                                               \
-    if (!(x))                                                                   \
-    {                                                                           \
-        printk(KERN_WARNING __FILE__ ":%d assert " #x "failed\n", __LINE__);    \
-    }                                                                           \
+#define ASSERT(x)				\
+{						\
+	if (!(x))				\
+	{					\
+		printk(KERN_WARNING __FILE__	\
+		       ":%d assert " #x "failed\n",\
+		       __LINE__);		\
+	}					\
 }
 #else
 #define ASSERT(x)

@@ -1250,7 +1250,9 @@ static VOID MT7601_AsicAntennaDefaultReset(IN struct _RTMP_ADAPTER *pAd,
 
 static VOID MT7601_ChipBBPAdjust(RTMP_ADAPTER * pAd)
 {
+#ifdef DBG
 	static char *ext_str[] = { "extNone", "extAbove", "", "extBelow" };
+#endif
 	UCHAR rf_bw, ext_ch;
 
 #ifdef DOT11_N_SUPPORT

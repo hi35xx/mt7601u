@@ -15,7 +15,7 @@ int sc_plt_set_monitor_chan(struct chan_info *info, void *priv)
 	CMD_RTPRIV_IOCTL_80211_CHAN ChanInfo;
 	PRTMP_ADAPTER pAd = (PRTMP_ADAPTER) priv;
 
-	MSC_DBG("[MSC] set chl, chan_id:%d, width:%d, chan_flags:0x%x\n",
+	MSC_DBG(KERN_DEBUG "[MSC] set chl, chan_id:%d, width:%d, chan_flags:0x%x\n",
 		info->chan_id, info->width, info->flags);
 
 	memset(&ChanInfo, 0, sizeof(ChanInfo));

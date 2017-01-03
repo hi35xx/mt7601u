@@ -1778,7 +1778,10 @@ VOID MlmeRALog(IN PRTMP_ADAPTER pAd,
 	    || (pAd->CommonCfg.DebugFlags & DBF_SHOW_ZERO_RA_LOG)
 #endif				/* DBG_CTRL_SUPPORT */
 	    ) {
-		BOOLEAN stbc, csd = FALSE;
+		BOOLEAN stbc;
+#ifdef DBG
+		BOOLEAN csd = FALSE;
+#endif
 		ULONG tp;
 
 		/*  Get STBC and StreamMode state */

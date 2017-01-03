@@ -919,7 +919,7 @@ INT WaitForAsicReady(IN RTMP_ADAPTER * pAd)
 			return FALSE;
 
 		RTMP_IO_READ32(pAd, reg, &mac_val);
-		printk("==>WaitForAsicReady MAC_CSR0=0x%x\n", mac_val);
+		printk(KERN_DEBUG "==>WaitForAsicReady MAC_CSR0=0x%x\n", mac_val);
 		if ((mac_val != 0x00) && (mac_val != 0xFFFFFFFF))
 			return TRUE;
 

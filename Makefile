@@ -469,7 +469,7 @@ ifneq ($(findstring 7601,$(CHIPSET)),)
 ifeq ($(PLATFORM),MT53XX)
 	cp -f $(RT28xx_DIR)/os/linux/mt$(MODULE)sta.ko ../../../../../android/jb-4.x/device/mtk/mt5396/prebuilt/wifi/
 else
-	$(CROSS_COMPILE)strip -g $(RT28xx_DIR)/os/linux/mt$(MODULE)sta.ko
+	$(CROSS_COMPILE)strip -g --strip-unneeded $(RT28xx_DIR)/os/linux/mt$(MODULE)sta.ko
 endif
 else
 	cp -f $(RT28xx_DIR)/os/linux/rt$(MODULE)sta.ko /tftpboot

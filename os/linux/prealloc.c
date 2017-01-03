@@ -105,10 +105,10 @@ int __init prealloc_init(void)
 	PreAllocDmaAddr[BLK_CMD] = virt_to_phys(PreAllocBuffer[BLK_CMD]);
 
 	for (k = 0; k < NUM_OF_TOTAL_BLK; k++)
-		printk("==>[%d]:PreBuff:0x%p, DmaAddr:0x%p\n", k,
+		printk(KERN_DEBUG "==>[%d]:PreBuff:0x%p, DmaAddr:0x%p\n", k,
 		       PreAllocBuffer[k], (void *)PreAllocDmaAddr[k]);
 
-	printk("install prealloc ok\n");
+	printk(KERN_INFO "install prealloc ok\n");
 	return result;		/* succeed */
 
  fail_malloc4:
@@ -176,10 +176,9 @@ void *RTMPQMemAddr(int size, int index, dma_addr_t * pDmaAddr, int type)
 		break;
 #endif
 	default:
-		printk("Non-support memory type!!!!\n");
+		printk(KERN_ERR "Non-support memory type!!!!\n");
 		return NULL;
 	}
-	printk("%s[%d]\n", __FUNCTION__, idx);
 	*pDmaAddr = PreAllocDmaAddr[idx];
 	return PreAllocBuffer[idx];
 }

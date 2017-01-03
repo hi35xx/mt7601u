@@ -515,16 +515,20 @@ VOID P2pGotoIdle(IN PRTMP_ADAPTER pAd)
  */
 VOID P2pGotoScan(IN PRTMP_ADAPTER pAd)
 {
+#ifdef DBG
 	PRT_P2P_CONFIG pP2PCtrl = &pAd->P2pCfg;
+#endif
 
 	/* Reset 100ms Counter to zero. */
 	pAd->P2pCfg.P2pCounter.Counter100ms = 0;
 	/* Set a short time to start next search State for the 1st time. */
 	pAd->P2pCfg.P2pCounter.NextScanRound = 5;
 
+#ifdef DBG
 	DBGPRINT(RT_DEBUG_ERROR,
 		 ("P2pGotoScan!  Set pP2PCtrl->NextScanRound = %ld Here!!!\n",
 		  pP2PCtrl->P2pCounter.NextScanRound));
+#endif
 }
 
 /*	
@@ -1763,7 +1767,9 @@ VOID P2pConnectPrepare(IN PRTMP_ADAPTER pAd, IN PUCHAR Addr, IN UINT32 ConnType)
 BOOLEAN P2pConnectAfterScan(IN PRTMP_ADAPTER pAd,
 			    IN BOOLEAN bBeacon, IN UCHAR idx)
 {
+#ifdef DBG
 	PRT_P2P_CONFIG pP2PCtrl = &pAd->P2pCfg;
+#endif
 	BOOLEAN brc = TRUE;
 	UCHAR index;		/*, i; */
 	UCHAR GrpIndex = idx;
