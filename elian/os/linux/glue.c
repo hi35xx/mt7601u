@@ -71,6 +71,7 @@ static int msc_proc_show(struct seq_file *seq, void *offset)
 {
 	struct msc_result result;
 
+	memset(&result, 0, sizeof(result));
 	msc_get_result(&result);
 
 #if 0
