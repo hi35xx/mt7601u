@@ -262,7 +262,7 @@ Note:
 ========================================================================
 */
 #if (LINUX_VERSION_CODE >= KERNEL_VERSION(2, 6, 32))
-#if (LINUX_VERSION_CODE < KERNEL_VERSION(3,4,0))
+#if (LINUX_VERSION_CODE < KERNEL_VERSION(3,6,0))
 static int CFG80211_OpsChannelSet(IN struct wiphy *pWiphy,
 				  IN struct net_device *pDev,
 				  IN struct ieee80211_channel *pChan,
@@ -2920,6 +2920,9 @@ struct cfg80211_ops CFG80211_Ops = {
 	.start_ap = CFG80211_OpsStartAp,
 	.change_beacon = CFG80211_OpsChangeBeacon,
 	.stop_ap = CFG80211_OpsStopAp,
+#if (LINUX_VERSION_CODE < KERNEL_VERSION(3,6,0))
+	.set_channel = CFG80211_OpsChannelSet,
+#endif
 #endif				/* LINUX_VERSION_CODE */
 
 	/* set channel for a given wireless interface */
