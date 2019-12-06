@@ -1513,12 +1513,12 @@ export CFLAGS
 endif
 
 ifeq ($(PLATFORM),MSTAR)
-EXTRA_CFLAGS += $(WFLAGS) -I$(RT28xx_DIR)/include -Wframe-larger-than=4096 -Werror
+EXTRA_CFLAGS += $(WFLAGS) -I$(RT28xx_DIR)/include -Wframe-larger-than=4096 -Wall
 #EXTRA_CFLAGS += -I$(LINUX_SRC)/include -I$(RT28xx_DIR)/include -I$(LINUX_SRC)/arch/arm/include -mlittle-endian -Wall -Wundef -Wstrict-prototypes -Wno-trigraphs -fno-strict-aliasing -fno-common -Werror-implicit-function-declaration -Wno-format-security -fno-delete-null-pointer-checks -Os -marm -fno-dwarf2-cfi-asm -fno-omit-frame-pointer -mapcs -mno-sched-prolog -mabi=aapcs-linux -mno-thumb-interwork -D__LINUX_ARM_ARCH__=7 -march=armv7-a -msoft-float -Uarm -Wframe-larger-than=4096 -fno-stack-protector -fno-omit-frame-pointer -fno-optimize-sibling-calls -g -fno-inline-functions-called-once -Wdeclaration-after-statement -Wno-pointer-sign -fno-strict-overflow -fconserve-stack $(WFLAGS)
 export EXTRA_CFLAGS
 endif
 
 ifeq ($(PLATFORM),HISILICON)
-EXTRA_CFLAGS += $(WFLAGS) -I$(RT28xx_DIR)/include -Wframe-larger-than=4096 -Werror
+EXTRA_CFLAGS += $(WFLAGS) -I$(RT28xx_DIR)/include -Wframe-larger-than=4096 -Wall
 export EXTRA_CFLAGS
 endif
